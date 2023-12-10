@@ -16,5 +16,3 @@
 - Find lawyers based on specialization, location, and more.
 - Schedule appointments and explore legal expertise.
 - Rate and review lawyers for a transparent legal community.
-
-Thanks!
