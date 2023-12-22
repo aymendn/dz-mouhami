@@ -1,5 +1,5 @@
 import Footer from "./Footer";
-import Navbar from "./Navbar";
+import Navbar from "./NavbarNoAction";
 
 import validation from "./Assets/person_check.png"
 const LawyerForm1 = () => {

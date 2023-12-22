@@ -1,5 +1,6 @@
 import Sidebar from "./Sidebar";
 import profilepicture from './Assets/pp.png'
+import Navbar from "./NavbarProfil";
 import { useState } from "react";
 const EditingProfil = () => {
     
@@ -19,9 +20,9 @@ const EditingProfil = () => {
         };
 
     return ( 
-    
-    
-    <div className="flex">
+    <div>
+        <Navbar></Navbar>
+        <div className="flex">
         <Sidebar></Sidebar> 
         
           <form>
@@ -160,7 +161,10 @@ const EditingProfil = () => {
 
 
 
-    </div> );
+    </div>
+    </div>
+    
+     );
 }
  
 export default EditingProfil;

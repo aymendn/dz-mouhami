@@ -1,4 +1,4 @@
-import Navbar from "./Navbar";
+import Navbar from "./NavbarNoAction";
 import Footer from "./Footer";
 import validation1 from "./Assets/hourglass.png"
 import validation from "./Assets/home.png"

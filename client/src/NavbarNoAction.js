@@ -30,16 +30,11 @@ const Navbar = () => {
             <img src={Search}></img>
             Search
           </a>
-          <a href="#" className=" flex items-center gap-1 text-[#26495D]">
-            <img src={Profil}></img>
-            Profil
-          </a>
+          
         </div>
 
-        {/* Get Started Button */}
-        <button className="bg-[#094E771A] font-medium text-[#094B72E5] rounded-full px-6 py-2 hover:bg-blue-100 hover:duration-500 hover:shadow-md focus:outline-none text-sm">
-          Get Started
-        </button>
+       
+      
       </div>
     </nav>
   );

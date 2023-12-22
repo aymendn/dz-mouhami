@@ -2,11 +2,13 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 import Refus from './Assets/delete.png'
-import Navbar from './Navbar';
+import Navbar from './NavbarProfil';
 const Appointement = () => {
   return (
     
-    <div className="flex">
+    <div>
+        <Navbar></Navbar>
+        <div className="flex">
         
       <Sidebar></Sidebar>
       <div className="flex-1 py-4">
@@ -35,6 +37,7 @@ const Appointement = () => {
           </tbody>
         </table>
       </div>
+    </div>
     </div>
   );
 };

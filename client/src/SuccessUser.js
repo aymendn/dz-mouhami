@@ -1,4 +1,4 @@
-import Navbar from "./Navbar";
+import Navbar from "./NavbarNoAction";
 import Footer from "./Footer";
 import validation from "./Assets/person_search (1).png"
 import validation1 from "./Assets/person_check (1).png"

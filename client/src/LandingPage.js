@@ -1,5 +1,6 @@
 import Footer from "./Footer";
 import Navbar from "./Navbar";
+
 import "./style/fonts.css";
 import Card from "./Card";
 import Services from "./Services";

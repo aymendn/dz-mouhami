@@ -1,5 +1,5 @@
 import Footer from "./Footer";
-import Navbar from "./Navbar";
+import  Navbar from './NavbarNoAction'
 import balance from './Assets/balance.png';
 import search from './Assets/person_search.png'
 const Choice = () => {

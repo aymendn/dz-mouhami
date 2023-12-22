@@ -1,4 +1,4 @@
-import Navbar from "./Navbar";
+import Navbar from "./NavbarNoAction";
 import Footer from "./Footer";
 import validation from "./Assets/person_check.png"
 import { Link } from 'react-router-dom';
