@@ -1,7 +1,7 @@
 import Marteau from './Assets/Frame 30.png';
 import places from './Assets/Group 497.png';
 import categories from './Assets/Main Categories.png';
-import location from './Assets/location_on_FILL0_wght400_GRAD0_opsz24 1.png';
+import location from './Assets/location.png';
 import search from './Assets/Vector (11).png';
 
 const Main = () => {
