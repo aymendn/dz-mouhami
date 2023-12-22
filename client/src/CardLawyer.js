@@ -1,7 +1,7 @@
 import Lawyer from './Assets/image 4.png'
 import location from './Assets/location_on_FILL0_wght400_GRAD0_opsz24 1.png'
 const CardLawyer = () => {
-    return (<div className="w-[506px] h-[234px] bg-white p-4 rounded-lg shadow-md p-4 m-4 flex">
+    return (<div className="transform hover:scale-110 transition duration-300 ease-in-out w-[506px] h-[234px] bg-white p-4 rounded-lg shadow-md p-4 m-4 flex">
     {/* Image on the left */}
     <img src={Lawyer}  className="w-64 h-[200px] rounded-md mr-4" />
 

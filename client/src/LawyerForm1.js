@@ -66,7 +66,7 @@ const LawyerForm1 = () => {
     </label>
 </form>
 <div className="flex justify-end m-4">
-            <button className=" mx-4 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
+            <button className="transition-transform transform hover:scale-105 duration-500   mx-4 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
               <img src={validation} alt="Validation" />
               Continue 
             </button>

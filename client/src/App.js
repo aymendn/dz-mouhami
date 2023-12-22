@@ -9,6 +9,7 @@ import SuccessLawyer from "./SuccessLawyer";
 import Requests from "./Requests";
 import Appointement from "./Appointment";
 import EditingProfil from "./EditingProfil";
+import "./style/fonts.css";
 function App() {
   return (
     <Router>

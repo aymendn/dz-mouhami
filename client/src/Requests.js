@@ -32,10 +32,10 @@ const Requests = () => {
                 <td className="border border-slate-200 px-4 py-2">25</td>
                 <td className="border border-slate-200 px-4 py-2 ">
                   <div className='flex gap-2 '>
-                  <button className= " bg-green-500 py-2  px-6  rounded-3xl text-white font-normal text-md flex hover:bg-green-200 duration-300 ">
+                  <button className= "transition-transform transform hover:scale-105 duration-500   bg-green-500 py-2  px-6  rounded-3xl text-white font-normal text-md flex hover:bg-green-700 duration-300 ">
                   ✓ Accept
                   </button>
-                  <button className= " bg-red-500 py-2  px-6  rounded-3xl text-white font-normal text-md flex hover:bg-red-200 duration-300 items-center gap-2 ">
+                  <button className= " transition-transform transform hover:scale-105 duration-500  bg-red-500 py-2  px-6  rounded-3xl text-white font-normal text-md flex hover:bg-red-700 duration-300 items-center gap-2 ">
                   <img src={Refus} alt="Refus" />
                       Refuse
                   </button> </div>

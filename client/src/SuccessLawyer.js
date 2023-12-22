@@ -15,7 +15,7 @@ const SuccessLawyer = () => {
         Thank you for registering with DZ-Mouhami! We're currently reviewing your account information to ensure the highest quality of legal professionals on our platform. Your account is currently pending approval.</p>
       </div>
       <div className="flex justify-center  mb-16">
-          <button className= "border-1 bg-[#094B72] py-3 px-6 rounded-3xl text-white font-normal text-md flex gap-2">
+          <button className= " transition-transform transform hover:scale-105 duration-500 border-1 bg-[#094B72] py-3 px-6 rounded-3xl text-white font-normal text-md flex gap-2">
             <img src={validation} alt="Validation" />
              Home Page
           </button>

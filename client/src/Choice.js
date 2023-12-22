@@ -11,8 +11,8 @@ const Choice = () => {
         
         </div>
 
-        <div className="flex items-center justify-center py-12 gap-12">
-        <div className="p-8 bg-[#FFFBF1] hover:bg-[#FFF4D9] hover:border-[1.5px] hover:border-[#FFC63E] w-64 h-96 rounded-2xl  hover:shadow-sm  hover:duration-500 text-center p-4 ">
+        <div className=" flex items-center justify-center py-12 gap-12">
+        <div className="transform hover:scale-110 transition duration-300 ease-in-out p-8 bg-[#FFFBF1] hover:bg-[#FFF4D9] hover:border-[1.5px] hover:border-[#FFC63E] w-64 h-96 rounded-2xl  hover:shadow-sm  hover:duration-500 text-center p-4 ">
       <img className="mx-auto w-16 py-4"
           src={balance} 
         ></img>
@@ -21,7 +21,7 @@ const Choice = () => {
         <button className=" my-2 border-2 border-[#094B72] hover:bg-[#094B72] hover:text-white hover:duration-500 py-2 px-12 rounded-2xl text-[#094B72] font-medium text-sm  ">Select</button>
     </div> 
 
-    <div className="p-8 bg-[#FFFBF1] hover:bg-[#FFF4D9] hover:border-[1.5px] hover:border-[#FFC63E] w-64 h-96 rounded-2xl  hover:shadow-sm  hover:duration-500 text-center p-4 ">
+    <div className=" transform hover:scale-110 transition duration-300 ease-in-out p-8 bg-[#FFFBF1] hover:bg-[#FFF4D9] hover:border-[1.5px] hover:border-[#FFC63E] w-64 h-96 rounded-2xl  hover:shadow-sm  hover:duration-500 text-center p-4 ">
       <img className="mx-auto w-16 py-4"
           src={search}
         ></img>
@@ -33,7 +33,7 @@ const Choice = () => {
 
         <div className="mb-12 text-center">
 
-        <button className="  border-1 bg-[#094B72] py-2 px-12 rounded-3xl text-white font-normal text-sm  ">Continue</button>
+        <button className="  transition-transform transform hover:scale-105 duration-500 border-1 bg-[#094B72] py-2 px-12 rounded-3xl text-white font-normal text-sm  ">Continue</button>
         
         <p className='p-2 text-[#496C80] text-md'>By continuing, you agree to our Terms of Service and Privacy Policy.</p>
         </div>

@@ -5,6 +5,7 @@ import info from './Assets/info.png'
 import contact from './Assets/alternate_email.png'
 import Profil from './Assets/account_circle.png'
 import Search from './Assets/search.png'
+import './style/styles.css'
 const Navbar = () => {
   return (
     <nav className=" font-normal px-24 py-8">
@@ -18,15 +19,15 @@ const Navbar = () => {
 
         {/* Navigation Links */}
         <div className="space-x-4 flex justify-between gap-12 text-sm font-medium">
-          <a href="#" className=" flex items-center gap-1 text-[#26495D]">
+          <a href="#" className=" nav-Links  flex items-center gap-1 text-[#26495D]">
             <img src={info}></img>
             About
           </a>
-          <a href="#" className=" flex items-center gap-1 text-[#26495D]">
+          <a href="#" className=" nav-Links  flex items-center gap-1 text-[#26495D]">
             <img src={contact}></img>
             Contact
           </a>
-          <a href="#" className=" flex items-center gap-1 text-[#26495D]">
+          <a href="#" className=" nav-Links  flex items-center gap-1 text-[#26495D]">
             <img src={Search}></img>
             Search
           </a>

@@ -2,4 +2,3 @@ Create front end project inside this folder3
 *need to link the pages 
 * add effects 
 *responsive
-*navbar with and without action and with pp

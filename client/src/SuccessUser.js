@@ -16,7 +16,7 @@ const SucceessUser = () => {
         </p>
       </div>
       <div className="flex justify-center m-4 mb-16">
-          <button className="border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
+          <button className="transition-transform transform hover:scale-105 duration-500  border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
             <img src={validation} alt="Validation" />
             Explore Lawyers
           </button>

@@ -35,7 +35,7 @@ const Main = () => {
       </div>
 
       {/* Get Started Button */}
-      <button className="bg-[#094B72] font-normal text-white rounded-full px-4 py-2 hover:bg-blue-100 hover:duration-500 hover:shadow-md focus:outline-none">
+      <button className="transition-transform transform hover:scale-105 duration-500  bg-[#094B72] font-normal text-white rounded-full px-6 py-2 hover:bg-blue-100 hover:text-[#094B72] hover:duration-500 hover:shadow-md focus:outline-none">
           Get Started
         </button>
     </div>
