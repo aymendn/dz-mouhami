@@ -2,7 +2,7 @@ import React from 'react';
 import Navbar from './NavbarNoAction';
 import Footer from './Footer';
 import validation from './Assets/person_check.png';
-
+import { Link } from 'react-router-dom';
 const UserForm = () => {
   return (
     <div>
@@ -72,10 +72,11 @@ const UserForm = () => {
         </div>
 
         <div className="flex justify-center md:justify-end m-4">
-          <button className="transition-transform transform hover:scale-105 duration-500 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
+         <Link to='/UserRegistration/Validation'>
+         <button className="transition-transform transform hover:scale-105 duration-500 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
             <img src={validation} alt="Validation" />
             Create account
-          </button>
+          </button></Link>
         </div>
       </form>
 

@@ -6,10 +6,10 @@ const TopRated = () => {
   // Tableau d'objets représentant les avocats
   const lawyersData = [
     {
-      name: "Mohamed Amine",
-      location: "Algiers, Algeria",
-      categories: ["category1", "category2"],
-      description: "What is important for you in the UI card design? I’d like to share with you the best practices that",
+      name: "Marzouk Lounes",
+      location: "Tizi-Ouzou, Algeria",
+      categories: ["Usurpation ", "Criminologie"],
+      description: "je suis un avocat specialisé en affaire de crimes et d'usurpation d'identite  , je suis devouée et je suis passioné par mon travail",
       image: image1,
     },
     // Ajoutez d'autres avocats selon vos besoins

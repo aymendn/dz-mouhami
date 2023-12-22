@@ -22,7 +22,7 @@ function App() {
         <Route path='/LawyerRegistrationStep2' Component={LawyerForm1}></Route> 
         <Route path='/LawyerRegistrationStep2/validation' Component={SuccessLawyer}></Route>
         <Route path='/Requests' Component={Requests}></Route>
-        <Route path='/Appointment' Component={Appointement}></Route>
+        <Route path='/Appointments' Component={Appointement}></Route>
         <Route path='/Edit' Component={EditingProfil}></Route>
            </Routes>
     </Router>

@@ -2,6 +2,7 @@ import Footer from "./Footer";
 import Navbar from "./NavbarNoAction";
 
 import validation from "./Assets/person_check.png"
+import { Link } from "react-router-dom";
 const LawyerForm1 = () => {
     return ( <div>
         <Navbar></Navbar>
@@ -66,11 +67,13 @@ const LawyerForm1 = () => {
     </label>
 </form>
 <div className="flex justify-end m-4">
+            <Link to='/LawyerRegistrationStep2/validation'>
             <button className="transition-transform transform hover:scale-105 duration-500   mx-4 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
               <img src={validation} alt="Validation" />
               Continue 
             </button>
-          </div>
+            </Link>
+                  </div>
 
 <Footer></Footer>
     </div> );
