@@ -4,8 +4,19 @@ import Sidebar from './Sidebar';
 import Refus from './Assets/delete.png'
 import Navbar from './NavbarProfil';
 const Appointement = () => {
+
+  const rdvData=[
+    {name:'Melissa',
+    surname:'Mellaz',
+    age:'20',
+    schedule:'10h00'},
+    {name:'aya',
+    surname:'lamiri',
+    age:'19',
+    schedule:'10h45'},
+   
+  ]
   return (
-    
     <div>
         <Navbar></Navbar>
         <div className="flex">
@@ -27,13 +38,15 @@ const Appointement = () => {
           </thead>
           <tbody>
             {/* Sample data, replace this with your actual data */}
-            <tr>
-              <td className="border border-slate-200 px-4 py-2">John</td>
-              <td className="border border-slate-200 px-4 py-2">Doe</td>
-              <td className="border border-slate-200 px-4 py-2">25</td>
-              <td className="border border-slate-200 px-4 py-2">8h00</td>
-              
-            </tr>
+           { rdvData.map((data,index)=>(
+            <tr key={index}>
+            <td className="border border-slate-200 px-4 py-2">{data.name}</td>
+            <td className="border border-slate-200 px-4 py-2">{data.surname}</td>
+            <td className="border border-slate-200 px-4 py-2">{data.age}</td>
+            <td className="border border-slate-200 px-4 py-2">{data.schedule}</td>
+            
+          </tr>
+           ))}
           </tbody>
         </table>
       </div>

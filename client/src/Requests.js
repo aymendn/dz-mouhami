@@ -4,6 +4,20 @@ import Sidebar from './Sidebar';
 import Refus from './Assets/delete.png'
 import Navbar from './NavbarProfil';
 const Requests = () => {
+
+ const requestsData = [
+  {
+    name:'maya',
+    surname:'mellaz',
+    age : 20,
+  },
+  {
+    name:'aya',
+    surname:'lamiri',
+    age : 19,
+  }
+ ]
+
   return (
     <div>
         <Navbar></Navbar>
@@ -13,7 +27,7 @@ const Requests = () => {
         <div className="flex-1 py-4">
         <div className='m-6'>
         <h1 className="text-2xl font-bold mb-1 text-[#094B72]">Requests</h1>
-          <p className='text-[#103F5BB2] text-sm font-medium'>You have 20 requests</p>
+          <p className='text-[#103F5BB2] text-sm font-medium'>You have {requestsData.length} requests</p>
         </div>
           <table className="min-w-full bg-white border border-slate-200 ">
             <thead>
@@ -25,11 +39,12 @@ const Requests = () => {
               </tr>
             </thead>
             <tbody>
-              {/* Sample data, replace this with your actual data */}
-              <tr>
-                <td className="border border-slate-200 px-4 py-2">John</td>
-                <td className="border border-slate-200 px-4 py-2">Doe</td>
-                <td className="border border-slate-200 px-4 py-2">25</td>
+              {requestsData.map((requests,index) =>
+              (
+                <tr key={index}>
+                <td className="border border-slate-200 px-4 py-2">{requests.name}</td>
+                <td className="border border-slate-200 px-4 py-2">{requests.surname}</td>
+                <td className="border border-slate-200 px-4 py-2">{requests.age}</td>
                 <td className="border border-slate-200 px-4 py-2 ">
                   <div className='flex gap-2 '>
                   <button className= "transition-transform transform hover:scale-105 duration-500   bg-green-500 py-2  px-6  rounded-3xl text-white font-normal text-md flex hover:bg-green-700 duration-300 ">
@@ -41,6 +56,9 @@ const Requests = () => {
                   </button> </div>
                 </td>
               </tr>
+              )
+              
+              )}
             </tbody>
           </table>
         </div>
