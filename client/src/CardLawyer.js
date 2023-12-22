@@ -15,7 +15,7 @@ const CardLawyer = () => {
   Algiers, Algeria
 </p>
       {/* Categories */}
-      <div className='flex jutsify-between gap-2'>
+      <div className='flex gap-2'>
       <div className="text-[#094B72] border-2 border-yellow-400 rounded-3xl  w-24 p-1 text-center "><p className='text-sm font-semibold'> categories</p></div>
       <div className="text-[#094B72] border-2 border-yellow-400 rounded-3xl  w-24 p-1 text-center "><p className='text-sm font-semibold'> categories</p></div>
       </div>

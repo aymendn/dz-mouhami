@@ -27,7 +27,7 @@ const LawyerForm1 = () => {
           </p>
         </div>
 
-        <form class="my-8 mx-64 flex items-center space-x-6">
+        <form class="my-8  mx-16 lg:mx-64 flex items-center space-x-6">
         <label
                 htmlFor="Lawfirm"
                 className="block "
@@ -46,7 +46,7 @@ const LawyerForm1 = () => {
         "/>
     </label>
 </form>
-<form class="my-8 mx-64 flex items-center space-x-6">
+<form class="my-8 mx-16 lg:mx-64 flex items-center space-x-6">
         <label
                 htmlFor="Lawfirm"
                 className="block "

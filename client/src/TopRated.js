@@ -10,7 +10,7 @@ const TopRated = () => {
         </div>
 
         
-        <div className=" px-24 pb-8 grid grid-cols-2  sm:grid-cols"> 
+        <div className=" px-24 pb-8 grid sm:grid-cols-1  lg:grid-cols-2  "> 
         <CardLawyer></CardLawyer>
         <CardLawyer></CardLawyer>
         <CardLawyer></CardLawyer>
