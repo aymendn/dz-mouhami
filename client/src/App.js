@@ -6,7 +6,8 @@ import SuccessUser from "./SuccessUser";
 import LawyerForm from "./LawyerForm";
 import LawyerForm1 from "./LawyerForm1";
 import SuccessLawyer from "./SuccessLawyer";
-import Sidebar from "./Sidebar";
+import Requests from "./Requests";
+import Appointement from "./Appointment";
 function App() {
   return (
     <Router>
@@ -18,7 +19,8 @@ function App() {
         <Route path='/LawyerRegistrationStep1' Component={LawyerForm}></Route> 
         <Route path='/LawyerRegistrationStep2' Component={LawyerForm1}></Route> 
         <Route path='/LawyerRegistrationStep2/validation' Component={SuccessLawyer}></Route>
-        <Route path='/Sidebar' Component={Sidebar}></Route>
+        <Route path='/Requests' Component={Requests}></Route>
+        <Route path='/Appointment' Component={Appointement}></Route>
            </Routes>
     </Router>
   );

@@ -6,7 +6,7 @@ import profile from './Assets/account_circle.png'
 import logout from './Assets/move_item.png'
 const Sidebar = () => {
   return (
-    <div className="p-6 text-white h-screen w-1/5 p-4  border-r-2">
+    <div className="p-6 text-white h-screen w-1/5 p-4  border-r-1 bg-slate-50">
       <div className="mb-4">
         <h2 className="text-sm text-[#708FA2]
         font-normal">Main Menu</h2>
