@@ -25,6 +25,7 @@ const Main = () => {
         <div className="mb-4 sm:mb-0 flex items-center border-1 shadow-sm rounded-2xl overflow-hidden mr-0 sm:mr-4 bg-slate-50">
           <img src={search} className="px-1" alt="Search Icon" />
           <input
+            name="category"
             type="text"
             className="p-2 bg-slate-50 w-full sm:w-64 outline-none"
             placeholder="Search by category"
@@ -35,6 +36,7 @@ const Main = () => {
         <div className="mb-4 sm:mb-0 flex items-center border-1 shadow-sm rounded-2xl overflow-hidden mr-0 sm:mr-4 bg-slate-50">
           <img src={location} className="px-1" alt="Location Icon" />
           <input
+            name="location"
             type="text"
             className="p-2 bg-slate-50 w-full sm:w-64 outline-none"
             placeholder="Location"
