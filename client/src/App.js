@@ -1,30 +1,48 @@
-import LandingPage from "./LandingPage";
-import Choice from "./Choice";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import UserForm from "./UserForm";
-import SuccessUser from "./SuccessUser";
-import LawyerForm from "./LawyerForm";
-import LawyerForm1 from "./LawyerForm1";
-import SuccessLawyer from "./SuccessLawyer";
-import Requests from "./Requests";
-import Appointement from "./Appointment";
-import EditingProfil from "./EditingProfil";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./style/fonts.css";
+import LandingPage from "./pages/Landing/LandingPage";
+import UserFormPage from "./pages/UserForm/UserFormPage";
+import SuccessUserPage from "./pages/SuccessUser/SuccessUserPage";
+import LawyerForm1Page from "./pages/LawyerForm1/LawyerForm1Page";
+import LawyerForm2Page from "./pages/LawyerForm2/LawyerForm2Page";
+import SuccessLawyerPage from "./pages/SuccessLawyer/SuccessLawyerPage";
+import RequestsPage from "./pages/Requests/RequestsPage";
+import AppointementPage from "./pages/Appointment/AppointmentPage";
+import EditProfilePage from "./pages/EditProfile/EditProfilePage";
+import DashboardPage from "./pages/Dashboard/DashboardPage";
+import SearchPage from "./pages/Search/SearchPage";
+import ChoicePage from "./pages/Choice/ChoicePage";
+import LawyerPage from "./pages/Lawyer/LawyerPage";
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' Component={LandingPage}></Route>
-        <Route path='/Choice' Component={Choice}></Route>
-        <Route path='/UserRegistration' Component={UserForm}></Route>
-        <Route path='/UserRegistration/validation' Component={SuccessUser}></Route>
-        <Route path='/LawyerRegistrationStep1' Component={LawyerForm}></Route> 
-        <Route path='/LawyerRegistrationStep2' Component={LawyerForm1}></Route> 
-        <Route path='/LawyerRegistrationStep2/validation' Component={SuccessLawyer}></Route>
-        <Route path='/Requests' Component={Requests}></Route>
-        <Route path='/Appointments' Component={Appointement}></Route>
-        <Route path='/Edit' Component={EditingProfil}></Route>
-           </Routes>
+        <Route path="/" Component={LandingPage}></Route>
+        <Route path="/choice" Component={ChoicePage}></Route>
+        <Route path="/userRegistration" Component={UserFormPage}></Route>
+        <Route
+          path="/userRegistration/validation"
+          Component={SuccessUserPage}
+        ></Route>
+        <Route
+          path="/lawyerRegistrationStep1"
+          Component={LawyerForm1Page}
+        ></Route>
+        <Route
+          path="/lawyerRegistrationStep2"
+          Component={LawyerForm2Page}
+        ></Route>
+        <Route
+          path="/lawyerRegistrationStep2/validation"
+          Component={SuccessLawyerPage}
+        ></Route>
+        <Route path="/dashboard" Component={DashboardPage}></Route>
+        <Route path="/requests" Component={RequestsPage}></Route>
+        <Route path="/appointments" Component={AppointementPage}></Route>
+        <Route path="/edit" Component={EditProfilePage}></Route>
+        <Route path="/search" Component={SearchPage}></Route>
+        <Route path="/lawyer" Component={LawyerPage}></Route>
+      </Routes>
     </Router>
   );
 }
