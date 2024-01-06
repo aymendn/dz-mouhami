@@ -27,7 +27,7 @@ const ChoicePage = () => {
             Join our legal community to showcase your expertise and connect with
             clients.
           </p>
-          <Link to="/LawyerRegistrationStep1">
+          <Link to="/lawyer-registrationStep1">
             <button className="my-2 border-2 border-[#094B72] hover:bg-[#094B72] hover:text-white hover:duration-500 py-2 px-12 rounded-2xl text-[#094B72] font-medium text-sm">
               Select
             </button>
@@ -42,7 +42,7 @@ const ChoicePage = () => {
           <p className="py-4 text-[#496C80] text-md">
             Find trusted lawyers in Algeria. Let us guide you.
           </p>
-          <Link to="/UserRegistration">
+          <Link to="/user-registration">
             <button className="my-2 border-2 border-[#094B72] hover:bg-[#094B72] hover:text-white hover:duration-500 py-2 px-12 rounded-2xl text-[#094B72] font-medium text-sm">
               Select
             </button>

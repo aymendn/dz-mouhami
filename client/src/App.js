@@ -17,27 +17,28 @@ import ContactPage from "./pages/Contact/ContactPage";
 import AboutPage from "./pages/About/AboutPage";
 import PrivacyPage from "./pages/Privacy/PrivacyPage";
 import TermsPage from "./pages/Terms/TermsPage";
+import UserEditProfilePage from "./pages/UserEditProfile/UserEditProfilePage";
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" Component={LandingPage}></Route>
         <Route path="/choice" Component={ChoicePage}></Route>
-        <Route path="/userRegistration" Component={UserFormPage}></Route>
+        <Route path="/user-registration" Component={UserFormPage}></Route>
         <Route
-          path="/userRegistration/validation"
+          path="/user-registration/validation"
           Component={SuccessUserPage}
         ></Route>
         <Route
-          path="/lawyerRegistrationStep1"
+          path="/lawyer-registrationStep1"
           Component={LawyerForm1Page}
         ></Route>
         <Route
-          path="/lawyerRegistrationStep2"
+          path="/lawyer-registrationStep2"
           Component={LawyerForm2Page}
         ></Route>
         <Route
-          path="/lawyerRegistrationStep2/validation"
+          path="/lawyer-registrationStep2/validation"
           Component={SuccessLawyerPage}
         ></Route>
         <Route path="/dashboard" Component={DashboardPage}></Route>
@@ -50,6 +51,7 @@ function App() {
         <Route path="/about" Component={AboutPage}></Route>
         <Route path="/privacy" Component={PrivacyPage}></Route>
         <Route path="/terms" Component={TermsPage}></Route>
+        <Route path="/user-edit" Component={UserEditProfilePage}></Route>
       </Routes>
     </Router>
   );

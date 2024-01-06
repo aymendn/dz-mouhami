@@ -11,28 +11,30 @@ const Navbar = () => {
     <nav className=" font-normal px-24 py-8">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
-        <img
-          src={Logo}
-          alt="Mouhami-dz"
-          className="text-white text-lg font-bold"
-        ></img>
+        <Link to="/">
+          <img
+            src={Logo}
+            alt="Mouhami-dz"
+            className="text-white text-lg font-bold"
+          ></img>
+        </Link>
 
         {/* Navigation Links */}
         <div className="space-x-4 flex justify-between gap-12 text-sm font-medium">
-          <a
-            href="#"
+          <Link
+            to="/about"
             className="nav-Links  flex items-center gap-1 text-[#26495D]"
           >
             <img src={info}></img>
             About
-          </a>
-          <a
-            href="#"
+          </Link>
+          <Link
+            to="/contact"
             className="nav-Links  flex items-center gap-1 text-[#26495D]"
           >
             <img src={contact}></img>
             Contact
-          </a>
+          </Link>
           <Link
             to="/search"
             className=" nav-Links flex items-center gap-1 text-[#26495D]"
@@ -40,17 +42,17 @@ const Navbar = () => {
             <img src={Search}></img>
             Search
           </Link>
-          <a
-            href="#"
+          <Link
+            to="/user-edit"
             className="nav-Links flex items-center gap-1 text-[#26495D]"
           >
             <img src={Profil}></img>
-            Profil
-          </a>
+            Profile
+          </Link>
         </div>
 
         {/* Get Started Button */}
-        <button className="transition-transform transform hover:scale-105 duration-500  bg-[#094E771A] font-medium text-[#094B72E5] rounded-full px-6 py-2 hover:bg-blue-100 hover:duration-500 hover:shadow-md focus:outline-none text-sm">
+        <button className="bg-[#E5F2FA] font-semibold text-[#09283A] rounded-full px-8 py-3 hover:bg-[#d7ebf8]">
           Get Started
         </button>
       </div>

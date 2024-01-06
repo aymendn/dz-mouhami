@@ -7,9 +7,9 @@ import Box from "./Box";
 
 const DashboardPage = () => {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Navbar></Navbar>
-      <div className="flex">
+      <div className="flex flex-1">
         <Sidebar></Sidebar>
         <div className="p-10">
           <h1 className="text-3xl mb-6 font-semibold text-[#094B72]">

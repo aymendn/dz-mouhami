@@ -22,10 +22,12 @@ const Services = () => {
     },
   ];
   return (
-    <div className="bg-[#ECF3F8] p-16 w-full">
-      <div className="p-8 text-center">
-        <h1 className="text-[#0F3146] text-4xl font-medium">Our Services</h1>
-        <p className="p-4  text-[#496C80] text-md">
+    <div className="bg-[#ECF3F8] px-4 py-16 w-full">
+      <div className="mb-8 text-center max-w-lg mx-auto">
+        <h1 className="text-center text-5xl font-['Lexend_Exa'] font-semibold -tracking-[0.30rem]  text-[#0f3146]">
+          Our Services
+        </h1>
+        <p className="p-4  text-[#496C80] text-md ">
           Environmental legal issues might occur since the planned business
           activities are designed
         </p>

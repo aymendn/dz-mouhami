@@ -16,7 +16,7 @@ const LawyerForm1Page = () => {
             <p className="font-normal text-sm">Fill information form</p>
           </button>
           <p className="font-medium text-2xl text-[#094B72] mx-2 my-8">►</p>
-          <Link to="/LawyerRegistrationStep2">
+          <Link to="/lawyer-registrationStep2">
             <button className="w-32 py-7 text-[#094B72] text-normal font-medium rounded-full border-2 border-[#094B72] hover:bg-[#FFC12CAD] hover:border-[#FFC12CAD] duration-500">
               <p className="font-medium text-xs">Second step</p>
               <p className="font-normal text-sm">Upload files</p>
@@ -140,7 +140,7 @@ const LawyerForm1Page = () => {
           </div>
 
           <div className="flex justify-end m-4">
-            <Link to="/LawyerRegistrationStep2">
+            <Link to="/lawyer-registrationStep2">
               <button className="transition-transform transform hover:scale-105 duration-500 mx-4 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
                 <img src={validation} alt="Validation" />
                 Continue

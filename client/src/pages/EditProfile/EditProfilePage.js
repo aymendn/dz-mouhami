@@ -16,9 +16,9 @@ const EditProfilePage = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Navbar></Navbar>
-      <div className="flex">
+      <div className="flex flex-1">
         <Sidebar></Sidebar>
         <form>
           <h1 className="text-3xl m-8 font-semibold text-[#094B72]">

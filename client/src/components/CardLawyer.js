@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const CardLawyer = ({ name, location, categories, description, image }) => {
   return (
     <Link to="/lawyer">
-      <div className="transform hover:bg-gray-100 hover:border-gray-300 border-gray-100 transition duration-300 ease-in-out  h-[234px] bg-white p-4 rounded-lg my-2 flex cursor-pointer border-2 w-full">
+      <div className="transform duration-150 hover:bg-gray-100 hover:border-gray-300 border-gray-100 transition  ease-in-out  h-[234px] bg-white p-4 rounded-lg my-2 flex cursor-pointer border-2 w-full">
         {/* Image on the left */}
         <img src={image} className="w-full md:w-64 h-[200px] rounded-md mr-4" />
 

@@ -7,10 +7,10 @@ const AppointementPage = () => {
     { name: "aya", surname: "lamiri", age: "19", schedule: "10h45" },
   ];
   return (
-    <div>
-      <Navbar></Navbar>
-      <div className="flex">
-        <Sidebar></Sidebar>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <div className="flex flex-1">
+        <Sidebar />
         <div className="flex-1 py-4">
           <div className="m-6">
             <h1 className="text-2xl font-bold mb-1 text-[#094B72]">

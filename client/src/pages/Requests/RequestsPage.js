@@ -19,9 +19,9 @@ const RequestsPage = () => {
   ];
 
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Navbar></Navbar>
-      <div className="flex">
+      <div className="flex flex-1">
         <Sidebar></Sidebar>
         <div className="flex-1 py-4">
           <div className="m-6">
