@@ -13,6 +13,7 @@ import DashboardPage from "./pages/Dashboard/DashboardPage";
 import SearchPage from "./pages/Search/SearchPage";
 import ChoicePage from "./pages/Choice/ChoicePage";
 import LawyerPage from "./pages/Lawyer/LawyerPage";
+import ContactPage from "./pages/Contact/ContactPage";
 function App() {
   return (
     <Router>
@@ -42,6 +43,7 @@ function App() {
         <Route path="/edit" Component={EditProfilePage}></Route>
         <Route path="/search" Component={SearchPage}></Route>
         <Route path="/lawyer" Component={LawyerPage}></Route>
+        <Route path="/contact" Component={ContactPage}></Route>
       </Routes>
     </Router>
   );
