@@ -15,4 +15,5 @@ body {
 .width70 {
    margin-inline: auto;
    max-width: 70rem;
+   min-width: min(100%, 70rem);
 }
