@@ -2,6 +2,7 @@ import Sidebar from "../../components/Sidebar";
 import Navbar from "../../components/ProfileNavbar";
 import ArrowUp from "../../assets/arrow_up.svg";
 import ChartPlaceholder from "../../assets/chart_placeholder.svg";
+import Reviews from "./Reviews";
 import Box from "./Box";
 
 const DashboardPage = () => {
@@ -42,9 +43,9 @@ const DashboardPage = () => {
                 <img src={ChartPlaceholder} className="mt-8"></img>
               </Box>
             </div>
-            <div className="min-w-[300px]">
+            <div className="min-w-[300px] max-w-sm">
               <Box title="Latest Reviews">
-                <p>Reviews here</p>
+                <Reviews />
               </Box>
             </div>
           </div>
