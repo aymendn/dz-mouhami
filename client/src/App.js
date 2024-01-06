@@ -14,6 +14,9 @@ import SearchPage from "./pages/Search/SearchPage";
 import ChoicePage from "./pages/Choice/ChoicePage";
 import LawyerPage from "./pages/Lawyer/LawyerPage";
 import ContactPage from "./pages/Contact/ContactPage";
+import AboutPage from "./pages/About/AboutPage";
+import PrivacyPage from "./pages/Privacy/PrivacyPage";
+import TermsPage from "./pages/Terms/TermsPage";
 function App() {
   return (
     <Router>
@@ -44,6 +47,9 @@ function App() {
         <Route path="/search" Component={SearchPage}></Route>
         <Route path="/lawyer" Component={LawyerPage}></Route>
         <Route path="/contact" Component={ContactPage}></Route>
+        <Route path="/about" Component={AboutPage}></Route>
+        <Route path="/privacy" Component={PrivacyPage}></Route>
+        <Route path="/terms" Component={TermsPage}></Route>
       </Routes>
     </Router>
   );

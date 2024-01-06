@@ -1,6 +1,7 @@
 import Footer from "../../components/Footer";
 import Navbar from "../../components/NavbarNoAction";
 import EmailIcon from "../../assets/email.svg";
+import Box from "../Dashboard/Box";
 
 const ContactPage = () => {
   return (
@@ -10,27 +11,41 @@ const ContactPage = () => {
         <div className="flex justify-start gap-2 mt-6 ms-2">
           <img src={EmailIcon} alt="Email Icon" className="w-8 h-8" />
           <h1 className="text-3xl mb-6 font-semibold text-[#094B72]">
-            Contact Us
+            Contactez-Nous
           </h1>
         </div>
         {/* Just some text to say you can contact us via this email */}
-        <div className="text-[#496C80]">
-          You can contact us via this email:{" "}
-          <a href="mailto:" className="text-[#094B72]">
-            contact@lawyered
-          </a>
-        </div>
+        <Box>
+          <section>
+            <h2 class="text-2xl font-semibold mb-4">Coordonnées</h2>
+            <p class="text-gray-700">
+              Vous pouvez nous contacter aux coordonnées suivantes :
+            </p>
+            <ul class="list-disc ml-6 mt-2">
+              <li>
+                Email :{" "}
+                <a href="mailto:contact@dzmouhami.com" class="text-blue-500">
+                  contact@dzmouhami.com
+                </a>
+              </li>
+              <li>Téléphone : +123 456 7890</li>
+              <li>Adresse : 123 Rue de l'Exemple, Ville, Pays</li>
+            </ul>
+          </section>
 
-        {/* Additional content to fill the page */}
-        <div className="mt-8">
-          <h2 className="text-2xl font-semibold text-[#094B72]">Our Office</h2>
-          <p className="text-[#496C80]">
-            Visit us at our main office located at:
-          </p>
-          <address className="text-[#496C80]">
-            123 Legal Street, Law City, LC 12345
-          </address>
-        </div>
+          <section class="mt-8">
+            <h2 class="text-2xl font-semibold mb-4">Horaires d'ouverture</h2>
+            <p class="text-gray-700">
+              Notre équipe est disponible pour vous aider aux horaires suivants
+              :
+            </p>
+            <ul class="list-disc ml-6 mt-2">
+              <li>Lundi - Vendredi : 9h00 - 18h00</li>
+              <li>Samedi : 10h00 - 15h00</li>
+              <li>Dimanche : Fermé</li>
+            </ul>
+          </section>
+        </Box>
       </div>
       <Footer />
     </div>
