@@ -40,14 +40,18 @@ class LawyerImageViewSet(viewsets.ModelViewSet):
 
 
 class LawyerDocumentViewSet(viewsets.ModelViewSet):
-    queryset = LawyerDocument.objects.all()
+    
     serializer_class = LawyerDocumentSerializer
 
     def get_serializer_context(self):
         context = super().get_serializer_context()
         lawyer_profile_pk = self.kwargs['lawyer_pk']
         context['lawyer_profile_pk'] = lawyer_profile_pk
-        return context    
+        return context  
+
+    def get_queryset(self):
+        lawyer_profile_pk = self.kwargs['lawyer_pk']
+        return LawyerDocument.objects.filter(lawyer_id=lawyer_profile_pk)  
 
 
 class LawyerProfileViewSet(viewsets.ModelViewSet):
