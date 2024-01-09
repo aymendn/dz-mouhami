@@ -13,7 +13,7 @@ class LawyerProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = LawyerProfile
-        fields = ['id', 'user', 'specialization', 'phone_number', 'bio', 'language', 'address']
+        fields = ['id', 'specialization', 'phone_number', 'bio', 'language', 'address']
 
     def create(self, validated_data):
         address_data = validated_data.pop('address', None)

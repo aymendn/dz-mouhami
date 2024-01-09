@@ -5,6 +5,10 @@ from .models import Address, LawyerProfile, LawyerImage, LawyerDocument , Client
 from .serializers import AddressSerializer, LawyerProfileSerializer, LawyerImageSerializer, LawyerDocumentSerializer , ClientProfileSerializer
 from django.contrib.auth.models import Group
 from django.shortcuts import get_object_or_404
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
 
 
 @api_view(['GET'])
@@ -21,7 +25,6 @@ class AddressViewSet(viewsets.ModelViewSet):
 
 
 class LawyerImageViewSet(viewsets.ModelViewSet):
-    queryset = LawyerImage.objects.all()
     serializer_class = LawyerImageSerializer
 
     def get_serializer_context(self):
@@ -29,6 +32,11 @@ class LawyerImageViewSet(viewsets.ModelViewSet):
         lawyer_profile_pk = self.kwargs['lawyer_pk']
         context['lawyer_profile_pk'] = lawyer_profile_pk
         return context
+    
+    def get_queryset(self):
+        lawyer_profile_pk = self.kwargs['lawyer_pk']
+        return LawyerImage.objects.filter(lawyer_id=lawyer_profile_pk)
+
 
 
 class LawyerDocumentViewSet(viewsets.ModelViewSet):
