@@ -10,4 +10,4 @@ lawyers_router = routers.NestedDefaultRouter(router, r'lawyers', lookup='lawyer'
 lawyers_router.register(r'images', views.LawyerImageViewSet, basename='lawyer-images')
 lawyers_router.register(r'documents', views.LawyerDocumentViewSet, basename='lawyer-documents')
 
-urlpatterns = router.urls + lawyers_router.urls
+urlpatterns = router.urls + lawyers_router.urls + [path('is-logged-in/', views.IsLoggedIn)]

@@ -7,9 +7,17 @@ from django.contrib.auth.models import Group
 from django.shortcuts import get_object_or_404
 
 
+@api_view(['GET'])
+def IsLoggedIn(request):
+    if request.user.is_authenticated:
+        return Response({'is-loggedIn': "true"})
+    else:
+        return Response({'is-loggedIn': 'false'})
+
 class AddressViewSet(viewsets.ModelViewSet):
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
+
 
 
 class LawyerImageViewSet(viewsets.ModelViewSet):
