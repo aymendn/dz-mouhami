@@ -50,7 +50,7 @@ class LawyerDocumentViewSet(viewsets.ModelViewSet):
         return context    
 
     def get_queryset(self):
-        # 
+        #
         lawyer_profile_pk = self.kwargs['lawyer_pk']
         return LawyerDocument.objects.filter(lawyer_id=lawyer_profile_pk)  
 
