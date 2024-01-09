@@ -48,12 +48,12 @@ class LawyerDocumentSerializer(serializers.ModelSerializer):
 
 
 class ClientProfileSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
+    # user = serializers.PrimaryKeyRelatedField(queryset=User.objects.all())
     address = AddressSerializer(required=False, allow_null=True)
 
     class Meta:
         model = ClientProfile
-        fields = ['id', 'user', 'age', 'gender', 'phone_number', 'address']
+        fields = ['id', 'age', 'gender', 'phone_number', 'address']
 
     def create(self, validated_data):
         address_data = validated_data.pop('address', None)
