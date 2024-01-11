@@ -5,10 +5,14 @@ import Services from "./Services";
 import TopRated from "./TopRated";
 import GetStared from "./GetStarted";
 import Main from "./Main";
+import BgImage from "../../assets/bg.svg";
 const LandingPage = () => {
   return (
     <div>
-      <div className="bg-[url(https://file.rendit.io/n/2s9oGSOzkVnPaqGsNxh2.svg)] bg-cover h-full bg-center">
+      <div
+        className="bg-cover h-full bg-center"
+        style={{ backgroundImage: `url(${BgImage})` }}
+      >
         <Navbar></Navbar>
         <Main></Main>
       </div>
