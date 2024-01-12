@@ -22,7 +22,26 @@ const AppointmentDialog = ({ trigger }) => {
               <div className="opacity-80 text-sm font-medium text-[#094b72] ml-1">
                 Premier Créneau
               </div>
-              <div className="flex flex-row gap-4    w-full items-start">
+              <div className="flex flex-row gap-4 w-full items-start">
+                {/* Replace with real interactive dropdown */}
+                <div className="border-[#d8ebf6] border-2 rounded-full w-full">
+                  <select className=" bg-white flex justify-start  items-center  px-4 py-3  rounded-full w-full">
+                    <option value="jeudi">Jeudi</option>
+                    <option value="vendredi">Vendredi</option>
+                  </select>
+                </div>
+                {/* Replace with real interactive dropdown */}
+                <div className="border-[#d8ebf6] border-2 rounded-full w-full">
+                  <select className=" bg-white flex justify-start  items-center  px-4 py-3  rounded-full w-full">
+                    <option value="jeudi">10:30</option>
+                    <option value="jeudi">11:00</option>
+                  </select>
+                </div>
+              </div>
+              <div className="opacity-80 text-sm font-medium text-[#094b72] ml-1 mt-4">
+                Deuxieme Créneau
+              </div>
+              <div className="flex flex-row gap-4 w-full items-start">
                 {/* Replace with real interactive dropdown */}
                 <div className="border-[#d8ebf6] border-2 rounded-full w-full">
                   <select className=" bg-white flex justify-start  items-center  px-4 py-3  rounded-full w-full">
