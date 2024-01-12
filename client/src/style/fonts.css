@@ -17,3 +17,11 @@ body {
    max-width: 70rem;
    min-width: min(100%, 70rem);
 }
+
+select {
+   border-inline-end: 12px solid transparent;
+}
+
+.select-selected {
+   background-color: DodgerBlue;
+}

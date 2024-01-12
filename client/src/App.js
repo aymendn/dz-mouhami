@@ -18,9 +18,11 @@ import AboutPage from "./pages/About/AboutPage";
 import PrivacyPage from "./pages/Privacy/PrivacyPage";
 import TermsPage from "./pages/Terms/TermsPage";
 import UserEditProfilePage from "./pages/UserEditProfile/UserEditProfilePage";
+import ScrollToTop from "./utils/ScrollToTop";
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Routes>
         <Route path="/" Component={LandingPage}></Route>
         <Route path="/choice" Component={ChoicePage}></Route>
@@ -54,6 +56,7 @@ function App() {
         <Route path="/user-edit" Component={UserEditProfilePage}></Route>
       </Routes>
     </Router>
+    // </ScrollToTop>
   );
 }
 
