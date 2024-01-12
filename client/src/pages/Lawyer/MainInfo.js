@@ -1,6 +1,7 @@
 import lawyerImage from "../../assets/lawyer_placeholder.png";
 import LocationIcon from "../../assets/location.svg";
 import categoryIcon from "../../assets/category.svg";
+import Availability from "../../components/Availability";
 
 const MainInfo = () => {
   const name = "Lawyer Name";
@@ -28,19 +29,30 @@ const MainInfo = () => {
           <p className="mb-2">Rating here</p>
 
           {/* Categories Title */}
-          <p className="flex items-center  text-[#193647] ">
-            <img src={categoryIcon} alt="Category Icon" className="mr-1 w-4" />
-            <p className="text-base font-medium">Categories</p>
+          <p className="text-lg font-bold flex items-center  text-[#193647]">
+            Categories
           </p>
 
           {/* Categories psk c un tableau asslan */}
           <p className="text-[#094b72e4]  text-[14px]">
             {categories.join(", ")}
           </p>
+
+          {/* Description Title */}
+          <p className="text-lg font-bold flex items-center  text-[#193647] mt-4">
+            Description
+          </p>
+          {/* Description */}
+          <p className="text-[#708FA2] text-sm mt-1">{description}</p>
         </div>
       </div>
-      {/* Small text */}
-      <p className="text-[#708FA2] text-sm mt-2">{description}</p>
+      {/* Availability Title */}
+      <p className="text-lg font-bold flex items-center  text-[#193647] mt-4 mb-1">
+        Availability
+      </p>
+
+      {/* Availability */}
+      <Availability />
     </>
   );
 };
