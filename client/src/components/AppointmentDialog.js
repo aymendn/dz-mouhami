@@ -1,5 +1,3 @@
-import Popup from "reactjs-popup";
-import { motion } from "framer-motion";
 import Dialog from "./Dialog";
 
 const AppointmentDialog = ({ trigger }) => {
