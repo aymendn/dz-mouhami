@@ -22,7 +22,6 @@ const LawyerForm1Page = () => {
   return (
     <div>
       <Navbar />
-
       <div className="flex flex-col items-center gap-4 my-8">
 
         <div className="mt-4 text-center">

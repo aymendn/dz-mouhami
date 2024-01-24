@@ -20,7 +20,7 @@ const Sidebar = () => {
       <h2 className="text-sm text-[#708FA2] font-normal mb-1 mt-6">Profile</h2>
 
       <SidebarLink icon={profileIcon} title="Edit profile" to="/edit" />
-      <SidebarLink icon={logoutIcon} title="Logout" to="/" color="red-500" />
+      <SidebarLink icon={logoutIcon} title="Logout" to="/"  />
       <div className="mt-auto mb-10">
         <div className=" flex items-start justify-start flex-wrap gap-x-4 gap-y-1">
           <Link to="/contact">
