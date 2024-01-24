@@ -14,7 +14,7 @@ const TextField = ({
     <div className={divClassName}>
       <label
         htmlFor={htmlFor}
-        className={"block text-xs font-medium text-gray-700 " + labelClassName}
+        className={"block text-sm font-medium text-gray-700 " + labelClassName}
       >
         {label}
       </label>
