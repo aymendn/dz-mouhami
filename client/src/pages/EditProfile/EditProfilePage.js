@@ -3,7 +3,6 @@ import Navbar from "../../components/ProfileNavbar";
 import TextField from "../../components/TextField";
 import { useState } from "react";
 import SelectField from "../../components/SelectField";
-import TextField from "../../components/TextField";
 import Footer from "../../components/Footer";
 const EditProfilePage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
