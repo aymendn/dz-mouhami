@@ -6,6 +6,7 @@ import { Stepper } from 'react-form-stepper';
 import { Link } from "react-router-dom";
 import TextField from "../../components/TextField";
 import SelectField from "../../components/SelectField";
+import TextAreaField from "../../components/TextAreaField";
 const LawyerForm1Page = () => {
 
   const styleConfig = {
@@ -26,6 +27,11 @@ const LawyerForm1Page = () => {
     { label: 'Vols', value: 'Option 3' },
     { label: 'Detournement', value: 'Option 3' },
     { label: 'Blanchissement', value: 'Option 3' },
+  ];
+  const options1 = [
+    { label: 'Anglais', value: 'Option 1' },
+    { label: 'Francais', value: 'Option 2' },
+   
   ];
 
   return (
@@ -94,7 +100,7 @@ const LawyerForm1Page = () => {
 
             <div className=" mb-4 mx-6">
             <SelectField
-        label="Categorie"
+        label="Specialization"
         placeholder="Crime"
         id="selectOption"
         options={options}
@@ -108,6 +114,65 @@ const LawyerForm1Page = () => {
         type="text"
         id="Lawfirm"
         />
+        </div>
+        <div className=" mb-4 mx-6">
+            <SelectField
+        label="Language"
+        placeholder="Arabe"
+        id="selectOption1"
+        options={options1}
+        />
+            </div>
+
+       <div className=" mb-4 mx-6">
+         <TextField
+        label="city"
+        type="text"
+        id="city"
+        />
+        </div>
+
+        <div className=" mb-4 mx-6">
+         <TextField
+        label="state"
+        type="text"
+        id="state"
+        />
+        </div>
+
+        <div className=" mb-4 mx-6">
+         <TextField
+        label="country"
+        type="text"
+        id="country"
+        />
+        </div>
+
+        <div className=" mb-4 mx-6">
+         <TextField
+        label="street"
+        type="text"
+        id="street"
+        />
+        </div>
+
+        <div className=" mb-4 mx-6">
+         <TextField
+        label="zipcode"
+        type="number"
+        id="zipcode"
+        />
+        </div>
+            
+
+        <div className=" mb-4 mx-6">
+         <TextAreaField
+         placeholder="Bio"
+         id="Bio"
+         label="Bio"
+         htmlFor="Bio"
+         
+         />
         </div>
 
           </div>

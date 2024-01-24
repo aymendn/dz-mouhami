@@ -7,7 +7,7 @@ const TopRated = () => {
   const lawyersData = Array(4)
     .fill()
     .map((_) => ({
-      name: "Marzouk Lounes",
+      name: "Mohammed amine ",
       location: "Tizi-Ouzou, Algeria",
       categories: ["Usurpation ", "Criminologie"],
       description:
