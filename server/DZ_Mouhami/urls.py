@@ -27,6 +27,7 @@ urlpatterns = [
     path("auth/", include("djoser.urls")),
     path('core/', include('core.urls')),
     path('accounts/', include('allauth.urls')),
+    path('accounts/', include('allauth.socialaccount.urls')),
 ]
 
 

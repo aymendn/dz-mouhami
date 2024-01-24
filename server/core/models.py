@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.contrib.auth.models import User
 from django.contrib import admin
+from django.utils import timezone
 # Address model
 class Address(models.Model):
     street = models.CharField(max_length=255)
@@ -43,6 +44,7 @@ class LawyerProfile(models.Model):
     address = models.ForeignKey(Address, on_delete=models.CASCADE , related_name='lawyer_address')
     language = models.CharField(max_length=255)
     approved = models.BooleanField(default=False)
+    rating = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
@@ -66,17 +68,17 @@ class Administrator(models.Model):
 
 # TimeSlot model
 class TimeSlot(models.Model):
-    date = models.DateField()
+    day = models.CharField(max_length=255)
     start_time = models.TimeField()
     end_time = models.TimeField()
-    availability = models.CharField(max_length=255)
-    lawyer = models.ForeignKey(LawyerProfile, on_delete=models.CASCADE)
+    lawyer = models.ForeignKey(LawyerProfile, on_delete=models.CASCADE , related_name='time_slots')
 
 # Appointment model
 class Appointment(models.Model):
-    time_slot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE , related_name='time_slot')
+    time_slot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE)
     lawyer = models.ForeignKey(LawyerProfile, on_delete=models.CASCADE)
     client = models.ForeignKey(ClientProfile, on_delete=models.CASCADE)
+    date = models.DateField(default=timezone.now)
     status = models.CharField(max_length=255)
 
 # Review model

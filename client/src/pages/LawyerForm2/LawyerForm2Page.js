@@ -1,9 +1,21 @@
 import Footer from "../../components/Footer";
 import Navbar from "../../components/NavbarNoAction";
-
+import { Stepper } from "react-form-stepper";
 import validation from "../../assets/person_check.svg";
 import { Link } from "react-router-dom";
 const LawyerForm2Page = () => {
+    const styleConfig = {
+      activeBgColor: '#007BFF', // Bleu vif pour les étapes actives
+      completedBgColor: '#4682B4', // Bleu acier pour les étapes complétées
+      inactiveBgColor: '#B0C4DE' // Bleu clair pour les étapes inactives
+  };
+  const connectorStyleConfig = {
+    size: '2px', // Épaisseur du connecteur
+    activeColor: '#007BFF', // Couleur du connecteur pour les étapes actives
+    completedColor: '#4682B4', // Couleur du connecteur pour les étapes complétées
+    disabledColor: '#B0C4DE' // Couleur du connecteur pour les étapes inactives
+    
+  };
   return (
     <div className="flex flex-col items-center">
       <Navbar></Navbar>
@@ -29,9 +41,21 @@ const LawyerForm2Page = () => {
         <p className="p-4 text-[#496C80] text-md text-center ">
           Upload required documents to showcase your legal expertise and foster
           trust with potential clients on DZ-Mouhami.
-        </p>
-      </div>
+  </p>
+</div>
 
+<div className="flex items-center "> 
+<Stepper
+steps={[{ label: 'Step 1' }, { label: 'Step 2' }]}
+activeStep={2}
+styleConfig={styleConfig}
+connectorStyleConfig={connectorStyleConfig}
+/>
+
+
+</div>
+    
+      
       <form class="my-8  mx-16 lg:mx-64 flex items-center space-x-6">
         <label htmlFor="Lawfirm" className="block ">
           <h1 className="text-[#15394E] text-lg font-medium">
