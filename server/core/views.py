@@ -215,10 +215,9 @@ def lawyer_profile_search(request):
 
     if lawyer_category:
         lawyer_filter = (
-            Q(name__icontains=lawyer_category) |
+            Q(user__first_name__icontains=lawyer_category) |
             Q(specialization__icontains=lawyer_category)
         )
-
         search_results = search_results.filter(lawyer_filter)
 
     if location:
