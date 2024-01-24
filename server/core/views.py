@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
+from rest_framework.pagination import PageNumberPagination
 from allauth.socialaccount.models import SocialAccount, SocialToken
 from rest_framework import generics, permissions
 from .models import LawyerProfile
@@ -206,33 +207,43 @@ class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
         return Response({'error': 'Method Not Allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
+class CustomPageNumberPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
 @api_view(['GET'])
 def lawyer_profile_search(request):
-    lawyer_category = request.GET.get('lawyer_category', '')
-    location = request.GET.get('location', '')
+    query = request.GET.get('query', '')
+    category_filter = request.GET.get('category', '')
+    day_filter = request.GET.get('day', '')
+    rating_filter = request.GET.get('rating', '')
 
     search_results = LawyerProfile.objects.filter(approved=True)
-    print(lawyer_category)
+    lawyer_filter = (
+        Q(user__first_name__icontains = query) |
+        Q(specialization__icontains = query)
+    )
+    address_filter = (
+        Q(address__street__icontains = query) |
+        Q(address__city__icontains = query) |
+        Q(address__state__icontains = query) |
+        Q(address__country__icontains = query)
+    )
 
-    if lawyer_category:
-        lawyer_filter = (
-            Q(user__first_name__icontains=lawyer_category) |
-            Q(specialization__icontains=lawyer_category)
-        )
-        search_results = search_results.filter(lawyer_filter)
+    search_results = search_results.filter(lawyer_filter | address_filter)
 
-    if location:
-        address_filter = (
-            Q(address__street__icontains=location) |
-            Q(address__city__icontains=location) |
-            Q(address__state__icontains=location) |
-            Q(address__country__icontains=location)
-        )
-        #search_results = search_results.filter(address_filter)
+    if category_filter :
+        pass
+
+    paginator = CustomPageNumberPagination()
+    paginated_results = paginator.paginate_queryset(search_results, request)
 
     search_results = search_results.order_by('-rating')
     print(search_results)
     
-    serialized_results = LawyerProfileSerializer(search_results, many=True).data
+    serialized_results = LawyerProfileSerializer(paginated_results, many=True).data
     return Response({'search_results': serialized_results})
+
+
 
