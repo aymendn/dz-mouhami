@@ -4,7 +4,8 @@ import Footer from "../../components/Footer";
 import validation from "../../assets/person_check.svg";
 import { Stepper } from 'react-form-stepper';
 import { Link } from "react-router-dom";
-
+import TextField from "../../components/TextField";
+import SelectField from "../../components/SelectField";
 const LawyerForm1Page = () => {
 
   const styleConfig = {
@@ -19,6 +20,12 @@ const LawyerForm1Page = () => {
     disabledColor: '#B0C4DE' // Couleur du connecteur pour les étapes inactives
     
   };
+  const options = [
+    { value: 'option1', label: 'Option 1' },
+    { value: 'option2', label: 'Option 2' },
+    { value: 'option3', label: 'Option 3' },
+  ];
+
   return (
     <div>
       <Navbar />
@@ -48,106 +55,59 @@ const LawyerForm1Page = () => {
         </div> 
         <form className="mx-4 md:mx-16 lg:mx-32">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
-            <div className="mb-4">
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-[#103F5BE5]"
-              >
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                className="focus:border-none mt-1 p-2 rounded-2xl bg-slate-50 required hover:bg-slate-100 border border-gray-300 w-full md:w-96"
-                placeholder="John"
-              />
-            </div>
+          <div className="mb-4">
+         <TextField
+        label="Nom"
+        type="text"
+        id="nom"
+        placeholder="Doe"/>
+        </div>
+        
+        <div className="mb-4">
+         <TextField
+        label="surname"
+        type="text"
+        id="surname"
+        placeholder="John"/>
+        </div>
+          
+
+        <div className="mb-4">
+         <TextField
+        label="email"
+        type="email"
+        id="email"
+        placeholder="Johndoe@gmail.dz"/>
+        </div>
+
+        <div className="mb-4">
+         <TextField
+        label="contact"
+        type="tel"
+        id="contact"
+        placeholder="555-222-111"/>
+        </div>
+
+            
 
             <div className="mb-4">
-              <label
-                htmlFor="surname"
-                className="block text-sm font-medium text-[#103F5BE5]"
-              >
-                Surname
-              </label>
-              <input
-                type="text"
-                id="surname"
-                name="surname"
-                className="focus:border-none mt-1 p-2 rounded-2xl bg-slate-50 required hover:bg-slate-100 border border-gray-300 w-full md:w-96"
-                placeholder="Doe"
-              />
+            <SelectField
+        label="Choisissez une option"
+        placeholder="Crime"
+        id="selectOption"
+        options={options}
+        />
             </div>
 
-            <div className="mb-4">
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-[#103F5BE5]"
-              >
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="focus:border-none mt-1 p-2 rounded-2xl bg-slate-50 border border-gray-300 w-full md:w-96"
-                placeholder="Johndoe@gmail.com"
-              />
-            </div>
 
             <div className="mb-4">
-              <label
-                htmlFor="contact"
-                className="block text-sm font-medium text-[#103F5BE5]"
-              >
-                Contact Number
-              </label>
-              <input
-                type="tel"
-                id="contact"
-                name="contact"
-                className="focus:border-none mt-1 p-2 rounded-2xl bg-slate-50 required hover:bg-slate-100 border border-gray-300 w-full md:w-96"
-                placeholder="555-222-111"
-              />
-            </div>
+         <TextField
+        label="Lawfirm"
+        type="text"
+        id="Lawfirm"
+        />
+        </div>
 
-            <div className="mb-4">
-              <label
-                htmlFor="Specification"
-                className="block text-sm font-medium text-[#103F5BE5]"
-              >
-                Legal Specification
-              </label>
-              <div className="">
-                <select
-                  id="Specification"
-                  name="Specification"
-                  autoComplete="Specification-name"
-                  className="mt-1 p-2 rounded-2xl bg-slate-50 required hover:bg-slate-100 border border-gray-300 w-full md:w-96 ring-inset ring-slate-50 focus:ring-0 focus:ring-inset focus:ring-slate-600"
-                >
-                  <option>Agression</option>
-                  <option>Crime</option>
-                  <option>Robbing</option>
-                </select>
-              </div>
-            </div>
-
-            <div className="mb-4">
-              <label
-                htmlFor="Lawfirm"
-                className="block text-sm font-medium text-[#103F5BE5]"
-              >
-                Lawfirm
-              </label>
-              <input
-                type="text"
-                id="Lawfirm"
-                name="Lawfirm"
-                className="focus:border-none mt-1 p-2 rounded-2xl bg-slate-50 required hover:bg-slate-100 border border-gray-300 w-full md:w-96"
-                placeholder=".."
-              />
-            </div>
           </div>
 
           <div className="flex justify-end m-4">

@@ -3,7 +3,6 @@ import Navbar from "../../components/NavbarNoAction";
 import Footer from "../../components/Footer";
 import validation from "../../assets/person_check.svg";
 import { Link } from "react-router-dom";
-import TextAreaField from "../../components/TextAreaField";
 import TextField from "../../components/TextField";
 const UserFormPage = () => {
   return (
