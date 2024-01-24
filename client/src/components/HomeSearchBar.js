@@ -2,6 +2,7 @@ import React from "react";
 import SearchIcon from "../assets/search.svg";
 import SvgColor from "react-svg-color";
 import LocationIcon from "../assets/location.svg";
+import { Link } from "react-router-dom";
 
 const HomeSearchBar = () => {
   const handleSearch = () => {
@@ -32,12 +33,14 @@ const HomeSearchBar = () => {
             className=" text-[rgba(16,_63,_91,_0.5)] outline-none border-none w-full focus:outline-none"
           />
         </div>
-        <button
-          onClick={handleSearch}
-          className="bg-[#094b72] flex flex-row justify-center  items-center rounded-full cursor-pointer px-10 py-3 hover:opacity-90"
-        >
-          <div className=" text-[#f5fbff]">Search</div>
-        </button>
+        <Link to={`/search?query=${"query"}`}>
+          <button
+            onClick={handleSearch}
+            className="bg-[#094b72] flex flex-row justify-center  items-center rounded-full cursor-pointer px-10 py-3 hover:opacity-90"
+          >
+            <div className=" text-[#f5fbff]">Search</div>
+          </button>
+        </Link>
       </div>
     </div>
   );

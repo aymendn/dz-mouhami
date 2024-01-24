@@ -1,6 +1,9 @@
 import Sidebar from "../../components/Sidebar";
 import Navbar from "../../components/ProfileNavbar";
 import { useState } from "react";
+import SelectField from "../../components/SelectField";
+import TextField from "../../components/TextField";
+import Footer from "../../components/Footer";
 const EditProfilePage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -17,10 +20,12 @@ const EditProfilePage = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar></Navbar>
+      <div className="z-50">
+        <Navbar></Navbar>
+      </div>
       <div className="flex flex-1">
         <Sidebar></Sidebar>
-        <form>
+        <form className="w-full">
           <h1 className="text-3xl m-8 font-semibold text-[#094B72]">
             Edit your profil
           </h1>
@@ -53,106 +58,35 @@ const EditProfilePage = () => {
               </div>
             )}
           </div>
-          <div className="grid grid-cols-2 gap-6 m-8">
-            <div className="mb-4">
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-[#103F5BE5]"
-              >
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                className="focus:border-none mt-1 p-2 rounded-2xl bg-slate-50 required hover:bg-slate-100 border border-gray-300 w-96"
-                placeholder="John"
-              />
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 m-8">
+            <TextField id={"name"} label={"Name"} placeholder={"John"} />
 
-            <div className="mb-4">
-              <label
-                htmlFor="surname"
-                className="block text-sm font-medium text-[#103F5BE5]"
-              >
-                Surname
-              </label>
-              <input
-                type="text"
-                id="surname"
-                name="surname"
-                className="focus:border-none mt-1 p-2 rounded-2xl bg-slate-50 required hover:bg-slate-100 border border-gray-300 w-96"
-                placeholder="Doe"
-              />
-            </div>
+            <TextField id={"surname"} label={"Surname"} placeholder={"Doe"} />
 
-            <div className="mb-4">
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-[#103F5BE5]"
-              >
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="focus:border-none mt-1 p-2 rounded-2xl bg-slate-50 border border-gray-300 w-96"
-                placeholder="Johndoe@gmail.com"
-              />
-            </div>
+            <TextField
+              id={"email"}
+              label={"Email"}
+              placeholder={"a@mail.com"}
+            />
 
-            <div className="mb-4">
-              <label
-                htmlFor="contact"
-                className="block text-sm font-medium text-[#103F5BE5]"
-              >
-                Contact Number
-              </label>
-              <input
-                type="tel"
-                id="contact"
-                name="contact"
-                className="focus:border-none mt-1 p-2 rounded-2xl bg-slate-50 required hover:bg-slate-100 border border-gray-300 w-96"
-                placeholder="555-222-111"
-              />
-            </div>
-            <div class="mb-4">
-              <label
-                for="Specification"
-                class="block text-sm font-medium text-[#103F5BE5]"
-              >
-                Legal Specification
-              </label>
-              <div class="">
-                <select
-                  id="Specification"
-                  name="Specification"
-                  autocomplete="Specification-name"
-                  className="mt-1 p-2 rounded-2xl bg-slate-50 required hover:bg-slate-100 border border-gray-300 w-96  ring-inset ring-slate-50 focus:ring-0 focus:ring-inset focus:ring-slate-600"
-                >
-                  <option>Agression</option>
-                  <option>Crime</option>
-                  <option>Robbing</option>
-                </select>
-              </div>
-            </div>
+            <TextField
+              id={"phone"}
+              label={"Phone"}
+              placeholder={"06 00 00 00 00"}
+            />
 
-            <div className="mb-4">
-              <label
-                htmlFor="Lawfirm"
-                className="block text-sm font-medium text-[#103F5BE5]"
-              >
-                Lawfirm
-              </label>
-              <input
-                type="text"
-                id="Lawfirm"
-                name="Lawfirm"
-                className="focus:border-none mt-1 p-2 rounded-2xl bg-slate-50 required hover:bg-slate-100 border border-gray-300 w-96"
-                placeholder=".."
-              />
-            </div>
+            <SelectField
+              id={"Specification"}
+              label={"Legal Specification"}
+              placeholder={"Select a specification"}
+              options={[
+                { value: "Agression", label: "Agression" },
+                { value: "Crime", label: "Crime" },
+                { value: "Robbing", label: "Robbing" },
+              ]}
+            />
+
+            <TextField id={"address"} label={"Address"} placeholder={"Paris"} />
           </div>
 
           <div className="flex justify-end m-4">
@@ -161,6 +95,9 @@ const EditProfilePage = () => {
             </button>
           </div>
         </form>
+      </div>
+      <div className=" lg:hidden">
+        <Footer />
       </div>
     </div>
   );

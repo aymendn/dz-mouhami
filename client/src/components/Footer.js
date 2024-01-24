@@ -9,7 +9,9 @@ const Footer = () => {
       <div className="container mx-auto flex flex-col sm:flex-row justify-between">
         {/* Footer Text */}
         <div className="w-full sm:w-2/3 lg:w-3/4 p-2 sm:p-4 md:p-8">
-          <SvgColor svg={Logo} colors={["#FFF", "#FFF"]} />
+          <Link to="/">
+            <SvgColor svg={Logo} colors={["#FFF", "#FFF"]} />
+          </Link>
           <p className="text-sm py-4 md:w-96">
             All rights reserved. © 2023 DZ-Mouhami. Your trusted source for
             legal expertise in Algeria.
@@ -37,6 +39,16 @@ const Footer = () => {
             <li className="mb-2">
               <Link to="/terms" className="hover:underline">
                 Terms
+              </Link>
+            </li>
+            <li className="mb-2">
+              <Link to="/admin" className="hover:underline">
+                Admin
+              </Link>
+            </li>
+            <li className="mb-2">
+              <Link to="/dashboard" className="hover:underline">
+                Dashboard
               </Link>
             </li>
           </ul>

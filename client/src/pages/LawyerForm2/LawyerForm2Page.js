@@ -5,20 +5,22 @@ import validation from "../../assets/person_check.svg";
 import { Link } from "react-router-dom";
 const LawyerForm2Page = () => {
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <Navbar></Navbar>
-      <div className="flex justify-center gap-2">
-        <button className="w-32  py-3 text-[#094B72] text-normal font-medium  rounded-full border-2 border-[#094B72] hover:bg-[#FFC12CAD] hover:border-[#FFC12CAD] duration-500">
-          <p className="font-medium text-xs">First step</p>
-          <p className="font-normal text-sm">Fill information form</p>
-        </button>
-
-        <p className="font-medium text-2xl text-[#094B72] mx-2 my-8">►</p>
-
-        <button className="w-32  py-3 text-[#094B72] text-normal font-medium  rounded-full border-2 border-[#094B72] bg-[#FFC12CAD] border-[#FFC12CAD] hover:duration-500">
-          <p className="font-medium text-xs">Second step</p>
-          <p className="font-normal text-sm">Upload files</p>
-        </button>
+      <div className="hidden sm:flex items-center gap-2">
+        <Link to="/lawyer-registrationStep1">
+          <button className=" text-[#094B72] text-normal font-medium rounded-full border-2 border-[#094b722b] hover:bg-[#FFC12CAD] hover:shadow-md hover:border-[#634f20ad] px-4   py-3 transition-all">
+            <p className=" text-xs opacity-60">First step</p>
+            <p className=" text-sm">Fill information form</p>
+          </button>
+        </Link>
+        <p className="font-medium text-2xl text-[#094B72] mx-2 my-8">{">"}</p>
+        <Link to="/lawyer-registrationStep2">
+          <button className=" text-[#094B72] text-normal font-medium rounded-full border-2 border-[#094b722b] bg-[#FFC12CAD] px-4  py-3 transition-all">
+            <p className=" text-xs opacity-60">Second step</p>
+            <p className=" text-sm">Upload Files</p>
+          </button>
+        </Link>
       </div>
       <div className="mt-8  text-center ">
         <h1 className="text-[#0F3146] text-5xl font-semibold">
@@ -77,14 +79,16 @@ const LawyerForm2Page = () => {
       </form>
       <div className="flex justify-end m-4">
         <Link to="/lawyer-registrationStep2/validation">
-          <button className="transition-transform transform hover:scale-105 duration-500   mx-4 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
+          <button className="mb-10 transition-all hover:opacity-90   mx-4 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
             <img src={validation} alt="Validation" />
             Continue
           </button>
         </Link>
       </div>
 
-      <Footer></Footer>
+      <div className="w-full">
+        <Footer></Footer>
+      </div>
     </div>
   );
 };

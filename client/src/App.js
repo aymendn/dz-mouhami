@@ -19,6 +19,7 @@ import PrivacyPage from "./pages/Privacy/PrivacyPage";
 import TermsPage from "./pages/Terms/TermsPage";
 import UserEditProfilePage from "./pages/UserEditProfile/UserEditProfilePage";
 import ScrollToTop from "./utils/ScrollToTop";
+import AdminPage from "./pages/Admin/AdminPage";
 function App() {
   return (
     <Router>
@@ -54,6 +55,7 @@ function App() {
         <Route path="/privacy" Component={PrivacyPage}></Route>
         <Route path="/terms" Component={TermsPage}></Route>
         <Route path="/user-edit" Component={UserEditProfilePage}></Route>
+        <Route path="/admin" Component={AdminPage}></Route>
       </Routes>
     </Router>
     // </ScrollToTop>

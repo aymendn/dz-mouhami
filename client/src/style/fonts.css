@@ -23,7 +23,7 @@ body {
    max-width: 70rem;
    min-width: min(90%, 70rem);
    margin-inline: auto;
-   padding-inline: 1rem;
+   padding-inline: 0.25rem;
 }
 
 

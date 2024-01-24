@@ -102,9 +102,11 @@ function MenuIcon({ onClick, isOpen = true }) {
 
 function GetStartedButton({}) {
   return (
-    <button className="bg-[#E5F2FA] font-semibold text-[#09283A] rounded-full px-6 py-2 hover:bg-[#d7ebf8] border-2 border-[#194f6e1b] hover:border-[#194f6e54] transition-all duration-100">
-      Get Started
-    </button>
+    <Link to={"/choice"}>
+      <button className="bg-[#E5F2FA] font-semibold text-[#09283A] rounded-full px-6 py-2 hover:bg-[#d7ebf8] border-2 border-[#194f6e1b] hover:border-[#194f6e54] transition-all duration-100">
+        Get Started
+      </button>
+    </Link>
   );
 }
 

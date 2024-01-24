@@ -4,11 +4,14 @@ import ArrowUp from "../../assets/arrow_up.svg";
 import ChartPlaceholder from "../../assets/chart_placeholder.svg";
 import Reviews from "./Reviews";
 import Box from "./Box";
+import Footer from "../../components/Footer";
 
 const DashboardPage = () => {
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar></Navbar>
+      <div className="z-50">
+        <Navbar></Navbar>
+      </div>
       <div className="flex flex-1">
         <Sidebar></Sidebar>
         <div className="p-10">
@@ -50,6 +53,9 @@ const DashboardPage = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className=" lg:hidden">
+        <Footer />
       </div>
     </div>
   );
