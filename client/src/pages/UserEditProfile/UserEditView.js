@@ -54,7 +54,7 @@ const UserEditView = () => {
           </div>
         )}
       </div>
-      <div className="grid grid-cols-2 gap-6 m-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 m-8">
         <TextField id={"name"} label={"Name"} placeholder={"John"} />
 
         <TextField id={"surname"} label={"Surname"} placeholder={"Doe"} />

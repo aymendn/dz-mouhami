@@ -18,7 +18,7 @@ const Footer = () => {
 
         {/* Footer Columns */}
         <div className="w-full text-sm sm:w-1/3 lg:w-1/4 mt-4 sm:mt-0 pt-0 sm:pt-8">
-          <ul className="grid grid-cols-1 sm:grid-cols-4 gap-12 list-none">
+          <ul className="flex flex-col md:flex-row justify-between px-2 gap-2">
             <li className="mb-2">
               <Link to="/contact" className="hover:underline">
                 Contact

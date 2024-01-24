@@ -1,5 +1,5 @@
 import Footer from "../../components/Footer";
-import Navbar from "../../components/NavbarNoAction";
+import Navbar from "../../components/Navbar";
 import InfoIcon from "../../assets/info.svg";
 import Box from "../Dashboard/Box";
 

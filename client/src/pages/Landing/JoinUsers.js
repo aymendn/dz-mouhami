@@ -3,7 +3,7 @@ import JoinUsersImage from "../../assets/join_users.svg";
 const JoinUsers = () => {
   return (
     // fit image contain
-    <div className="w-full h-[34px]">
+    <div className="h-[34px]">
       <img src={JoinUsersImage} alt="Join Users" className="w-full h-full" />
     </div>
   );

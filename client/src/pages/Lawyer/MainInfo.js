@@ -12,11 +12,11 @@ const MainInfo = () => {
 
   return (
     <>
-      <div className=" flex mb-10">
+      <div className="flex flex-col md:flex-row items-center justify-center md:items-start md:justify-start mb-10">
         {/* Image on the left */}
         <img
           src={lawyerImage}
-          className="md:w-64 w-[150px] h-[280px] rounded-md mr-4 object-cover"
+          className="w-64 h-[280px] rounded-md mr-4 object-cover"
         />
 
         <div className="rounded-lg overflow-hidden">

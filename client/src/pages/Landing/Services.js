@@ -24,7 +24,7 @@ const Services = () => {
   return (
     <div className="bg-[#ECF3F8] px-4 py-16 w-full">
       <div className="mb-8 text-center max-w-lg mx-auto">
-        <h1 className="text-center text-5xl font-['Lexend_Exa'] font-semibold -tracking-[0.30rem]  text-[#0f3146]">
+        <h1 className="text-center text-4xl lg:text-5xl font-['Lexend_Exa'] font-semibold -tracking-[0.30rem]  text-[#0f3146]">
           Our Services
         </h1>
         <p className="p-4  text-[#496C80] text-md ">
@@ -32,7 +32,7 @@ const Services = () => {
           activities are designed
         </p>
       </div>
-      <div className="grid grid-cols-1 gap-4 mx-16 md:grid md:grid-cols-2 lg:flex lg:justify-evenly ">
+      <div className="flex flex-col md:flex-row justify-between items-center max-w-6xl mx-auto gap-8">
         {/* im gonna render card for each item  */}
         {dataItems.map((data, index) => (
           <Card

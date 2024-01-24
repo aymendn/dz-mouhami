@@ -1,5 +1,5 @@
 import Footer from "../../components/Footer";
-import Navbar from "../../components/NavbarNoAction";
+import Navbar from "../../components/Navbar";
 import MainInfo from "./MainInfo";
 import Reviews from "./Reviews";
 import Contact from "./Contact";
@@ -7,13 +7,15 @@ import Address from "./Address";
 
 const LawyerPage = () => {
   return (
-    <>
-      <Navbar />
-      <div className="flex justify-center items-start min-h-screen max-w-7xl mx-auto mb-12 gap-6 width70 ">
+    <div className="flex flex-col justify-center items-center">
+      <div className="w-full">
+        <Navbar />
+      </div>
+      <div className="flex flex-col md:flex-row justify-center items-start min-h-screen max-w-[70rem] mx-2 md:mx-6 mb-12 mt-6 gap-6 ">
         {/* main (2/3) */}
-        <div className="w-2/3 h-full flex flex-col gap-6">
+        <div className="w-full md:w-2/3 h-full flex flex-col gap-6">
           {/* Main info */}
-          <div className="rounded-2xl border-2 border-slate-100 p-8 ">
+          <div className="rounded-2xl border-2 border-slate-100 p-8">
             <MainInfo />
           </div>
 
@@ -23,7 +25,7 @@ const LawyerPage = () => {
           </div>
         </div>
         {/* sidebar (1/3) */}
-        <div className="w-1/3 h-full flex flex-col gap-6">
+        <div className="w-full md:w-1/3 h-full flex flex-col gap-6">
           {/* Contact */}
           <div className="rounded-2xl border-2 border-slate-100 p-8 ">
             <Contact />
@@ -35,8 +37,10 @@ const LawyerPage = () => {
           </div>
         </div>
       </div>
-      <Footer />
-    </>
+      <div className="w-full">
+        <Footer />
+      </div>
+    </div>
   );
 };
 

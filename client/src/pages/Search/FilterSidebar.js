@@ -3,7 +3,7 @@ import CloseIcon from "../../assets/close_small.svg";
 
 const FilterSidebar = () => {
   return (
-    <div className="w-1/3 h-full rounded-2xl border-2 border-slate-100 p-8 mr-5">
+    <div className="w-1/3 h-full rounded-2xl border-2 border-slate-100 p-8 mr-5 hidden lg:block">
       <div className="flex justify-start items-center">
         <img src={Filter} className="w-5 mr-3" alt="Filter Icon" />
         <h2 className="text-[#15394E] text-2xl font-bold">Filter</h2>

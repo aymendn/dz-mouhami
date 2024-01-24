@@ -16,20 +16,22 @@ const TopRated = () => {
     }));
 
   return (
-    <div className="width70 my-12 mx-2">
-      <div className="flex justify-between mb-4">
-        <h1 className="font-['Lexend_Exa'] font-semibold -tracking-[0.15rem] text-3xl text-[#094B72E5]">
-          Top Rated Lawyers
-        </h1>
-        <button className="bg-[#094E771A] font-medium text-[#094B72E5] rounded-full px-6 py-2 hover:bg-[#094f773b] transition duration-50">
-          See All
-        </button>
-      </div>
-      {/* opérateur spread (...) qui prend toutes les propriétés de l'objet lawyer et les passe en tant que props individuelles au composant CardLawyer. */}
-      <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-x-4">
-        {lawyersData.map((lawyer, index) => (
-          <CardLawyer key={index} {...lawyer} />
-        ))}
+    <div className="flex justify-center items-center">
+      <div className=" my-12 mx-2 sm:mx-4 md:mx-8 lg:mx-12 xl:mx-16 2xl:mx-20 max-w-[70rem]">
+        <div className="flex justify-between mb-4">
+          <h1 className="font-['Lexend_Exa'] font-semibold -tracking-[0.15rem]  text-[#094B72E5] text-2xl md:text-3xl">
+            Top Rated Lawyers
+          </h1>
+          <button className="bg-[#094E771A] font-medium text-[#094B72E5] rounded-full px-6 py-2 hover:bg-[#094f773b] transition duration-50 text-sm md:text-base">
+            See All
+          </button>
+        </div>
+        {/* opérateur spread (...) qui prend toutes les propriétés de l'objet lawyer et les passe en tant que props individuelles au composant CardLawyer. */}
+        <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-x-4">
+          {lawyersData.map((lawyer, index) => (
+            <CardLawyer key={index} {...lawyer} />
+          ))}
+        </div>
       </div>
     </div>
   );

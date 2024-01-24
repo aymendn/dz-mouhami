@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Logo from "../assets/logo.svg";
 import info from "../assets/info.svg";
 import contact from "../assets/email.svg";
@@ -17,19 +17,6 @@ const Navbar = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // nav bar background color if scrolled
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  const handleScroll = () => {
-    if (window.scrollY > 20) {
-      setIsScrolled(true);
-    } else {
-      setIsScrolled(false);
-    }
-  };
-
-  window.addEventListener("scroll", handleScroll);
-
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
 
   const handleResize = () => {
@@ -40,17 +27,14 @@ const Navbar = () => {
     }
   };
 
-  window.addEventListener("resize", handleResize);
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+  }, [window.innerWidth]);
 
   return (
-    <nav
-      className={`mb-6 transition-all duration-150 font-normal px-2 md:px-4 lg:px-8 py-2 mt-6 sticky top-0 left-0 right-0 z-50 ${
-        isScrolled ? "bg-white shadow-sm " : "bg-transparent"
-      }`}
-    >
+    <nav className="py-3 md:py-4 transition-all duration-150 font-normal px-2 md:px-4 lg:px-8 sticky top-0 left-0 right-0 z-50 bg-white shadow-sm">
       {isMobile ? (
         <>
-          {" "}
           <div className="container mx-auto flex justify-between items-center">
             {/* Logo */}
             <LogoComponent />

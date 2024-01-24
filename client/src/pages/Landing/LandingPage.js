@@ -9,11 +9,13 @@ import BgImage from "../../assets/bg.svg";
 const LandingPage = () => {
   return (
     <div>
+      <Navbar></Navbar>
       <div
-        className="bg-cover h-full bg-center"
-        style={{ backgroundImage: `url(${BgImage})` }}
+        className="bg-cover h-full bg-center border border-transparent border-spacing-0"
+        style={{
+          backgroundImage: `url(${BgImage})`,
+        }}
       >
-        <Navbar></Navbar>
         <Main></Main>
       </div>
       <Services></Services>
