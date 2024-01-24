@@ -3,6 +3,8 @@ import Navbar from "../../components/NavbarNoAction";
 import Footer from "../../components/Footer";
 import validation from "../../assets/person_check.svg";
 import { Link } from "react-router-dom";
+import TextAreaField from "../../components/TextAreaField";
+import TextField from "../../components/TextField";
 const UserFormPage = () => {
   return (
     <div>
@@ -22,21 +24,18 @@ const UserFormPage = () => {
       <form className="mx-4 md:mx-16 lg:mx-32">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 my-8">
           <div className="mb-4">
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-[#103F5BE5]"
-            >
-              Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              className="mt-1 p-2 rounded-2xl bg-slate-50 required hover:bg-slate-100 border border-gray-300 w-full md:w-96"
-              placeholder="John"
-            />
-          </div>
+            
+          <TextField
+        label="Nom"
+        type="text"
+        id="nom"
+        placeholder="Entrez votre nom"
+        
+       
+      />
 
+          </div>
+         
           <div className="mb-4">
             <label
               htmlFor="surname"
