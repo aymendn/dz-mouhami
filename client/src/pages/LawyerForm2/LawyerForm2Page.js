@@ -1,35 +1,49 @@
 import Footer from "../../components/Footer";
 import Navbar from "../../components/NavbarNoAction";
-
+import { Stepper } from "react-form-stepper";
 import validation from "../../assets/person_check.svg";
 import { Link } from "react-router-dom";
 const LawyerForm2Page = () => {
+    const styleConfig = {
+      activeBgColor: '#007BFF', // Bleu vif pour les étapes actives
+      completedBgColor: '#4682B4', // Bleu acier pour les étapes complétées
+      inactiveBgColor: '#B0C4DE' // Bleu clair pour les étapes inactives
+  };
+  const connectorStyleConfig = {
+    size: '2px', // Épaisseur du connecteur
+    activeColor: '#007BFF', // Couleur du connecteur pour les étapes actives
+    completedColor: '#4682B4', // Couleur du connecteur pour les étapes complétées
+    disabledColor: '#B0C4DE' // Couleur du connecteur pour les étapes inactives
+    
+  };
   return (
     <div>
       <Navbar></Navbar>
-      <div className="flex justify-center gap-2">
-        <button className="w-32  py-3 text-[#094B72] text-normal font-medium  rounded-full border-2 border-[#094B72] hover:bg-[#FFC12CAD] hover:border-[#FFC12CAD] duration-500">
-          <p className="font-medium text-xs">First step</p>
-          <p className="font-normal text-sm">Fill information form</p>
-        </button>
+      <div className="flex flex-col items-center gap-4 my-8">
 
-        <p className="font-medium text-2xl text-[#094B72] mx-2 my-8">►</p>
+<div className="mt-4 text-center">
+  <h1 className="text-[#0F3146] text-5xl font-semibold">
+     Submit Essentials Documents
+  </h1>
 
-        <button className="w-32  py-3 text-[#094B72] text-normal font-medium  rounded-full border-2 border-[#094B72] bg-[#FFC12CAD] border-[#FFC12CAD] hover:duration-500">
-          <p className="font-medium text-xs">Second step</p>
-          <p className="font-normal text-sm">Upload files</p>
-        </button>
-      </div>
-      <div className="mt-8  text-center ">
-        <h1 className="text-[#0F3146] text-5xl font-semibold">
-          Submit Essentials Documents
-        </h1>
-        <p className="p-4 text-[#496C80] text-md text-center ">
-          Upload required documents to showcase your legal expertise and foster
+  <p className="p-4 text-[#496C80] text-md text-center">
+  Upload required documents to showcase your legal expertise and foster
           trust with potential clients on DZ-Mouhami.
-        </p>
-      </div>
+  </p>
+</div>
 
+<div className="flex items-center "> 
+<Stepper
+steps={[{ label: 'Step 1' }, { label: 'Step 2' }]}
+activeStep={2}
+styleConfig={styleConfig}
+connectorStyleConfig={connectorStyleConfig}
+/>
+
+
+</div>
+    
+      
       <form class="my-8  mx-16 lg:mx-64 flex items-center space-x-6">
         <label htmlFor="Lawfirm" className="block ">
           <h1 className="text-[#15394E] text-lg font-medium">
@@ -84,6 +98,7 @@ const LawyerForm2Page = () => {
         </Link>
       </div>
 
+    </div>
       <Footer></Footer>
     </div>
   );
