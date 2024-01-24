@@ -2,32 +2,34 @@ import React from "react";
 import Navbar from "../../components/NavbarNoAction";
 import Footer from "../../components/Footer";
 import validation from "../../assets/person_check.svg";
+import { Stepper } from 'react-form-stepper';
 import { Link } from "react-router-dom";
 
 const LawyerForm1Page = () => {
+
+  const styleConfig = {
+      activeBgColor: '#007BFF', // Bleu vif pour les étapes actives
+      completedBgColor: '#4682B4', // Bleu acier pour les étapes complétées
+      inactiveBgColor: '#B0C4DE' // Bleu clair pour les étapes inactives
+  };
+  const connectorStyleConfig = {
+    size: '2px', // Épaisseur du connecteur
+    activeColor: '#007BFF', // Couleur du connecteur pour les étapes actives
+    completedColor: '#4682B4', // Couleur du connecteur pour les étapes complétées
+    disabledColor: '#B0C4DE' // Couleur du connecteur pour les étapes inactives
+    
+  };
   return (
     <div>
       <Navbar />
 
       <div className="flex flex-col items-center gap-4 my-8">
-        <div className="flex items-center gap-2">
-          <button className="w-32 py-3 text-[#094B72] text-normal font-medium rounded-full border-2 border-[#094B72] bg-[#FFC12CAD] hover:shadow-md border-[#FFC12CAD] hover:duration-500">
-            <p className="font-medium text-xs">First step</p>
-            <p className="font-normal text-sm">Fill information form</p>
-          </button>
-          <p className="font-medium text-2xl text-[#094B72] mx-2 my-8">►</p>
-          <Link to="/lawyer-registrationStep2">
-            <button className="w-32 py-7 text-[#094B72] text-normal font-medium rounded-full border-2 border-[#094B72] hover:bg-[#FFC12CAD] hover:border-[#FFC12CAD] duration-500">
-              <p className="font-medium text-xs">Second step</p>
-              <p className="font-normal text-sm">Upload files</p>
-            </button>
-          </Link>
-        </div>
 
-        <div className="mt-8 text-center">
+        <div className="mt-4 text-center">
           <h1 className="text-[#0F3146] text-5xl font-semibold">
             Lawyer Registration
           </h1>
+
           <p className="p-4 text-[#496C80] text-md text-center">
             Welcome, legal professional! We're excited to have you join our
             community. Please provide the following information to create your
@@ -35,6 +37,16 @@ const LawyerForm1Page = () => {
           </p>
         </div>
 
+        <div className="flex items-center ">
+        <Stepper
+        steps={[{ label: 'Step 1' }, { label: 'Step 2' }]}
+        activeStep={1}
+        styleConfig={styleConfig}
+        connectorStyleConfig={connectorStyleConfig}
+      />
+
+
+        </div> 
         <form className="mx-4 md:mx-16 lg:mx-32">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
             <div className="mb-4">

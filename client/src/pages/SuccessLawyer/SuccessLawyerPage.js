@@ -21,7 +21,7 @@ const SuccessLawyerPage = () => {
       </div>
       <div className="flex justify-center mb-16">
         <Link to="/">
-          <button className="transition-transform transform hover:scale-105 duration-500 border-1 bg-[#094B72] py-3 px-6 rounded-3xl text-white font-normal text-md flex gap-2 hover:bg-blue-100 hover:text-[#094B72] hover:duration-500 hover:shadow-md focus:outline-none">
+          <button className="transition-transform transform hover:scale-105 duration-500 border-1 bg-[#094B72] py-2 px-4 rounded-3xl text-white font-normal text-md flex gap-2  hover:text-[#094B72] hover:text-white hover:duration-500 hover:shadow-md focus:outline-none">
             <img src={validation} alt="Validation" />
             Home Page
           </button>
