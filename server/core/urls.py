@@ -18,7 +18,6 @@ lawyers_dashbord = routers.NestedDefaultRouter(router, r'dashboard', lookup='law
 
 
 
-
-urlpatterns = router.urls + lawyers_router.urls + lawyers_dashbord.urls
+urlpatterns = router.urls + lawyers_router.urls + lawyers_dashbord.urls + [path('lawyer-profile-search/'), views.lawyer_profile_search]
 
 

@@ -17,12 +17,14 @@ from .serializers import UserSerializer
 from django.contrib.auth.models import User
 from .serializers import LawyerProfileAdminListSerializer
 from django.utils import timezone
+from django.db.models import Q
 
 from allauth.socialaccount.models import SocialAccount
 from rest_framework import status
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.exceptions import NotFound
 from django.db.models import Avg
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -202,4 +204,34 @@ class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         return Response({'error': 'Method Not Allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+@api_view(['GET'])
+def lawyer_profile_search(request):
+    lawyer_category = request.GET.get('lawyer_category', '')
+    location = request.GET.get('location', '')
+
+    search_results = LawyerProfile.objects.filter(approved=True)
+
+    if lawyer_category:
+        lawyer_filter = (
+            Q(name__icontains=lawyer_category) |
+            Q(specialization__icontains=lawyer_category)
+        )
+
+        search_results = search_results.filter(lawyer_filter)
+
+    if location:
+        address_filter = (
+            Q(address__street__icontains=location) |
+            Q(address__city__icontains=location) |
+            Q(address__state__icontains=location) |
+            Q(address__country__icontains=location)
+        )
+        search_results = search_results.filter(address_filter)
+
+    search_results = search_results.order_by('-rating')
+    
+    serialized_results = LawyerProfileSerializer(search_results, many=True).data
+    return Response({'search_results': serialized_results})
 
