@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../../components/NavbarNoAction";
+import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import balance from "../../assets/balance.svg";
 import search from "../../assets/person_search.svg";
@@ -23,7 +23,7 @@ const ChoicePage = () => {
     <div>
       <Navbar />
       <div className="mt-8 text-center">
-        <h1 className="text-[#0F3146] text-5xl font-semibold">
+        <h1 className="text-[#0F3146] text-5xl font-semibold font-['Lexend_Exa'] -tracking-[0.42rem]">
           Choose your role
         </h1>
         <p className="p-4 text-[#496C80] text-md">

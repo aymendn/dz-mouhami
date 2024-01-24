@@ -5,7 +5,7 @@ import validation from "../../assets/home.svg";
 import { Link } from "react-router-dom";
 const SuccessLawyerPage = () => {
   return (
-    <div>
+    <div className="flex flex-col justify-between items-stretch min-h-screen w-full ">
       <Navbar />
       <div className="mt-8 py-4 mx-auto w-1/2 text-center">
         <img src={validation1} alt="validation" className="w-16 mx-auto" />
@@ -21,7 +21,7 @@ const SuccessLawyerPage = () => {
       </div>
       <div className="flex justify-center mb-16">
         <Link to="/">
-          <button className="transition-transform transform hover:scale-105 duration-500 border-1 bg-[#094B72] py-2 px-4 rounded-3xl text-white font-normal text-md flex gap-2  hover:text-[#094B72] hover:text-white hover:duration-500 hover:shadow-md focus:outline-none">
+          <button className="transition-all hover:opacity-90 border-1 bg-[#094B72] py-3 px-6 rounded-3xl text-white font-normal text-md flex gap-2 ">
             <img src={validation} alt="Validation" />
             Home Page
           </button>

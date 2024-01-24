@@ -1,45 +1,48 @@
 import React from "react";
-import Navbar from "../../components/NavbarNoAction";
+import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import validation from "../../assets/person_check.svg";
-import { Stepper } from 'react-form-stepper';
+import { Stepper } from "react-form-stepper";
 import { Link } from "react-router-dom";
 import TextField from "../../components/TextField";
 import SelectField from "../../components/SelectField";
-import TextAreaField from "../../components/TextAreaField";
-const LawyerForm1Page = () => {
 
+const LawyerForm1Page = () => {
   const styleConfig = {
-      activeBgColor: '#007BFF', // Bleu vif pour les étapes actives
-      completedBgColor: '#4682B4', // Bleu acier pour les étapes complétées
-      inactiveBgColor: '#B0C4DE' // Bleu clair pour les étapes inactives
+    activeBgColor: "#007BFF", // Bleu vif pour les étapes actives
+    completedBgColor: "#4682B4", // Bleu acier pour les étapes complétées
+    inactiveBgColor: "#ffffff", // Bleu clair pour les étapes inactives
   };
   const connectorStyleConfig = {
-    size: '2px', // Épaisseur du connecteur
-    activeColor: '#007BFF', // Couleur du connecteur pour les étapes actives
-    completedColor: '#4682B4', // Couleur du connecteur pour les étapes complétées
-    disabledColor: '#B0C4DE' // Couleur du connecteur pour les étapes inactives
-    
+    size: "2px", // Épaisseur du connecteur
+    activeColor: "#007BFF", // Couleur du connecteur pour les étapes actives
+    completedColor: "#4682B4", // Couleur du connecteur pour les étapes complétées
+    disabledColor: "#B0C4DE", // Couleur du connecteur pour les étapes inactives
   };
   const options = [
-    { label: 'Divorce', value: 'Option 1' },
-    { label: 'Usurpation', value: 'Option 2' },
-    { label: 'Vols', value: 'Option 3' },
-    { label: 'Detournement', value: 'Option 3' },
-    { label: 'Blanchissement', value: 'Option 3' },
+    { label: "Divorce", value: "Option 1" },
+    { label: "Usurpation", value: "Option 2" },
+    { label: "Vols", value: "Option 3" },
+    { label: "Detournement", value: "Option 3" },
+    { label: "Blanchissement", value: "Option 3" },
   ];
   const options1 = [
-    { label: 'Anglais', value: 'Option 1' },
-    { label: 'Francais', value: 'Option 2' },
-   
+    { label: "Anglais", value: "Option 1" },
+    { label: "Francais", value: "Option 2" },
   ];
 
   return (
     <div>
       <Navbar />
-      <div className="flex flex-col items-center gap-4 my-8">
+      <div className="flex flex-col items-center mt-4 ">
+        <Stepper
+          steps={[{ label: "Step 1" }, { label: "Step 2" }]}
+          activeStep={2}
+          styleConfig={styleConfig}
+          connectorStyleConfig={connectorStyleConfig}
+        />
 
-        <div className="mt-4 text-center">
+        <div className="mt-8 text-center">
           <h1 className="text-[#0F3146] text-5xl font-semibold">
             Lawyer Registration
           </h1>
@@ -51,135 +54,41 @@ const LawyerForm1Page = () => {
           </p>
         </div>
 
-        <div className="flex items-center ">
-        <Stepper
-        steps={[{ label: 'Step 1' }, { label: 'Step 2' }]}
-        activeStep={1}
-        styleConfig={styleConfig}
-        connectorStyleConfig={connectorStyleConfig}
-      />
+        <form className="min-w-full sm:min-w-[600px] max-w-3xl w-full px-2">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6  ">
+            <TextField id={"name"} label={"Name"} placeholder={"John"} />
 
+            <TextField id={"surname"} label={"Surname"} placeholder={"Doe"} />
 
-        </div> 
-        <form className="mx-4 md:mx-16 lg:mx-32">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-4 ">
-          <div className=" mb-4 mx-6 mx-6">
-         <TextField
-        label="Nom"
-        type="text"
-        id="nom"
-        placeholder="Doe"/>
-        </div>
-        
-        <div className=" mb-4 mx-6">
-         <TextField
-        label="surname"
-        type="text"
-        id="surname"
-        placeholder="John"/>
-        </div>
-          
+            <TextField
+              id={"email"}
+              label={"Email"}
+              placeholder={"a@mail.com"}
+            />
 
-        <div className=" mb-4 mx-6">
-         <TextField
-        label="email"
-        type="email"
-        id="email"
-        placeholder="Johndoe@gmail.dz"/>
-        </div>
+            <TextField
+              id={"phone"}
+              label={"Phone"}
+              placeholder={"06 00 00 00 00"}
+            />
 
-        <div className=" mb-4 mx-6">
-         <TextField
-        label="contact"
-        type="tel"
-        id="contact"
-        placeholder="555-222-111"/>
-        </div>
-
-            
-
-            <div className=" mb-4 mx-6">
             <SelectField
-        label="Specialization"
-        placeholder="Crime"
-        id="selectOption"
-        options={options}
-        />
-            </div>
+              id={"Specification"}
+              label={"Legal Specification"}
+              placeholder={"Select a specification"}
+              options={[
+                { value: "Agression", label: "Agression" },
+                { value: "Crime", label: "Crime" },
+                { value: "Robbing", label: "Robbing" },
+              ]}
+            />
 
-
-            <div className=" mb-4 mx-6">
-         <TextField
-        label="Lawfirm"
-        type="text"
-        id="Lawfirm"
-        />
-        </div>
-        <div className=" mb-4 mx-6">
-            <SelectField
-        label="Language"
-        placeholder="Arabe"
-        id="selectOption1"
-        options={options1}
-        />
-            </div>
-
-       <div className=" mb-4 mx-6">
-         <TextField
-        label="city"
-        type="text"
-        id="city"
-        />
-        </div>
-
-        <div className=" mb-4 mx-6">
-         <TextField
-        label="state"
-        type="text"
-        id="state"
-        />
-        </div>
-
-        <div className=" mb-4 mx-6">
-         <TextField
-        label="country"
-        type="text"
-        id="country"
-        />
-        </div>
-
-        <div className=" mb-4 mx-6">
-         <TextField
-        label="street"
-        type="text"
-        id="street"
-        />
-        </div>
-
-        <div className=" mb-4 mx-6">
-         <TextField
-        label="zipcode"
-        type="number"
-        id="zipcode"
-        />
-        </div>
-            
-
-        <div className=" mb-4 mx-6">
-         <TextAreaField
-         placeholder="Bio"
-         id="Bio"
-         label="Bio"
-         htmlFor="Bio"
-         
-         />
-        </div>
-
+            <TextField id={"address"} label={"Address"} placeholder={"Paris"} />
           </div>
 
           <div className="flex justify-end m-4">
-            <Link to="/lawyer-registrationStep2">
-              <button className="transition-transform transform hover:scale-105 duration-500 mx-4 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
+            <Link to="/user-registration/validation">
+              <button className="flex flex-row gap-2 transition-all border-1 bg-[#094B72] py-3 px-10 rounded-full text-white font-normal text-md hover:opacity-90 mb-6">
                 <img src={validation} alt="Validation" />
                 Continue
               </button>

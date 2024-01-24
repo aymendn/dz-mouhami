@@ -2,6 +2,8 @@ import Sidebar from "../../components/Sidebar";
 import Navbar from "../../components/ProfileNavbar";
 import TextField from "../../components/TextField";
 import { useState } from "react";
+import SelectField from "../../components/SelectField";
+import Footer from "../../components/Footer";
 const EditProfilePage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -18,10 +20,12 @@ const EditProfilePage = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar></Navbar>
+      <div className="z-50">
+        <Navbar></Navbar>
+      </div>
       <div className="flex flex-1">
         <Sidebar></Sidebar>
-        <form>
+        <form className="w-full">
           <h1 className="text-3xl m-8 font-semibold text-[#094B72]">
             Edit your profil
           </h1>
@@ -54,39 +58,35 @@ const EditProfilePage = () => {
               </div>
             )}
           </div>
-          <div className="grid grid-cols-2 gap-6 m-8">
-          <div className="mb-4">
-         <TextField
-        label="Nom"
-        type="text"
-        id="nom"
-        placeholder="Doe"/>
-        </div>
-        
-        <div className="mb-4">
-         <TextField
-        label="surname"
-        type="text"
-        id="surname"
-        placeholder="John"/>
-        </div>
-          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 m-8">
+            <TextField id={"name"} label={"Name"} placeholder={"John"} />
 
-        <div className="mb-4">
-         <TextField
-        label="email"
-        type="email"
-        id="email"
-        placeholder="Johndoe@gmail.dz"/>
-        </div>
+            <TextField id={"surname"} label={"Surname"} placeholder={"Doe"} />
 
-        <div className="mb-4">
-         <TextField
-        label="contact"
-        type="tel"
-        id="contact"
-        placeholder="555-222-111"/>
-        </div>
+            <TextField
+              id={"email"}
+              label={"Email"}
+              placeholder={"a@mail.com"}
+            />
+
+            <TextField
+              id={"phone"}
+              label={"Phone"}
+              placeholder={"06 00 00 00 00"}
+            />
+
+            <SelectField
+              id={"Specification"}
+              label={"Legal Specification"}
+              placeholder={"Select a specification"}
+              options={[
+                { value: "Agression", label: "Agression" },
+                { value: "Crime", label: "Crime" },
+                { value: "Robbing", label: "Robbing" },
+              ]}
+            />
+
+            <TextField id={"address"} label={"Address"} placeholder={"Paris"} />
           </div>
 
           <div className="flex justify-end m-4">
@@ -95,6 +95,9 @@ const EditProfilePage = () => {
             </button>
           </div>
         </form>
+      </div>
+      <div className=" lg:hidden">
+        <Footer />
       </div>
     </div>
   );

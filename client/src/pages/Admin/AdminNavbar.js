@@ -1,11 +1,11 @@
-import info from "../assets/info_nav.svg";
-import contact from "../assets/email_nav.svg";
-import profilePicture from "../assets/profile_placeholder.png";
-import LogoComponent from "./Logo";
+import info from "../../assets/info_nav.svg";
+import contact from "../../assets/email_nav.svg";
+import profilePicture from "../../assets/profile_placeholder.png";
+import LogoComponent from "../../components/Logo";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import SvgColor from "react-svg-color";
-const ProfileNavbar = () => {
+const AdminNavbar = () => {
   // get current url, if it's /home, show the get started button
   const currentUrl = window.location.pathname;
   const isHome = currentUrl === "/";
@@ -36,7 +36,7 @@ const ProfileNavbar = () => {
           <>
             <div className=" mx-auto flex justify-between items-center z-50">
               {/* Logo */}
-              <LogoComponent isWhite={true} to="/dashboard" />
+              <AdminLogo />
 
               {/* Hamburger menu */}
               <MenuIcon onClick={handleMenuClick} isOpen={isMenuOpen} />
@@ -62,7 +62,7 @@ const ProfileNavbar = () => {
         ) : (
           <div className=" mx-auto flex justify-between items-center">
             {/* Logo */}
-            <LogoComponent isWhite={true} to="/dashboard" />
+            <AdminLogo />
             {/* Navigation Links */}
             <div className="space-x-4 flex justify-end gap-12 text-sm font-medium">
               <Link to="/about" className="flex items-center gap-1 text-white">
@@ -85,7 +85,7 @@ const ProfileNavbar = () => {
   );
 };
 
-export default ProfileNavbar;
+export default AdminNavbar;
 
 function MenuIcon({ onClick, isOpen = true }) {
   return (
@@ -121,5 +121,16 @@ function CustomLink({ name, to }) {
     >
       {name}
     </Link>
+  );
+}
+
+function AdminLogo() {
+  // put a "ADMIN DASHBOARD" text on the end of the logo
+  // return (<LogoComponent isWhite={true} to="/dashboard" />);
+  return (
+    <div className="flex items-top gap-4">
+      <LogoComponent isWhite={true} to="/admin" />
+      <p className="text-white font-medium opacity-70">Admin Dashboard</p>
+    </div>
   );
 }

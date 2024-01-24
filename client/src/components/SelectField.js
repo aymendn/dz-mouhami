@@ -15,7 +15,7 @@ const SelectField = ({
     <div className={divClassName}>
       <label
         htmlFor={htmlFor}
-        className={"block text-xs font-medium text-gray-700" + labelClassName}
+        className={"block text-sm font-medium text-gray-700 " + labelClassName}
       >
         {label}
       </label>
@@ -27,7 +27,7 @@ const SelectField = ({
           name={id}
           id={id}
           className={
-            "block mt-1 bg-gray-50  border border-gray-200 rounded-xl w-full py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-blue-200 active:border-blue-200 active:bg-white appearance-none pr-8" +
+            "block mt-1 bg-gray-50 border border-gray-200 rounded-md w-full py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-blue-200 active:border-blue-200 active:bg-white appearance-none pr-8" +
             selectClassName
           }
         >

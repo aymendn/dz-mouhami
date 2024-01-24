@@ -1,6 +1,7 @@
 import React from "react";
 import Sidebar from "../../components/Sidebar";
 import Navbar from "../../components/ProfileNavbar";
+import Footer from "../../components/Footer";
 const AppointementPage = () => {
   const rdvData = [
     { name: "Melissa", surname: "Mellaz", age: "20", schedule: "10h00" },
@@ -8,7 +9,9 @@ const AppointementPage = () => {
   ];
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar />
+      <div className="z-50">
+        <Navbar></Navbar>
+      </div>
       <div className="flex flex-1">
         <Sidebar />
         <div className="flex-1 py-4">
@@ -50,6 +53,9 @@ const AppointementPage = () => {
             </tbody>
           </table>
         </div>
+      </div>
+      <div className=" lg:hidden">
+        <Footer />
       </div>
     </div>
   );

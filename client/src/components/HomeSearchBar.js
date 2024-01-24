@@ -16,8 +16,8 @@ const HomeSearchBar = () => {
     .then(response => {
       console.log(response.data);
     })
-    .catch(error => {
-      console.error('Erreur lors de la requête ', error);
+    .catch((error) => {
+      console.error("Erreur lors de la requête ", error);
     });
   }
   
@@ -26,13 +26,12 @@ const HomeSearchBar = () => {
   return (
     <div className="flex justify-center items-center">
       <div className=" max-w-4xl  mx-4 border-solid border-2 border-[#d8ebf6] bg-white flex flex-row justify-between items-center w-full  p-[6px] pl-8  rounded-full">
-
         <div className="flex flex-row w-full items-center justify-start">
           {/* category icon */}
           <SvgColor svg={SearchIcon} colors={["#094b72", "#094b72"]} />
           <input
             type="search"
-            name='lawyer_category'
+            name='lawyerCategory'
             placeholder="Lawyer, place,..."
             className=" text-[rgba(16,_63,_91,_0.5)]  border-none outline-none w-full"
             value={lawyerCategory}
@@ -48,7 +47,7 @@ const HomeSearchBar = () => {
           <SvgColor svg={LocationIcon} colors={["#094b72", "#094b72"]} />
           <input
             type="text"
-            name='location'
+            name="location"
             placeholder="Lawyer, place,..."
             className=" text-[rgba(16,_63,_91,_0.5)] outline-none border-none w-full focus:outline-none"
             value={location}
