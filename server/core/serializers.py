@@ -13,15 +13,25 @@ class TimeSlotSerializer(serializers.ModelSerializer):
         model = TimeSlot
         fields = ['id', 'day', 'start_time', 'end_time']
 
+class LawyerImageSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        lawyer_profile_pk = self.context['lawyer_profile_pk']
+        return LawyerImage.objects.create(lawyer_id=lawyer_profile_pk, **validated_data)
+
+    class Meta:
+        model = LawyerImage
+        fields = ['id', 'image']
+
 
 class LawyerProfileSerializer(serializers.ModelSerializer):
     address = AddressSerializer(required=False, allow_null=True)
     time_slots = TimeSlotSerializer(required=False, allow_null=True, many=True)
     rating = serializers.IntegerField(read_only=True)
+    images= LawyerImageSerializer(many=True , read_only=True)
 
     class Meta:
         model = LawyerProfile
-        fields = ['id', 'specialization', 'phone_number', 'bio', 'language', 'address', 'time_slots' , 'rating']
+        fields = ['id', 'specialization', 'phone_number', 'bio', 'language', 'address', 'time_slots' , 'rating' , 'images']
 
     def create(self, validated_data):
         address_data = validated_data.pop('address', None)
@@ -71,18 +81,6 @@ class LawyerProfileSerializer(serializers.ModelSerializer):
         return instance
 
 
-
-
-
-
-class LawyerImageSerializer(serializers.ModelSerializer):
-    def create(self, validated_data):
-        lawyer_profile_pk = self.context['lawyer_profile_pk']
-        return LawyerImage.objects.create(lawyer_id=lawyer_profile_pk, **validated_data)
-
-    class Meta:
-        model = LawyerImage
-        fields = ['id', 'image']
 
 
 class LawyerDocumentSerializer(serializers.ModelSerializer):
