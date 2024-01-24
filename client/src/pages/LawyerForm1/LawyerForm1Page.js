@@ -56,8 +56,8 @@ const LawyerForm1Page = () => {
 
         </div> 
         <form className="mx-4 md:mx-16 lg:mx-32">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
-          <div className="mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-4 ">
+          <div className=" mb-4 mx-6 mx-6">
          <TextField
         label="Nom"
         type="text"
@@ -65,7 +65,7 @@ const LawyerForm1Page = () => {
         placeholder="Doe"/>
         </div>
         
-        <div className="mb-4">
+        <div className=" mb-4 mx-6">
          <TextField
         label="surname"
         type="text"
@@ -74,7 +74,7 @@ const LawyerForm1Page = () => {
         </div>
           
 
-        <div className="mb-4">
+        <div className=" mb-4 mx-6">
          <TextField
         label="email"
         type="email"
@@ -82,7 +82,7 @@ const LawyerForm1Page = () => {
         placeholder="Johndoe@gmail.dz"/>
         </div>
 
-        <div className="mb-4">
+        <div className=" mb-4 mx-6">
          <TextField
         label="contact"
         type="tel"
@@ -92,7 +92,7 @@ const LawyerForm1Page = () => {
 
             
 
-            <div className="mb-4">
+            <div className=" mb-4 mx-6">
             <SelectField
         label="Categorie"
         placeholder="Crime"
@@ -102,7 +102,7 @@ const LawyerForm1Page = () => {
             </div>
 
 
-            <div className="mb-4">
+            <div className=" mb-4 mx-6">
          <TextField
         label="Lawfirm"
         type="text"
