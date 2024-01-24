@@ -1,4 +1,6 @@
 import Dialog from "./Dialog";
+import SelectField from "./SelectField";
+import TextAreaField from "./TextAreaField";
 
 const AppointmentDialog = ({ trigger }) => {
   return (
@@ -15,61 +17,49 @@ const AppointmentDialog = ({ trigger }) => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-8 w-full items-start">
+          <div className="flex flex-col gap-4 w-full items-start">
             <div className="flex flex-col gap-2 w-full items-start">
-              <div className="opacity-80 text-sm font-medium text-[#094b72] ml-1">
-                Premier Créneau
-              </div>
-              <div className="flex flex-row gap-4 w-full items-start">
+              <div className="flex flex-col sm:flex-row gap-4 w-full items-start">
                 {/* Replace with real interactive dropdown */}
-                <div className="border-[#d8ebf6] border-2 rounded-full w-full">
-                  <select className=" bg-white flex justify-start  items-center  px-4 py-3  rounded-full w-full">
-                    <option value="jeudi">Jeudi</option>
-                    <option value="vendredi">Vendredi</option>
-                  </select>
-                </div>
+                <SelectField
+                  id={"Jour"}
+                  label={"Jour"}
+                  placeholder={"Select a day"}
+                  divClassName={"w-full"}
+                  options={[
+                    { value: "Samedi", label: "Samedi" },
+                    { value: "Dimanche", label: "Dimanche" },
+                    { value: "Lundi", label: "Lundi" },
+                    { value: "Mardi", label: "Mardi" },
+                    { value: "Mercredi", label: "Mercredi" },
+                    { value: "Jeudi", label: "Jeudi" },
+                    { value: "Vendredi", label: "Vendredi" },
+                  ]}
+                />
                 {/* Replace with real interactive dropdown */}
-                <div className="border-[#d8ebf6] border-2 rounded-full w-full">
-                  <select className=" bg-white flex justify-start  items-center  px-4 py-3  rounded-full w-full">
-                    <option value="jeudi">10:30</option>
-                    <option value="jeudi">11:00</option>
-                  </select>
-                </div>
-              </div>
-              <div className="opacity-80 text-sm font-medium text-[#094b72] ml-1 mt-4">
-                Deuxieme Créneau
-              </div>
-              <div className="flex flex-row gap-4 w-full items-start">
-                {/* Replace with real interactive dropdown */}
-                <div className="border-[#d8ebf6] border-2 rounded-full w-full">
-                  <select className=" bg-white flex justify-start  items-center  px-4 py-3  rounded-full w-full">
-                    <option value="jeudi">Jeudi</option>
-                    <option value="vendredi">Vendredi</option>
-                  </select>
-                </div>
-                {/* Replace with real interactive dropdown */}
-                <div className="border-[#d8ebf6] border-2 rounded-full w-full">
-                  <select className=" bg-white flex justify-start  items-center  px-4 py-3  rounded-full w-full">
-                    <option value="jeudi">10:30</option>
-                    <option value="jeudi">11:00</option>
-                  </select>
-                </div>
+                <SelectField
+                  id={"Heure"}
+                  label={"Heure"}
+                  placeholder={"Select a time"}
+                  divClassName={"w-full"}
+                  options={[
+                    { value: "10:00", label: "10:00" },
+                    { value: "10:30", label: "10:30" },
+                    { value: "11:00", label: "11:00" },
+                    { value: "11:30", label: "11:30" },
+                    { value: "12:00", label: "12:00" },
+                  ]}
+                />
               </div>
             </div>
-
-            {/* Repeat the above structure for the Deuxieme Créneau section */}
           </div>
 
           <div className="flex flex-col gap-8 w-full font-['DM_Sans'] items-start">
-            <div className="flex flex-col gap-2 w-full items-start">
-              <div className="opacity-80 text-sm font-medium text-[#094b72] ml-1">
-                Additional Notes or Comments
-              </div>
-              <textarea
-                className="text-sm text-[#a6bdcb] border-solid border-[#d8ebf6] bg-white flex flex-row w-full min-h-[100px] items-start  border-2 rounded-xl py-2 px-4"
-                placeholder="Additional Notes or Comments...."
-              ></textarea>
-            </div>
+            <TextAreaField
+              divClassName={"w-full"}
+              placeholder="Additional Notes or Comments...."
+              label="Additional Notes or Comments"
+            />
 
             <div className="flex flex-row gap-5 w-full items-start max-w-xl mx-auto">
               <button

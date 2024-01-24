@@ -2,6 +2,7 @@ import Rating from "react-rating";
 import Dialog from "./Dialog";
 import starFilled from "../assets/star_filled.svg";
 import star from "../assets/star.svg";
+import TextAreaField from "./TextAreaField";
 
 const LeaveReviewDialog = ({ trigger }) => {
   return (
@@ -34,15 +35,11 @@ const LeaveReviewDialog = ({ trigger }) => {
           </div>
 
           <div className="flex flex-col gap-8 w-full font-['DM_Sans'] items-start">
-            <div className="flex flex-col gap-2 w-full items-start">
-              <div className="opacity-80 text-sm font-medium text-[#094b72] ml-1">
-                Comment
-              </div>
-              <textarea
-                className="text-sm text-[#a6bdcb] border-solid border-[#d8ebf6] bg-white flex flex-row w-full min-h-[100px] items-start  border-2 rounded-xl py-2 px-4"
-                placeholder="Additional Notes or Comments...."
-              ></textarea>
-            </div>
+            <TextAreaField
+              divClassName={"w-full"}
+              placeholder="Additional Notes or Comments...."
+              label="Comment"
+            />
 
             <div className="flex flex-row gap-5 w-full items-start max-w-xl mx-auto">
               <button
