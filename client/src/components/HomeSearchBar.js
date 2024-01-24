@@ -3,23 +3,25 @@ import SearchIcon from "../assets/search.svg";
 import SvgColor from "react-svg-color";
 import LocationIcon from "../assets/location.svg";
 import axios from 'axios';
+import { useState } from "react";
 const HomeSearchBar = () => {
+  const [lawyerCategory, setLawyerCategory] = useState('');
+  const [location, setLocation] = useState('');
+
+  const HandleSubmit=(event)=>{
+    event.preventDefault()
+    console.log('test')
+  axios.get('http://127.0.0.1:8000/core/lawyer-profile-search/?lawyer_category=lawyer_category&location=location')
   
-  axios.get('http://127.0.0.1:8000/lawyer-profile-search/?lawyer_category=some_category&location=some_location')
     .then(response => {
       console.log(response.data);
     })
     .catch(error => {
       console.error('Erreur lors de la requête ', error);
     });
+  }
   
 
-
-
-  const handleSearch = () => {
-    // Implement your search logic here
-    console.log("Performing search...");
-  };
 
   return (
     <div className="flex justify-center items-center">
@@ -30,9 +32,12 @@ const HomeSearchBar = () => {
           <SvgColor svg={SearchIcon} colors={["#094b72", "#094b72"]} />
           <input
             type="search"
-            name='lawyer_categorie'
+            name='lawyer_category'
             placeholder="Lawyer, place,..."
             className=" text-[rgba(16,_63,_91,_0.5)]  border-none outline-none w-full"
+            value={lawyerCategory}
+            onChange={(e) => setLawyerCategory(e.target.value)}
+
           />
         </div>
 
@@ -46,13 +51,15 @@ const HomeSearchBar = () => {
             name='location'
             placeholder="Lawyer, place,..."
             className=" text-[rgba(16,_63,_91,_0.5)] outline-none border-none w-full focus:outline-none"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
           />
         </div>
-        <button
-          onClick={handleSearch}
+        <button type="submit" onClick={HandleSubmit}
+         
           className="bg-[#094b72] flex flex-row justify-center  items-center rounded-full cursor-pointer px-10 py-3 hover:opacity-90"
         >
-          <div className=" text-[#f5fbff]">Search</div>
+          <div className=" text-[#f5fbff]" >Search</div>
         </button>
       </div>
     </div>
