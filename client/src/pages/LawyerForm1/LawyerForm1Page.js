@@ -21,9 +21,11 @@ const LawyerForm1Page = () => {
     
   };
   const options = [
-    { value: 'option1', label: 'Option 1' },
-    { value: 'option2', label: 'Option 2' },
-    { value: 'option3', label: 'Option 3' },
+    { label: 'Divorce', value: 'Option 1' },
+    { label: 'Usurpation', value: 'Option 2' },
+    { label: 'Vols', value: 'Option 3' },
+    { label: 'Detournement', value: 'Option 3' },
+    { label: 'Blanchissement', value: 'Option 3' },
   ];
 
   return (
@@ -92,7 +94,7 @@ const LawyerForm1Page = () => {
 
             <div className="mb-4">
             <SelectField
-        label="Choisissez une option"
+        label="Categorie"
         placeholder="Crime"
         id="selectOption"
         options={options}
