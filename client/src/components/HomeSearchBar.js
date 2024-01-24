@@ -11,7 +11,7 @@ const HomeSearchBar = () => {
   const HandleSubmit=(event)=>{
     event.preventDefault()
     console.log('test')
-  axios.get('http://127.0.0.1:8000/core/lawyer-profile-search/?lawyer_category=lawyer_category&location=location')
+  axios.get(`http://127.0.0.1:8000/core/lawyer-profile-search/?lawyer_category=${lawyerCategory}&location=${location}`)
   
     .then(response => {
       console.log(response.data);

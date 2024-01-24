@@ -212,10 +212,11 @@ def lawyer_profile_search(request):
     location = request.GET.get('location', '')
 
     search_results = LawyerProfile.objects.filter(approved=True)
+    print(lawyer_category)
 
     if lawyer_category:
         lawyer_filter = (
-            Q(name__icontains=lawyer_category) |
+            Q(user__first_name__icontains=lawyer_category) |
             Q(specialization__icontains=lawyer_category)
         )
 
@@ -228,9 +229,10 @@ def lawyer_profile_search(request):
             Q(address__state__icontains=location) |
             Q(address__country__icontains=location)
         )
-        search_results = search_results.filter(address_filter)
+        #search_results = search_results.filter(address_filter)
 
     search_results = search_results.order_by('-rating')
+    print(search_results)
     
     serialized_results = LawyerProfileSerializer(search_results, many=True).data
     return Response({'search_results': serialized_results})
