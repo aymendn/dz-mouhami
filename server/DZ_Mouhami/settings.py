@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-26=abu(brxqpt5_sbhj(&4g^xoly9@f7r@b7*5$dqlmxjhe52^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost' ,'127.0.0.1']
+ALLOWED_HOSTS = ['localhost' ,'127.0.0.1',"192.168.228.1","192.168.228.1.nip.io"]
 
 
 # Application definition
@@ -43,9 +43,14 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'rest_framework',
+    "rest_framework.authtoken",
+    "sslserver",
     'djoser',
     'debug_toolbar',
     'corsheaders',
+    'oauth2_provider',
+    'social_django',
+    'drf_social_oauth2',
     'core'
 ]
 CORS_ORIGIN_ALLOW_ALL = True
@@ -61,7 +66,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
-
+ 
 ROOT_URLCONF = 'DZ_Mouhami.urls'
 
 TEMPLATES = [
@@ -76,6 +81,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -93,12 +100,23 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'DZ_Mouhami_DB',
-        'USER': 'root',
-        'PASSWORD': 'teamproject2023',
-        'HOST': '127.0.0.1',
-        "PORT": "3306"
+        'USER': 'avnadmin',
+        'PASSWORD': 'AVNS_vXeEd-Miww6VsPvnWhc',
+        'HOST': 'dz-mouhami-dz-mouhami.a.aivencloud.com',
+        "PORT": "28133"
     }
 }
+# mysql --user avnadmin --password=AVNS_vXeEd-Miww6VsPvnWhc --host dz-mouhami-dz-mouhami.a.aivencloud.com --port 28133 DZ_Mouhami_DB
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'DZ_Mouhami_DB',
+#         'USER': 'root',
+#         'PASSWORD': 'teamproject2023',
+#         'HOST': '127.0.0.1',
+#         "PORT": "3306"
+#     }
+# }
 
 
 # Password validation
@@ -152,15 +170,30 @@ AUTHENTICATION_BACKENDS = [
 
     # `allauth` specific authentication methods, such as login by email
     'allauth.account.auth_backends.AuthenticationBackend',
+    'social_core.backends.google.GoogleOAuth2',
+    # drf-social-oauth2
+    'drf_social_oauth2.backends.DjangoOAuth2',
+    # Django
+    'django.contrib.auth.backends.ModelBackend',
 ]
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = "159094331037-bh9moh5r16ogrug3f31c48v0vtsv4l70.apps.googleusercontent.com"
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = "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"
 
+SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
+    'https://www.googleapis.com/auth/userinfo.email',
+    'https://www.googleapis.com/auth/userinfo.profile',
+]
 
 SITE_ID = 1
 
 # 159094331037-bh9moh5r16ogrug3f31c48v0vtsv4l70.apps.googleusercontent.com
 
 # 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
-
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+GOOGLE_CLIENT_ID =  "159094331037-bh9moh5r16ogrug3f31c48v0vtsv4l70.apps.googleusercontent.com"
+GOOGLE_CLIENT_SECRET = "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"
+GOOGLE_TOKEN_URL = "https://www.googleapis.com/oauth2/v3/token"
+GOOGLE_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth"
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -178,4 +211,29 @@ SOCIALACCOUNT_PROVIDERS = {
 LOGIN_REDIRECT_URL = 'http://127.0.0.1:8000/core/'
 LOGOUT_REDIRECT_URL = 'http://127.0.0.1:8000/core/'
 
-SOCIALACCOUNT_STORE_TOKENS = True
+SOCIALACCOUNT_STORE_TOKENS = True 
+
+
+
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "anisbensmail250@gmail.com"
+EMAIL_HOST_PASSWORD= 'tezylczlmgjdfdbj'#your email must have 2 step verification 
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+
+REST_FRAMEWORK = {
+    
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        
+        # OAuth
+        # 'oauth2_provider.ext.rest_framework.OAuth2Authentication',  # django-oauth-toolkit < 1.0.0
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',  # django-oauth-toolkit >= 1.0.0
+        'drf_social_oauth2.authentication.SocialAuthentication',
+    )
+}
+
+
+# curl -X POST -d "client_id=Oh72rPXEtDYfwGf6PrM6jZUq5lgUflUXSiWW0ljJ&client_secret=pbkdf2_sha256$720000$Doppj9USNcwfFjkUnLNhbB$Neu7FIoPsrJ6i5pS51/jTeqA3kTmzfZ4D5dxE/zKwiE=&grant_type=password&username=anis&password=anis4869" http://localhost:8000/auth/token

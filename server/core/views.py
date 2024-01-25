@@ -2,8 +2,9 @@
 
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from .models import Address, LawyerProfile, LawyerImage, LawyerDocument , ClientProfile , User , TimeSlot , Review
-from .serializers import AddressSerializer, LawyerProfileSerializer, LawyerImageSerializer, LawyerDocumentSerializer , ClientProfileSerializer , TimeSlotSerializer
+from .models import Address, LawyerProfile, LawyerImage, LawyerDocument , ClientProfile , User , TimeSlot , Review , Appointment
+from .serializers import AddressSerializer, LawyerProfileSerializer, LawyerImageSerializer, LawyerDocumentSerializer , ClientProfileSerializer , TimeSlotSerializer \
+    , ReviewSerializer , AppointmentSerializer
 from django.contrib.auth.models import Group
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
@@ -23,6 +24,24 @@ from rest_framework import status
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.exceptions import NotFound
 from django.db.models import Avg
+from .serializers import LawyerProfileAdminListSerializer, AppointmentSerializer
+from rest_framework import generics
+from rest_framework import filters
+from django_filters.rest_framework import DjangoFilterBackend
+from django.db.models import Q
+from django.core.mail import send_mail
+from django.conf import settings
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
+
+
+# samy's import 
+from django.urls import reverse
+from django.conf import settings
+from django.shortcuts import redirect
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -202,4 +221,297 @@ class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         return Response({'error': 'Method Not Allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    
+    def perform_update(self, serializer):
 
+        instance = serializer.save()
+
+        # Check if 'approved' was updated to True
+        if serializer.validated_data.get('approved', False) and not instance.approved:
+            # Send email to the lawyer
+            subject = 'Your Lawyer Profile has been approved'
+            message = 'Your lawyer profile has been approved. You can now use our platform.'
+            from_email = 'settings.EMAIL_HOST_USER'  # Make sure to replace this with your actual sender email
+            to_email = [instance.user.email]  # Assuming the lawyer's email is stored in the User model
+
+            send_mail(subject, message, from_email, to_email, fail_silently=False)
+
+    def create(self, request, *args, **kwargs):
+        return Response({'error': 'Method Not Allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+
+
+class LawyerSearchViewSet(viewsets.ModelViewSet):
+    queryset = LawyerProfile.objects.all()
+    serializer_class = LawyerProfileSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ['user__first_name', 'user__last_name', 'address__city' , 'specialization' , 'address__state' , 'address__country']
+    http_method_names = ['get']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        name = self.request.query_params.get('name', None)
+        city = self.request.query_params.get('city', None)
+        specialization = self.request.query_params.get('specialization', None)
+        state = self.request.query_params.get('state', None)
+        country = self.request.query_params.get('country', None)
+
+        if name:
+            queryset = queryset.filter(user__first_name__icontains=name) | queryset.filter(user__last_name__icontains=name)
+
+        if city:
+            queryset = queryset.filter(address__city__icontains=city)
+
+        if specialization:
+            queryset = queryset.filter(specialization__icontains=specialization)
+
+        if state:
+            queryset = queryset.filter(address__state__icontains=state)
+
+        if country:
+            queryset = queryset.filter(address__country__icontains=country)
+
+        return queryset
+    
+    # def list(self, request, *args, **kwargs):
+    #     queryset = self.get_queryset()
+    #     serializer = self.get_serializer(queryset, many=True)
+
+    #     # Calculate and include the rating information in the serialized response
+    #     data = serializer.data
+    #     for item in data:
+    #         lawyer_id = item['id']
+    #         rating = Review.objects.filter(lawyer__id=lawyer_id).aggregate(Avg('rating'))['rating__avg']
+    #         item['rating'] = rating
+
+    #     return Response(data)
+
+
+
+
+class LawyerSearchCatViewSet(viewsets.ModelViewSet):
+    queryset = LawyerProfile.objects.all()
+    serializer_class = LawyerProfileSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ['user__first_name', 'user__last_name', 'address__city', 'specialization']
+    method = ['GET']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        name = self.request.query_params.get('name', None)
+        city = self.request.query_params.get('city', None)
+        specialization = self.request.query_params.get('specialization', None)
+
+        if name:
+            queryset = queryset.filter(user__first_name__icontains=name) | queryset.filter(user__last_name__icontains=name)
+
+        if city:
+            queryset = queryset.filter(address__city__icontains=city)
+
+        if specialization:
+            queryset = queryset.filter(specialization__icontains=specialization)
+
+        return queryset
+
+class AppointmentLawyerModelViewSet(viewsets.ModelViewSet):
+    serializer_class = AppointmentSerializer
+
+    def get_queryset(self):
+        # Assuming the user is a lawyer
+        lawyer = self.request.user.lawyer_profile
+        return Appointment.objects.filter(lawyer=lawyer)    
+
+
+
+
+
+class AppointmentClientModelViewSet(viewsets.ModelViewSet):
+    serializer_class = AppointmentSerializer
+
+    def get_queryset(self):
+        lawyer_id = self.kwargs.get('lawyer_pk')
+        if lawyer_id:
+            lawyer = get_object_or_404(LawyerProfile, id=lawyer_id)
+            return Appointment.objects.filter(lawyer=lawyer, client=self.request.user.client_profile)
+        else:
+            return Appointment.objects.none()
+
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        lawyer_id = self.kwargs.get('lawyer_pk')
+        context['lawyer_profile'] = LawyerProfile.objects.get(id=lawyer_id)
+        context['client_profile'] = ClientProfile.objects.get(user=self.request.user)
+        return context   
+    # def perform_create(self, serializer):
+    #     lawyer_id = self.kwargs.get('lawyer_pk')
+    #     print(lawyer_id + "pasdfhosapfdhpsahfd;ksahfkashfk;af;khasfkashfkahfahflshafdlkhalfdkhsakfhakfdsh")
+    #     if lawyer_id:
+    #         lawyer_profile = get_object_or_404(LawyerProfile, id=lawyer_id)
+
+    #         if hasattr(self.request.user, 'client_profile'):
+    #             client_profile = self.request.user.client_profile
+
+
+ 
+                
+
+    #             if serializer.is_valid():
+    #                 serializer.save()
+    #                 return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #             else:
+    #                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #         else:
+    #             return Response({"error": "Only clients can create appointments."}, status=status.HTTP_403_FORBIDDEN)
+    #     else:
+    #         return Response({"error": "Invalid lawyer ID."}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class ReviewViewSet(viewsets.ModelViewSet):
+    serializer_class = ReviewSerializer
+
+    def get_queryset(self):
+        lawyer_id = self.kwargs.get('lawyer_pk')
+        return Review.objects.filter(lawyer__id=lawyer_id)
+
+    def perform_create(self, serializer):
+        lawyer_id = self.kwargs.get('lawyer_pk')
+        lawyer = get_object_or_404(LawyerProfile, id=lawyer_id)
+        serializer.validated_data['lawyer'] = lawyer
+        serializer.save()
+
+    def get_serializer_context(self):
+        return {'lawyer_id': self.kwargs['lawyer_pk'] , 'client_id': self.request.user.client_profile.id}
+    
+
+
+
+@api_view(['GET'])
+def lawyer_profile_search(request):
+    lawyer_category = request.GET.get('lawyer_category', '')
+    location = request.GET.get('location', '')
+
+    search_results = LawyerProfile.objects.filter(approved=True)
+
+    if lawyer_category:
+        lawyer_filter = (
+            Q(user__first_name__icontains=lawyer_category) |
+            Q(specialization__icontains=lawyer_category)
+        )
+        search_results = search_results.filter(lawyer_filter)
+
+    if location:
+        address_filter = (
+            Q(address__street__icontains=location) |
+            Q(address__city__icontains=location) |
+            Q(address__state__icontains=location) |
+            Q(address__country__icontains=location)
+        )
+        search_results = search_results.filter(address_filter)
+
+    search_results = search_results.order_by('-rating')
+    
+    serialized_results = LawyerProfileSerializer(search_results, many=True).data
+    return Response({'search_results': serialized_results})
+
+
+
+
+# def index(request,):
+#     if request.method == 'POST':
+#         message = request.POST['message']
+#         email = request.POST['email']
+#         name = request.POST['name']
+#         send_mail(
+#             name,  # title
+#             message,  # message
+#             'settings.EMAIL_HOST_USER',  # sender
+#             [email],
+#             fail_silently=False
+#         )
+#     return response()  # put the response
+
+#--------------------------------------------samy test --------------------------------------------
+
+from django.contrib.auth.models import User
+
+from django.http import JsonResponse
+from django.urls import reverse
+
+from rest_framework.authtoken.models import Token
+from rest_framework.views import APIView
+from django.db import models
+from .utils import google_callback
+from .models import UserProfile
+from django.shortcuts import redirect
+from django.urls import reverse
+from .utils import google_setup
+from django.contrib.auth.models import User
+from django.http import JsonResponse
+from django.shortcuts import redirect
+import json
+
+class GoogleOAuth2SignUpView(APIView):
+    def get(self, request):
+        redirect_uri = request.build_absolute_uri(reverse("google_signup_callback"))
+        return redirect(google_setup(redirect_uri))
+    
+class GoogleOAuth2SignUpCallbackView(APIView):
+    def get(self, request):
+        redirect_uri = request.build_absolute_uri(reverse("google_signup_callback"))
+        auth_uri = request.build_absolute_uri()
+
+        user_data = google_callback(redirect_uri, auth_uri)
+
+        # Use get_or_create since an existing user may end up signing in
+        # through the sign up route.
+        user, _ = User.objects.get_or_create(
+            username=user_data["email"],
+            defaults={"first_name": user_data["given_name"]},
+        )
+
+        # Populate the extended user data stored in UserProfile.
+        UserProfile.objects.get_or_create(
+            user=user, defaults={"google_id": user_data["id"]}
+        )
+
+        # Create the auth token for the frontend to use.
+        token, _ = Token.objects.get_or_create(user=user)
+
+        # Here we assume that once we are logged in we should send
+        # a token to the frontend that a framework like React or Angular
+        # can use to authenticate further requests.
+        frontend_url = "http://192.168.228.10:3000/login-handler"
+        return redirect(frontend_url + "?token=" + token.key+"?data="+json.dumps(user_data))
+        return JsonResponse({"data":user_data,"token": token.key})
+
+class GoogleOAuth2LoginView(APIView):
+    def get(self, request):
+        # The redirect_uri should match the settings shown on the GCP OAuth config page.
+        # The call to build_absolute_uri returns the full URL including domain.
+        redirect_uri = request.build_absolute_uri(reverse("google_login_callback"))
+        return redirect(google_setup(redirect_uri))
+
+class GoogleOAuth2LoginCallbackView(APIView):
+    def get(self, request):
+        redirect_uri = request.build_absolute_uri(reverse("google_login_callback"))
+        auth_uri = request.build_absolute_uri()
+
+        user_data = google_callback(redirect_uri, auth_uri)
+
+        try:
+            user = User.objects.get(username=user_data["email"])
+        except User.DoesNotExist:
+            return redirect("http://192.168.228.1.nip.io:8000/core/signup")
+
+        # Create the auth token for the frontend to use.
+        token, _ = Token.objects.get_or_create(user=user)
+
+        # Here we assume that once we are logged in we should send
+        # a token to the frontend that a framework like React or Angular
+        # can use to authenticate further requests.
+        frontend_url = "http://192.168.228.10:3000/login-handler"
+        return redirect(frontend_url + "?token=" + token.key+"?data="+json.dumps(user_data))
+        return JsonResponse({"token": token.key,"data": user_data})

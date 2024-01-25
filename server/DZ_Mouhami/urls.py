@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path , include
 import debug_toolbar
+from core import views
 
 
 urlpatterns = [
@@ -28,6 +29,9 @@ urlpatterns = [
     path('core/', include('core.urls')),
     path('accounts/', include('allauth.urls')),
     path('accounts/', include('allauth.socialaccount.urls')),
+    path('auth/', include('drf_social_oauth2.urls', namespace='drf')),
+    path('o/', include('social_django.urls', namespace='social')),
+    
 ]
 
 

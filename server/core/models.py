@@ -1,8 +1,20 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.contrib import admin
 from django.utils import timezone
+from django.db.models import Avg
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    google_id = models.CharField(max_length=255, unique=True, null=True)
+    github_id = models.CharField(max_length=255, unique=True, null=True)
+
+    def clean(self):
+        if self.google_id is None and self.github_id is None:
+            raise ValidationError("One of google_id or github_id must be set.")
 # Address model
 class Address(models.Model):
     street = models.CharField(max_length=255)
@@ -15,7 +27,7 @@ class Address(models.Model):
 
 # ClientProfile model, using OneToOneField for a one-to-one relationship with User
 class ClientProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE , related_name='client_profile') 
     age = models.IntegerField()
     gender = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=255)
@@ -37,7 +49,7 @@ class ClientProfile(models.Model):
 
 # LawyerProfile model, using OneToOneField for a one-to-one relationship with User
 class LawyerProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE , related_name='lawyer_profile')
     specialization = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=255)
     bio = models.CharField(max_length=255)
@@ -45,6 +57,13 @@ class LawyerProfile(models.Model):
     language = models.CharField(max_length=255)
     approved = models.BooleanField(default=False)
     rating = models.IntegerField(null=True, blank=True)
+
+    # def save(self, *args, **kwargs):
+    #     # Calculate and update the rating when saving the LawyerProfile instance
+    #     reviews_avg = Review.objects.filter(lawyer=self).aggregate(Avg('rating'))['rating__avg']
+    #     self.rating = reviews_avg if reviews_avg is not None else 0
+
+    #     super().save(*args, **kwargs)
 
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
@@ -75,19 +94,23 @@ class TimeSlot(models.Model):
 
 # Appointment model
 class Appointment(models.Model):
-    time_slot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE)
+    day = models.CharField(max_length=255, default=timezone.now) 
+    start_time = models.TimeField(default=timezone.now )
+    end_time = models.TimeField(default=timezone.now )
     lawyer = models.ForeignKey(LawyerProfile, on_delete=models.CASCADE)
     client = models.ForeignKey(ClientProfile, on_delete=models.CASCADE)
-    date = models.DateField(default=timezone.now)
     status = models.CharField(max_length=255)
 
 # Review model
 class Review(models.Model):
-    lawyer = models.ForeignKey(LawyerProfile, on_delete=models.CASCADE)
+    lawyer = models.ForeignKey(LawyerProfile, on_delete=models.CASCADE, related_name='reviews')
     client = models.ForeignKey(ClientProfile, on_delete=models.CASCADE)
-    rating = models.IntegerField()
-    comment = models.CharField(max_length=255)
-    date = models.DateField()
+    rating = models.PositiveIntegerField()
+    comment = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Review for {self.lawyer.user.get_full_name()} by {self.client.user.get_full_name()}'
 
 # LawyerDocument model
 class LawyerImage(models.Model):

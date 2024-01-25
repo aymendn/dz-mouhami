@@ -1,6 +1,7 @@
 # serializers.py
 from rest_framework import serializers
-from .models import Address, LawyerProfile, LawyerImage, LawyerDocument , ClientProfile , User , TimeSlot
+from .models import Address, LawyerProfile, LawyerImage, LawyerDocument , ClientProfile , User , TimeSlot , Appointment , Review
+from django.shortcuts import get_object_or_404
 
 
 class AddressSerializer(serializers.ModelSerializer):
@@ -41,6 +42,7 @@ class LawyerProfileSerializer(serializers.ModelSerializer):
             address = Address.objects.create(**address_data)
             validated_data['address'] = address
 
+        # Save the lawyer profile first
         lawyer = LawyerProfile.objects.create(**validated_data)
 
         if time_slots_data:
@@ -125,3 +127,49 @@ class LawyerProfileAdminListSerializer(serializers.ModelSerializer):
     class Meta:
         model = LawyerProfile
         fields = ['id','first_name', 'last_name', 'specialization', 'images', 'documents' , 'approved']
+
+
+class AppointmentSerializer(serializers.ModelSerializer):
+    status = serializers.CharField(read_only=True)
+
+    class Meta:
+        model = Appointment
+        fields = ['id', 'day', 'start_time', 'end_time' , 'status']
+
+    def validate(self, data):
+        lawyer = self.context.get('lawyer_profile')
+        client = self.context.get('client_profile')
+
+        Appointment.objects.create(
+            lawyer=lawyer,
+            client=client,
+            day=data['day'],
+            start_time=data['start_time'],
+            end_time=data['end_time'],
+            status='pending'
+        )
+        data = { 'lawyer': lawyer, 'client': client, 'day': data['day'], 'start_time': data['start_time'], 'end_time': data['end_time']}
+        return data
+
+    
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ['id', 'rating', 'comment', 'created_at']
+
+    def create(self, validated_data):
+        lawyer = self.context.get('lawyer_id')
+        client_id = self.context.get('client_id')
+        
+        # Get the ClientProfile instance using the provided client_id
+        client = get_object_or_404(ClientProfile, id=client_id)
+
+        review_instance = Review.objects.create(
+            lawyer_id=lawyer,
+            client=client,
+            rating=validated_data['rating'],
+            comment=validated_data['comment']
+        )
+        return review_instance
+
+    
