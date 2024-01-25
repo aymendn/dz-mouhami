@@ -433,7 +433,7 @@ def lawyer_profile_search(request):
 #         )
 #     return response()  # put the response
 
-#--------------------------------------------samy test --------------------------------------------
+#--------------------------------------------samy 3amkom --------------------------------------------
 
 from django.contrib.auth.models import User
 
