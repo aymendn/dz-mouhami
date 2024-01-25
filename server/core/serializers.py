@@ -28,10 +28,12 @@ class LawyerProfileSerializer(serializers.ModelSerializer):
     time_slots = TimeSlotSerializer(required=False, allow_null=True, many=True)
     rating = serializers.IntegerField(read_only=True)
     images= LawyerImageSerializer(many=True , read_only=True)
+    first_name = serializers.CharField(source='user.first_name', read_only=True)
+    last_name = serializers.CharField(source='user.last_name', read_only=True)
 
     class Meta:
         model = LawyerProfile
-        fields = ['id', 'specialization', 'phone_number', 'bio', 'language', 'address', 'time_slots' , 'rating' , 'images']
+        fields = ['id', 'first_name', 'last_name', 'specialization', 'phone_number', 'bio', 'language', 'address', 'time_slots' , 'rating' , 'images']
 
     def create(self, validated_data):
         address_data = validated_data.pop('address', None)
