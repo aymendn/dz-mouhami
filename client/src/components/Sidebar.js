@@ -26,7 +26,12 @@ const Sidebar = () => {
           {t("profile")}
         </h2>
         <SidebarLink icon={profileIcon} title={t("editProfile")} to="/edit" />
-        <SidebarLink icon={logoutIcon} title={t("signOut")} to="/" className="text-red-500" />
+        <SidebarLink
+          icon={logoutIcon}
+          title={t("signOut")}
+          to="/"
+          isRed={true}
+        />
         <div className="mt-auto mb-10">
           <div className=" flex items-start justify-start flex-wrap gap-x-4 gap-y-1">
             <Link to="/contact">

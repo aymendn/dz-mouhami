@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 const Main = () => {
   const { t } = useTranslation();
   return (
-    <div className="mx-auto text-center">
+    <div className="mx-auto text-center min-h-[calc(100vh-90px)] flex flex-col justify-center items-center">
       {/* Heading */}
       <h1 className="font-['Domine'] font-bold  mt-6 mb-3  text-[#0F3146] max-w-3xl mx-auto leading-tight lg:text-6xl md:text-5xl sm:text-4xl text-3xl">
         {t("landingTitle")}

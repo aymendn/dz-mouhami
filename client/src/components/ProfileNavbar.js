@@ -5,6 +5,7 @@ import LogoComponent from "./Logo";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import SwitchLanguage from "./SwitchLanguage";
 const ProfileNavbar = () => {
   const { t } = useTranslation();
 
@@ -67,6 +68,7 @@ const ProfileNavbar = () => {
             <LogoComponent isWhite={true} to="/dashboard" />
             {/* Navigation Links */}
             <div className="space-x-4 flex justify-end gap-12 text-sm font-medium">
+              <SwitchLanguage />
               <Link to="/about" className="flex items-center gap-1 text-white">
                 <img src={info}></img>
                 {t("about")}

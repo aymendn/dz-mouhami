@@ -4,20 +4,25 @@ import Footer from "../../components/Footer";
 import balance from "../../assets/balance.svg";
 import search from "../../assets/person_search.svg";
 import ChoiceCards from "../../components/ChoiceCards";
+import { useTranslation } from "react-i18next";
 
 const ChoicePage = () => {
+  const { t } = useTranslation();
+
   const dataItems = [
     {
       keyy: 1,
       title: "I am a lawyer ",
       text: "Join our legal community to showcase your expertise and connect with clients.",
       img: balance,
+      to: "/lawyer-registrationStep1",
     },
     {
       keyy: 2,
       title: "Seeking Legal Assistance",
       text: "  Find trusted lawyers in Algeria. Let us guide you.",
       img: search,
+      to: "/user-registration",
     },
   ];
   return (
@@ -25,7 +30,7 @@ const ChoicePage = () => {
       <Navbar />
       <div className="mt-8 text-center">
         <h1 className="text-[#0F3146] text-5xl font-semibold font-['Domine']">
-          Choose your role
+          {t("chooseRole")}
         </h1>
         <p className="p-4 text-[#496C80] text-md">
           Let's tailor your experience.
@@ -40,6 +45,7 @@ const ChoicePage = () => {
             img={data.img}
             title={data.title}
             text={data.text}
+            to={data.to}
           />
         ))}
       </div>

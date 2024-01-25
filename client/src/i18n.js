@@ -7,6 +7,7 @@ const resources = {
   fr: {
     translation: {
       languageCode: "fr",
+      direction: "ltr",
       getStarted: "Commencer",
       about: "A propos",
       contact: "Contact",
@@ -57,11 +58,23 @@ const resources = {
       appointments: "Rendez-vous",
       requests: "Demandes",
       signOut: "Déconnexion",
+      description: "Description",
+      availability: "Disponibilité",
+      reviews: "Avis",
+      leaveAReview: "Laisser un avis",
+      scheduleAnAppointment: "Prendre un rendez-vous",
+      sendEmail: "Envoyer un email",
+      makeCall: "Appeler",
+      address: "Adresse",
+      contactDescription:
+        "Prêt pour une assistance juridique? Connectez-vous avec cet avocat pour discuter de votre cas, poser des questions ou prendre rendez-vous.",
+      chooseRole: "Choisissez votre rôle",
     },
   },
   ar: {
     translation: {
       languageCode: "ar",
+      direction: "rtl",
       getStarted: "ابدأ الآن",
       about: "حول",
       contact: "اتصل",
@@ -110,6 +123,17 @@ const resources = {
       appointments: "مواعيد",
       requests: "طلبات",
       signOut: "تسجيل الخروج",
+      description: "وصف",
+      availability: "توفر",
+      reviews: "التعليقات",
+      leaveAReview: "اترك تعليق",
+      scheduleAnAppointment: "جدولة موعد",
+      sendEmail: "ارسل بريد الكتروني",
+      makeCall: "اتصل",
+      address: "عنوان",
+      contactDescription:
+        "هل أنت مستعد للحصول على المساعدة القانونية؟ اتصل بمحاميك لمناقشة قضيتك أو طرح الأسئلة أو تحديد موعد.",
+      chooseRole: "اختر دورك",
     },
   },
 };

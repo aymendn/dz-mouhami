@@ -16,7 +16,7 @@ const SearchBar = () => {
       <input
         type="text"
         placeholder={t("search")}
-        className=" text-[rgba(16,_63,_91,_0.5)] outline-none border-none"
+        className=" text-[rgba(10,40,57,0.76)] outline-none border-none w-full p-2"
       />
       <button
         onClick={handleSearch}

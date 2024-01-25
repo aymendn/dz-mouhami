@@ -1,6 +1,12 @@
-import StarIcon from "../assets/reviews.svg";
+import Rating from "react-rating";
+import { useTranslation } from "react-i18next";
+import starFilled from "../assets/star_filled.svg";
+import star from "../assets/star.svg";
 
 const ReviewCard = ({ imageUrl, fullName, date, rating, reviewContent }) => {
+  const { t } = useTranslation();
+  const direction = t("direction");
+
   return (
     <div>
       {/* image, name, date and rating here */}
@@ -12,14 +18,19 @@ const ReviewCard = ({ imageUrl, fullName, date, rating, reviewContent }) => {
           <div className="text-sm font-medium text-[#0f3146]">{fullName}</div>
           <div className="text-xs text-[#618396]">{date}</div>
         </div>
-        {/* rating */}
+        {/* Rating */}
         <div className="flex items-center gap-1 ms-auto self-start">
-          <div className="text-sm text-[#496C80]">{rating}</div>
-          <img src={StarIcon} alt="Star" className="w-4" />
+          <Rating
+            direction={direction}
+            initialRating={Math.floor(rating)}
+            readonly={true}
+            emptySymbol={<img src={star} className="icon" width={20} />}
+            fullSymbol={<img src={starFilled} className="icon" width={20} />}
+          />
         </div>
       </div>
       {/* content */}
-      <p className="text-[#496C80] text-sm">{reviewContent}</p>     
+      <p className="text-[#496C80] text-sm">{reviewContent}</p>
     </div>
   );
 };
