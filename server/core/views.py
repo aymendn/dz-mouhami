@@ -266,12 +266,11 @@ def lawyer_profile_content(request):
     serializer = LawyerProfileSerializer(lawyer_profile)
     return Response(serializer.data)
 
-
-def schedule_appointment(request):
+@api_view(['POST'])
+def schedule_appointment(request, lawyer_id, time_slot_id):
     if request.user.is_authenticated and hasattr(request.user,'clientprofile'):
-        lawyer_id = request.POST.get('lawyer_id')
         client_id = request.user.id
-        time_slot_id = request.POST.get('time_slot_id')
+         # client_id = 31 #testing
 
         client_profile = ClientProfile.objects.get(id=client_id)
         lawyer_profile = LawyerProfile.objects.get(id=lawyer_id)
@@ -291,6 +290,23 @@ def schedule_appointment(request):
             status="Pending"
         )
 
-        return {"success": True, "message": "Appointment created."}
+        print(appointment)
+
+        return Response({"success": True, "message": "Appointment created."})
     else :
         return {"success": False, "message": "You need to login first."}
+    
+
+@api_view(['POST'])
+def accept_appointment(request,appointment_id):
+    appointment = Appointment.objects.get(id=appointment_id)
+    appointment.status = 'Accepted'
+    appointment.save()
+    return Response({"success": True, "message": "Appointment accepted."})
+
+@api_view(['POST'])
+def refuse_appointment(request,appointment_id):
+    appointment = Appointment.objects.get(id=appointment_id)
+    appointment.status = 'Refused'
+    appointment.save()
+    return Response({"success": True, "message": "Appointment refused."})
