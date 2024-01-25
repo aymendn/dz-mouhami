@@ -15,9 +15,9 @@ lawyers_router.register(r'documents', views.LawyerDocumentViewSet, basename='law
 # lawyers_router.register(r'appointments', views.AppointmentLawyerModelViewSet, basename='lawyer-appointments')
 
 
-lawyers_dashbord = routers.NestedDefaultRouter(router, r'dashboard', lookup='lawyer')
+lawyers_dashbord = routers.NestedSimpleRouter(router, r'dashboard', lookup='lawyer')
 
-# lawyers_view = routers.NestedDefaultRouter(router, r'lawyer-search', lookup='lawyer')
+# lawyers_view = routers.NestedSimpleRouter(router, r'lawyer-search', lookup='lawyer')
 # lawyers_view.register(r'appointments', views.AppointmentClientModelViewSet, basename='appointments')
 # lawyers_view.register(r'reviews', views.ReviewViewSet, basename='lawyer-reviews')
 

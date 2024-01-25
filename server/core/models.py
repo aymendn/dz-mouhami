@@ -88,8 +88,8 @@ class Administrator(models.Model):
 # TimeSlot model
 class TimeSlot(models.Model):
     day = models.CharField(max_length=255)
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    start_time = models.TimeField(default=timezone.now)
+    end_time = models.TimeField(default=timezone.now)
     lawyer = models.ForeignKey(LawyerProfile, on_delete=models.CASCADE , related_name='time_slots')
 
 # Appointment model
