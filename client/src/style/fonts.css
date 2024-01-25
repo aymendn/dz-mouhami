@@ -1,8 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Lexend+Exa:wght@100;200;300;400;500;600;700;800&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Lexend+Exa:wght@100;200;300;400;500;600;700;800&family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400&display=swap'); */
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700;9..40,800;9..40,900;9..40,1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
 
 html {
-   font-family: 'DM Sans', sans-serif;
    position: relative;
    min-height: 100%;
    scroll-behavior: smooth;
@@ -12,6 +13,25 @@ html {
    overflow-x: hidden;
 
 }
+
+.fr {
+   font-family: 'DM Sans', sans-serif;
+   direction: ltr;
+   text-align: left;
+   unicode-bidi: bidi-override;
+}
+
+.ar {
+   font-family: 'Rubik', sans-serif !important;
+   direction: rtl;
+   text-align: right;
+   unicode-bidi: bidi-override;
+}
+
+.ar * {
+   font-family: 'Rubik', sans-serif !important;
+}
+
 
 body {
    margin-inline: auto;
@@ -23,7 +43,7 @@ body {
    max-width: 70rem;
    min-width: min(90%, 70rem);
    margin-inline: auto;
-   padding-inline: 1rem;
+   padding-inline: 0.25rem;
 }
 
 

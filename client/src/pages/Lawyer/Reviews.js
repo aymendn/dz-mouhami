@@ -1,8 +1,11 @@
 import ReviewsIcon from "../../assets/reviews.svg";
 import LeaveReviewDialog from "../../components/LeaveReviewDialog";
 import ReviewCard from "../../components/ReviewCard";
+import { useTranslation } from "react-i18next";
 
 const Reviews = () => {
+  const { t } = useTranslation();
+
   // imageUrl, fullName, date, rating, reviewContent;
   const reviews = Array(5)
     .fill()
@@ -20,13 +23,15 @@ const Reviews = () => {
       <div className="flex flex-row justify-between items-center border-b border-[#e4e4e4] pb-4 mb-4">
         <div className="flex items-center gap-2">
           <img src={ReviewsIcon} alt="Locationon" className="w-5" />
-          <div className="font-medium text-lg text-[#0f3146]">Reviews</div>
+          <div className="font-medium text-lg text-[#0f3146]">
+            {t("reviews")}
+          </div>
         </div>
         <LeaveReviewDialog
           key="appointment"
           trigger={
             <div className="bg-[#094b72] text-white text-sm font-medium  py-2 px-5 rounded-full hover:opacity-90 cursor-pointer transition-all ms-2">
-              Leave a review
+              {t("leaveAReview")}
             </div>
           }
         />

@@ -7,7 +7,11 @@ import Search from "../assets/search.svg";
 import "../style/styles.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import SwitchLanguage from "./SwitchLanguage";
+import { useTranslation } from "react-i18next";
 const Navbar = () => {
+  const { t } = useTranslation();
+
   // get current url, if it's /home, show the get started button
   const currentUrl = window.location.pathname;
   const isHome = currentUrl === "/";
@@ -101,43 +105,34 @@ function MenuIcon({ onClick, isOpen = true }) {
 }
 
 function GetStartedButton({}) {
+  const { t } = useTranslation();
   return (
-    <button className="bg-[#E5F2FA] font-semibold text-[#09283A] rounded-full px-6 py-2 hover:bg-[#d7ebf8] border-2 border-[#194f6e1b] hover:border-[#194f6e54] transition-all duration-100">
-      Get Started
-    </button>
+    <Link to={"/choice"}>
+      <button className="bg-[#E5F2FA] font-semibold text-[#09283A] rounded-full px-6 py-2 hover:bg-[#d7ebf8] border-2 border-[#194f6e1b] hover:border-[#194f6e54] transition-all duration-100">
+        {t("getStarted")}
+      </button>
+    </Link>
   );
 }
 
 function LinksWrapper({ className }) {
+  const { t } = useTranslation();
   return (
     <div className={className}>
-      <Link
-        to="/about"
-        className="nav-Links  flex items-center gap-1 text-[#26495D]"
-      >
-        <img src={info}></img>
-        About
-      </Link>
-      <Link
-        to="/contact"
-        className="nav-Links  flex items-center gap-1 text-[#26495D]"
-      >
-        <img src={contact}></img>
-        Contact
-      </Link>
+      <SwitchLanguage />
       <Link
         to="/search"
         className=" nav-Links flex items-center gap-1 text-[#26495D]"
       >
         <img src={Search}></img>
-        Search
+        {t("search")}
       </Link>
       <Link
         to="/user-edit"
         className="nav-Links flex items-center gap-1 text-[#26495D]"
       >
         <img src={Profil}></img>
-        Profile
+        {t("profile")}
       </Link>
     </div>
   );

@@ -11,13 +11,15 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
+from rest_framework.pagination import PageNumberPagination
 from allauth.socialaccount.models import SocialAccount, SocialToken
 from rest_framework import generics, permissions
-from .models import LawyerProfile
+from .models import LawyerProfile, Appointment
 from .serializers import UserSerializer
 from django.contrib.auth.models import User
 from .serializers import LawyerProfileAdminListSerializer
 from django.utils import timezone
+from django.db.models import Q
 
 from allauth.socialaccount.models import SocialAccount
 from rest_framework import status
@@ -41,6 +43,7 @@ from rest_framework import status
 from django.urls import reverse
 from django.conf import settings
 from django.shortcuts import redirect
+
 
 
 @api_view(['GET'])
@@ -515,3 +518,108 @@ class GoogleOAuth2LoginCallbackView(APIView):
         frontend_url = "http://192.168.228.10:3000/login-handler"
         return redirect(frontend_url + "?token=" + token.key+"?data="+json.dumps(user_data))
         return JsonResponse({"token": token.key,"data": user_data})
+
+
+class CustomPageNumberPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 100
+
+@api_view(['GET'])
+def lawyer_profile_search(request):
+    query = request.GET.get('query', '')
+    categories = request.GET.getlist('categories')
+    days = request.GET.getlist('days')
+
+    rating = request.GET.get('rating', '')
+
+    search_results = LawyerProfile.objects.filter(approved=True)
+
+    if query :
+        lawyer_filter = (
+            Q(user__first_name__icontains = query)
+        )
+        address_filter = (
+            Q(address__street__icontains = query) |
+            Q(address__city__icontains = query) |
+            Q(address__state__icontains = query) |
+            Q(address__country__icontains = query)
+        )
+
+        search_results = search_results.filter(lawyer_filter | address_filter)
+    
+    if days != ['']:
+        day_filter = Q()
+        for day in days:
+            day_filter |= Q(time_slots__day__iexact=day)
+        search_results = search_results.filter(day_filter)
+    
+    if categories != [''] :
+        category_filter = Q()
+        for category in categories:
+            category_filter |= Q(specialization__iexact=category)
+        search_results = search_results.filter(category_filter)
+
+    if rating:
+        search_results = search_results.filter(rating__gte=rating)
+        
+    paginator = CustomPageNumberPagination()
+    search_results = search_results.order_by('-rating',)
+
+    paginated_results = paginator.paginate_queryset(search_results, request)
+    
+    serialized_results = LawyerProfileSerializer(paginated_results, many=True).data
+
+    return Response({'search_results': serialized_results})
+
+@api_view(['GET'])
+def lawyer_profile_content(request):
+    lawyer_id = request.GET.get('lawyer_id')
+    lawyer_profile = get_object_or_404(LawyerProfile, id=lawyer_id)
+    serializer = LawyerProfileSerializer(lawyer_profile)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def schedule_appointment(request, lawyer_id, time_slot_id):
+    if request.user.is_authenticated and hasattr(request.user,'clientprofile'):
+        client_id = request.user.id
+         # client_id = 31 #testing
+
+        client_profile = ClientProfile.objects.get(id=client_id)
+        lawyer_profile = LawyerProfile.objects.get(id=lawyer_id)
+        time_slot = TimeSlot.objects.get(id=time_slot_id, lawyer_id=lawyer_id)
+
+        existing_appointment = Appointment.objects.filter(
+            time_slot_id=time_slot_id,
+            client_id=client_id
+        ).first()
+        if existing_appointment:
+            return {"success": False, "message": "Appointment already exists for this time slot."}
+
+        appointment = Appointment.objects.create(
+            time_slot=time_slot,
+            lawyer=lawyer_profile,
+            client=client_profile,
+            status="Pending"
+        )
+
+        print(appointment)
+
+        return Response({"success": True, "message": "Appointment created."})
+    else :
+        return {"success": False, "message": "You need to login first."}
+    
+
+@api_view(['POST'])
+def accept_appointment(request,appointment_id):
+    appointment = Appointment.objects.get(id=appointment_id)
+    appointment.status = 'Accepted'
+    appointment.save()
+    return Response({"success": True, "message": "Appointment accepted."})
+
+@api_view(['POST'])
+def refuse_appointment(request,appointment_id):
+    appointment = Appointment.objects.get(id=appointment_id)
+    appointment.status = 'Refused'
+    appointment.save()
+    return Response({"success": True, "message": "Appointment refused."})

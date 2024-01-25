@@ -9,7 +9,7 @@ const Reviews = () => {
       imageUrl: "https://picsum.photos/200",
       fullName: "John Doe",
       date: "July 2021",
-      rating: 4.5,
+      rating: 4,
       reviewContent:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut vitae, ultricies in sit. ",
     }));

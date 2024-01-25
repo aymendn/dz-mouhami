@@ -3,8 +3,10 @@ import Navbar from "../../components/Navbar";
 import FilterSidebar from "./FilterSidebar";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
+import {useTranslation} from "react-i18next";
 
 const SearchPage = () => {
+  const {t} = useTranslation();
   return (
     <>
       <Navbar />

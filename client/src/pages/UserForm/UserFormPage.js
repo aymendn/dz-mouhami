@@ -1,17 +1,19 @@
 import React from "react";
-import Navbar from "../../components/NavbarNoAction";
+import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import validation from "../../assets/person_check.svg";
 import { Link } from "react-router-dom";
-import TextAreaField from "../../components/TextAreaField";
 import TextField from "../../components/TextField";
+import SelectField from "../../components/SelectField";
 const UserFormPage = () => {
   return (
-    <div>
-      <Navbar />
+    <div className="flex flex-col justify-center items-center">
+      <div className="w-full">
+        <Navbar />
+      </div>
 
-      <div className="mt-8 text-center">
-        <h1 className="text-[#0F3146] text-5xl font-semibold">
+      <div className="mt-8 text-center max-w-3xl">
+        <h1 className="text-[#0F3146] text-4xl font-semibold">
           Create Your Account
         </h1>
         <p className="p-4 text-[#496C80] text-md text-center">
@@ -21,54 +23,48 @@ const UserFormPage = () => {
         </p>
       </div>
 
-      <form className="mx-6 md:mx-16 lg:mx-64">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 my-8">
-        <div className="mb-4">
-         <TextField
-        label="Nom"
-        type="text"
-        id="nom"
-        placeholder="Doe"/>
-        </div>
-        
-        <div className="mb-4">
-         <TextField
-        label="surname"
-        type="text"
-        id="surname"
-        placeholder="John"/>
-        </div>
-          
+      <form className="min-w-full sm:min-w-[600px] max-w-3xl w-full px-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8 ">
+          <TextField id={"name"} label={"Name"} placeholder={"John"} />
 
-        <div className="mb-4">
-         <TextField
-        label="email"
-        type="email"
-        id="email"
-        placeholder="Johndoe@gmail.dz"/>
-        </div>
+          <TextField id={"surname"} label={"Surname"} placeholder={"Doe"} />
 
-        <div className="mb-4">
-         <TextField
-        label="contact"
-        type="tel"
-        id="contact"
-        placeholder="555-222-111"/>
+          <TextField id={"email"} label={"Email"} placeholder={"a@mail.com"} />
+
+          <TextField
+            id={"phone"}
+            label={"Phone"}
+            placeholder={"06 00 00 00 00"}
+          />
+
+          <SelectField
+            id={"Specification"}
+            label={"Legal Specification"}
+            placeholder={"Select a specification"}
+            options={[
+              { value: "Agression", label: "Agression" },
+              { value: "Crime", label: "Crime" },
+              { value: "Robbing", label: "Robbing" },
+            ]}
+          />
+
+          <TextField id={"address"} label={"Address"} placeholder={"Paris"} />
         </div>
 
-       </div>
-        <div className="flex justify-center md:justify-end m-4">
+        <div className="flex justify-end m-4">
           <Link to="/user-registration/validation">
-            <button className="transition-transform transform hover:scale-90 duration-300 border bg-[#094B72] py-3 px-6 rounded-3xl text-white font-normal text-md flex  gap-2">
+            <button className="flex flex-row gap-2 transition-all border-1 bg-[#094B72] py-3 px-10 rounded-full text-white font-normal text-md hover:opacity-90 mb-6">
               <img src={validation} alt="Validation" />
-              Create account
+              Continue
             </button>
           </Link>
         </div>
         
       </form>
 
-      <Footer />
+      <div className="w-full">
+        <Footer />
+      </div>
     </div>
   );
 };
