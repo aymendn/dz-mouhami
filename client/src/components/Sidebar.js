@@ -6,24 +6,27 @@ import profileIcon from "../assets/profile_sidebar.svg";
 import logoutIcon from "../assets/logout.svg";
 import { Link } from "react-router-dom";
 import SidebarLink from "./SidebarLink";
+import { useTranslation } from "react-i18next";
 const Sidebar = () => {
+  const { t } = useTranslation();
   return (
-    <div className="hidden lg:flex">
+    <div className="hidden lg:flex max-w-[280px]">
       <div className="text-white  p-4 w-full border-r-1 bg-slate-50 flex flex-col">
         <h2 className="text-sm text-[#708FA2]  font-normal mb-1">Main Menu</h2>
-        <SidebarLink icon={homeIcon} title="Dashboard" to="/dashboard" />
+        <SidebarLink icon={homeIcon} title={t("dashboard")} to="/dashboard" />
         <SidebarLink
           icon={appointementsIcon}
-          title="Appointements"
+          title={t("appointments")}
           to="/appointments"
         />
-        <SidebarLink icon={requestIcon} title="Requests" to="/requests" />
-        <h2 className="text-sm text-[#708FA2] font-normal mb-1 mt-6">
-          Profile
-        </h2>
+        <SidebarLink icon={requestIcon} title={t("requests")} to="/requests" />
 
-        <SidebarLink icon={profileIcon} title="Edit profile" to="/edit" />
-        <SidebarLink icon={logoutIcon} title="Logout" to="/" color="red-600" />
+        {/* Profile Section */}
+        <h2 className="text-sm text-[#708FA2] font-normal mb-1 mt-6">
+          {t("profile")}
+        </h2>
+        <SidebarLink icon={profileIcon} title={t("editProfile")} to="/edit" />
+        <SidebarLink icon={logoutIcon} title={t("signOut")} to="/" className="text-red-500" />
         <div className="mt-auto mb-10">
           <div className=" flex items-start justify-start flex-wrap gap-x-4 gap-y-1">
             <Link to="/contact">

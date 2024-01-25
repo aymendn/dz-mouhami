@@ -1,21 +1,23 @@
 import Filter from "../../assets/filter.svg";
 import CloseIcon from "../../assets/close_small.svg";
+import { useTranslation } from "react-i18next";
 
 const FilterSidebar = () => {
+  const { t } = useTranslation();
   return (
-    <div className="w-1/3 h-full rounded-2xl border-2 border-slate-100 p-8 mr-5 hidden lg:block">
+    <div className="w-1/3 h-full rounded-2xl border-2 border-slate-100 p-8 me-5 hidden lg:block">
       <div className="flex justify-start items-center">
-        <img src={Filter} className="w-5 mr-3" alt="Filter Icon" />
-        <h2 className="text-[#15394E] text-2xl font-bold">Filter</h2>
+        <img src={Filter} className="w-5 me-3" alt="Filter Icon" />
+        <h2 className="text-[#15394E] text-2xl font-bold">{t("filter")}</h2>
       </div>
       {/* 2 buttons in a row */}
       <div className="flex justify-start items-center mt-4">
-        <button className="bg-[#094B72] text-white rounded-3xl px-8 py-2 text-base hover:opacity-80 transition-all mr-2">
-          <p>Apply Filters</p>
+        <button className="bg-[#094B72] text-white rounded-3xl px-8 py-2 text-base hover:opacity-80 transition-all me-2">
+          <p>{t("apply")}</p>
         </button>
         <button className="bg-gray-100 flex items-center text-[#103F5BE5] rounded-3xl px-8 py-2 text-base hover:opacity-80 hover:bg-gray-200 transition-all">
-          <img src={CloseIcon} className="w-2 mr-2" alt="Close Icon" />
-          <p>Clear</p>
+          <img src={CloseIcon} className="w-2 me-2" alt="Close Icon" />
+          <p>{t("clear")}</p>
         </button>
       </div>
       {/* a list of check boxes with a title, checkboxes should be in new lines*/}
@@ -28,7 +30,7 @@ const FilterSidebar = () => {
             name="category1"
             value="category1"
             //   make it a little bit bigger and the color to primary
-            className="mr-2 w-4 h-4 accent-[#094B72]"
+            className="me-2 w-4 h-4 accent-[#094B72]"
           />
           <label htmlFor="category1" className="text-base select-none">
             Category 1
@@ -41,7 +43,7 @@ const FilterSidebar = () => {
             name="category2"
             value="category2"
             //   make it a little bit bigger and the color to primary
-            className="mr-2 w-4 h-4 accent-[#094B72]"
+            className="me-2 w-4 h-4 accent-[#094B72]"
           />
           <label htmlFor="category2" className="text-base select-none">
             Category 2

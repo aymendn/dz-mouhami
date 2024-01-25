@@ -4,8 +4,10 @@ import profilePicture from "../assets/profile_placeholder.png";
 import LogoComponent from "./Logo";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import SvgColor from "react-svg-color";
+import { useTranslation } from "react-i18next";
 const ProfileNavbar = () => {
+  const { t } = useTranslation();
+
   // get current url, if it's /home, show the get started button
   const currentUrl = window.location.pathname;
   const isHome = currentUrl === "/";
@@ -51,10 +53,10 @@ const ProfileNavbar = () => {
               >
                 {/* Navigation Links */}
                 <div className="flex flex-col font-medium">
-                  <CustomLink name="Appointement" to="/appointments" />
-                  <CustomLink name="Requests" to="/requests" />
-                  <CustomLink name="Edit Profile" to="/edit" />
-                  <CustomLink name="Sign Out" to="/" />
+                  <CustomLink name={t("appointments")} to="/appointments" />
+                  <CustomLink name={t("requests")} to="/requests" />
+                  <CustomLink name={t("editProfile")} to="/edit" />
+                  <CustomLink name={t("signOut")} to="/" />
                 </div>
               </div>
             </div>
@@ -67,14 +69,14 @@ const ProfileNavbar = () => {
             <div className="space-x-4 flex justify-end gap-12 text-sm font-medium">
               <Link to="/about" className="flex items-center gap-1 text-white">
                 <img src={info}></img>
-                About
+                {t("about")}
               </Link>
               <Link
                 to="/contact"
                 className=" flex items-center gap-1 text-white"
               >
                 <img src={contact}></img>
-                Contact
+                {t("contact")}
               </Link>
               <img src={profilePicture} className="w-8 h-8 rounded-full"></img>
             </div>

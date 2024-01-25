@@ -49,7 +49,7 @@ const LawyerForm2Page = () => {
           <input
             type="file"
             className="block text-sm text-slate-500
-        file:mr-4 file:py-2 file:px-4
+        file:me-4 file:py-2 file:px-4
         file:rounded-xl file:w-full  file:h-[200px] file:border-0
         file:text-sm file:font-semibold file:border-2 
         file:bg-slate-50 file:text-[#103F5BE5]
@@ -72,7 +72,7 @@ const LawyerForm2Page = () => {
           <input
             type="file"
             className="block text-sm text-slate-500
-        file:mr-4 file:py-2 file:px-4
+        file:me-4 file:py-2 file:px-4
         file:rounded-xl file:w-full  file:h-[200px] file:border-0
         file:text-sm file:font-semibold file:border-2 
         file:bg-slate-50 file:text-[#103F5BE5]

@@ -4,7 +4,10 @@ import TextField from "../../components/TextField";
 import { useState } from "react";
 import SelectField from "../../components/SelectField";
 import Footer from "../../components/Footer";
+import { useTranslation } from "react-i18next";
 const EditProfilePage = () => {
+  const { t } = useTranslation();
+
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageChange = (event) => {
@@ -25,15 +28,15 @@ const EditProfilePage = () => {
       </div>
       <div className="flex flex-1">
         <Sidebar></Sidebar>
-        <form className="w-full">
+        <form className="w-full max-w-4xl">
           <h1 className="text-3xl m-8 font-semibold text-[#094B72]">
-            Edit your profil
+            {t("editProfile")}
           </h1>
           <label
             htmlFor="imageInput"
             className="block text-md m-6 font-medium text-[#094B72] "
           >
-            Upload a Picture
+            {t("changePicture")}
           </label>
           <div className="mt-1 flex items-center">
             <input
@@ -53,26 +56,25 @@ const EditProfilePage = () => {
               }}
             ></div>
             {selectedImage && (
-              <div className="ml-3">
+              <div className="ms-3">
                 <p className="text-sm text-gray-500">{selectedImage.name}</p>
               </div>
             )}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 m-8">
-            <TextField id={"name"} label={"Name"} placeholder={"John"} />
-
-            <TextField id={"surname"} label={"Surname"} placeholder={"Doe"} />
+            <TextField id={"name"} label={t("lastName")} placeholder={"John"} />
 
             <TextField
-              id={"email"}
-              label={"Email"}
-              placeholder={"a@mail.com"}
+              id={"surname"}
+              label={t("firstName")}
+              placeholder={"Doe"}
             />
+            <TextField id={"name"} label={t("lastName")} placeholder={"John"} />
 
             <TextField
-              id={"phone"}
-              label={"Phone"}
-              placeholder={"06 00 00 00 00"}
+              id={"surname"}
+              label={t("firstName")}
+              placeholder={"Doe"}
             />
 
             <SelectField
@@ -86,12 +88,16 @@ const EditProfilePage = () => {
               ]}
             />
 
-            <TextField id={"address"} label={"Address"} placeholder={"Paris"} />
+            <TextField
+              id={"surname"}
+              label={t("firstName")}
+              placeholder={"Doe"}
+            />
           </div>
 
           <div className="flex justify-end m-4">
-            <button className="transition-transform transform hover:scale-105 duration-500  mx-4 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
-              Save changes
+            <button className="transition-all hover:opacity-90 mx-4 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
+              <p>{t("save")}</p>
             </button>
           </div>
         </form>

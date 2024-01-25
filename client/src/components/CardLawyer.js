@@ -9,7 +9,7 @@ const CardLawyer = ({ name, location, categories, description, image }) => {
         {/* Image on the left */}
         <img
           src={image}
-          className="w-full md:w-64 h-[200px] rounded-md mr-4 object-cover"
+          className="w-full md:w-64 h-[200px] rounded-md me-4 object-cover"
         />
 
         <div className="rounded-lg overflow-hidden">
@@ -18,7 +18,7 @@ const CardLawyer = ({ name, location, categories, description, image }) => {
 
           {/* Localization */}
           <p className="flex items-center  mb-2 text-[#094b72cf] ">
-            <img src={locationlogo} alt="Location" className="mr-1 w-4" />
+            <img src={locationlogo} alt="Location" className="me-1 w-4" />
             {location}
           </p>
 

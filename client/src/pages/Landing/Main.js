@@ -25,7 +25,7 @@ const Main = () => {
       <div className="flex flex-col  sm:flex-row justify-start items-center gap-x-[4rem] md:gap-x-[8rem] gap-y-2 px-4 py-4 pb-10 max-w-4xl mx-auto">
         <div className="mb-4 sm:mb-0">
           <p className="flex items-center text-sm mb-2 text-[#708FA2]">
-            <div className="max-w-[20px] mr-1">
+            <div className="max-w-[20px] me-1">
               <SvgColor svg={category} colors={["#708FA2"]} />
             </div>
             <p>{t("mainCategories")}</p>
@@ -42,7 +42,7 @@ const Main = () => {
 
         <div>
           <p className="flex items-center text-sm mb-2 text-[#708FA2]">
-            <div className="max-w-[20px] mr-1">
+            <div className="max-w-[20px] me-1">
               <SvgColor svg={location} colors={["#708FA2"]} />
             </div>
             <p>{t("mainPlaces")}</p>

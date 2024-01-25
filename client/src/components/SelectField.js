@@ -15,7 +15,7 @@ const SelectField = ({
     <div className={divClassName}>
       <label
         htmlFor={htmlFor}
-        className={"block text-sm font-medium text-gray-700 " + labelClassName}
+        className={"block text-sm font-medium text-gray-700" + labelClassName}
       >
         {label}
       </label>
@@ -27,7 +27,7 @@ const SelectField = ({
           name={id}
           id={id}
           className={
-            "block mt-1 bg-gray-50 border border-gray-200 rounded-md w-full py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-blue-200 active:border-blue-200 active:bg-white appearance-none pr-8" +
+            "block mt-1 bg-gray-50 border border-gray-200 rounded-md w-full py-2 px-4 text-gray-700 focus:outline-none focus:bg-white focus:border-blue-200 active:border-blue-200 active:bg-white appearance-none pe-8" +
             selectClassName
           }
         >
@@ -38,7 +38,7 @@ const SelectField = ({
             </option>
           ))}
         </select>
-        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+        <div class="pointer-events-none absolute inset-y-0 end-0 flex items-center px-2 text-gray-700">
           <svg
             class="fill-current h-4 w-4"
             xmlns="http://www.w3.org/2000/svg"

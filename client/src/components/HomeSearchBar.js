@@ -29,7 +29,7 @@ const HomeSearchBar = () => {
 
   return (
     <div className="flex justify-center items-center">
-      <div className=" max-w-4xl  mx-4 border-solid border-2 border-[#d8ebf6] bg-white flex flex-row justify-between items-center w-full  p-[6px] pl-8  rounded-full">
+      <div className=" max-w-4xl  mx-4 border-solid border-2 border-[#d8ebf6] bg-white flex flex-row justify-between items-center w-full  p-[6px] ps-8  rounded-full">
         <div className="flex flex-row w-full items-center justify-start">
           {/* category icon */}
           <SvgColor svg={SearchIcon} colors={["#094b72", "#094b72"]} />

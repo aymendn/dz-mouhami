@@ -16,7 +16,7 @@ const MainInfo = () => {
         {/* Image on the left */}
         <img
           src={lawyerImage}
-          className="w-64 h-[280px] rounded-md mr-4 object-cover"
+          className="w-64 h-[280px] rounded-md me-4 object-cover"
         />
 
         <div className="rounded-lg overflow-hidden">

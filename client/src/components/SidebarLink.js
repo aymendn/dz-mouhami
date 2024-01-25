@@ -1,6 +1,6 @@
 import { useLocation, Link } from "react-router-dom";
 
-const SidebarLink = ({ icon, title, to, color = "[#15394E]" }) => {
+const SidebarLink = ({ icon, title, to, className }) => {
   let { pathname } = useLocation();
   let isActive = pathname === to;
   return (
@@ -12,7 +12,9 @@ const SidebarLink = ({ icon, title, to, color = "[#15394E]" }) => {
           }`}
         >
           <img src={icon}></img>
-          <p className={`text-md font-medium text-${color}`}>{title}</p>
+          <p className={`text-md font-medium ${className} text-blue-950`}>
+            {title}
+          </p>
         </li>
       </Link>
     </div>
