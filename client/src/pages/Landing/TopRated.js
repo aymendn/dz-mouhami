@@ -2,7 +2,10 @@
 import React from "react";
 import CardLawyer from "../../components/CardLawyer";
 import lawyerPlaceholder from "../../assets/lawyer_placeholder.png";
+import { useTranslation } from "react-i18next";
 const TopRated = () => {
+  const { t } = useTranslation();
+
   // Tableau d'objets représentant les avocats
   const lawyersData = Array(4)
     .fill()
@@ -19,11 +22,11 @@ const TopRated = () => {
     <div className="flex justify-center items-center">
       <div className=" my-12 mx-2 sm:mx-4 md:mx-8 lg:mx-12 xl:mx-16 2xl:mx-20 max-w-[70rem]">
         <div className="flex justify-between mb-4">
-          <h1 className="font-['Lexend_Exa'] font-semibold -tracking-[0.15rem]  text-[#094B72E5] text-2xl md:text-3xl">
-            Top Rated Lawyers
+          <h1 className="font-['Domine'] font-semibold text-[#094B72E5] text-2xl md:text-3xl">
+            {t("topRatedLawyers")}
           </h1>
           <button className="bg-[#094E771A] font-medium text-[#094B72E5] rounded-full px-6 py-2 hover:bg-[#094f773b] transition duration-50 text-sm md:text-base">
-            See All
+            {t("seeAll")}
           </button>
         </div>
         {/* opérateur spread (...) qui prend toutes les propriétés de l'objet lawyer et les passe en tant que props individuelles au composant CardLawyer. */}

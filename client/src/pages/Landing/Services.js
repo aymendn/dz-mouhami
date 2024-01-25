@@ -2,34 +2,35 @@ import Card from "../../components/Card";
 import logo1 from "../../assets/search_services.svg";
 import logo2 from "../../assets/verified.svg";
 import logo3 from "../../assets/chat.svg";
+import { useTranslation } from "react-i18next";
 
 const Services = () => {
+  const { t } = useTranslation();
   const dataItems = [
     {
-      title: "Advanced Research",
-      text: "Environmental legal issues might occur since the planned business activities are designed.",
+      title: t("advancedSearch"),
+      text: t("advancedSearchSubtitle"),
       Logo: logo1,
     },
     {
-      title: "Verified Profiles",
-      text: "Environmental legal issues might occur since the planned business activities are designed",
+      title: t("verifiedProfessionals"),
+      text: t("verifiedProfessionalsSubtitle"),
       Logo: logo2,
     },
     {
-      title: "Seamless Experience",
-      text: "Environmental legal issues might occur since the planned business activities are designed",
+      title: t("seamlessExperience"),
+      text: t("seamlessExperienceSubtitle"),
       Logo: logo3,
     },
   ];
   return (
     <div className="bg-[#ECF3F8] px-4 py-16 w-full">
       <div className="mb-8 text-center max-w-lg mx-auto">
-        <h1 className="text-center text-4xl lg:text-5xl font-['Lexend_Exa'] font-semibold -tracking-[0.30rem]  text-[#0f3146]">
-          Our Services
+        <h1 className="text-center text-4xl lg:text-5xl font-['Domine'] font-semibold text-[#0f3146]">
+          {t("ourServices")}
         </h1>
         <p className="p-4  text-[#496C80] text-md ">
-          Environmental legal issues might occur since the planned business
-          activities are designed
+          {t("ourServicesSubtitle")}
         </p>
       </div>
       <div className="flex flex-col md:flex-row justify-between items-center max-w-6xl mx-auto gap-8">

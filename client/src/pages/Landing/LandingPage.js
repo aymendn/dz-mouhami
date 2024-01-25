@@ -6,7 +6,10 @@ import TopRated from "./TopRated";
 import GetStared from "./GetStarted";
 import Main from "./Main";
 import BgImage from "../../assets/bg.svg";
+import { useTranslation } from "react-i18next";
+import i18n from "../../i18n";
 const LandingPage = () => {
+  const { t } = useTranslation();
   return (
     <div>
       <Navbar></Navbar>
