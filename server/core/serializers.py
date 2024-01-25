@@ -131,27 +131,27 @@ class LawyerProfileAdminListSerializer(serializers.ModelSerializer):
         fields = ['id','first_name', 'last_name', 'specialization', 'images', 'documents' , 'approved']
 
 
-class AppointmentSerializer(serializers.ModelSerializer):
-    status = serializers.CharField(read_only=True)
+# class AppointmentSerializer(serializers.ModelSerializer):
+#     status = serializers.CharField(read_only=True)
 
-    class Meta:
-        model = Appointment
-        fields = ['id', 'day', 'start_time', 'end_time' , 'status']
+#     class Meta:
+#         model = Appointment
+#         fields = ['id', 'day', 'start_time', 'end_time' , 'status']
 
-    def validate(self, data):
-        lawyer = self.context.get('lawyer_profile')
-        client = self.context.get('client_profile')
+#     def validate(self, data):
+#         lawyer = self.context.get('lawyer_profile')
+#         client = self.context.get('client_profile')
 
-        Appointment.objects.create(
-            lawyer=lawyer,
-            client=client,
-            day=data['day'],
-            start_time=data['start_time'],
-            end_time=data['end_time'],
-            status='pending'
-        )
-        data = { 'lawyer': lawyer, 'client': client, 'day': data['day'], 'start_time': data['start_time'], 'end_time': data['end_time']}
-        return data
+#         Appointment.objects.create(
+#             lawyer=lawyer,
+#             client=client,
+#             day=data['day'],
+#             start_time=data['start_time'],
+#             end_time=data['end_time'],
+#             status='pending'
+#         )
+#         data = { 'lawyer': lawyer, 'client': client, 'day': data['day'], 'start_time': data['start_time'], 'end_time': data['end_time']}
+#         return data
 
     
 class ReviewSerializer(serializers.ModelSerializer):

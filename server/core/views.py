@@ -245,37 +245,37 @@ class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
 
 
 
-class LawyerSearchViewSet(viewsets.ModelViewSet):
-    queryset = LawyerProfile.objects.all()
-    serializer_class = LawyerProfileSerializer
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    search_fields = ['user__first_name', 'user__last_name', 'address__city' , 'specialization' , 'address__state' , 'address__country']
-    http_method_names = ['get']
+# class LawyerSearchViewSet(viewsets.ModelViewSet):
+#     queryset = LawyerProfile.objects.all()
+#     serializer_class = LawyerProfileSerializer
+#     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+#     search_fields = ['user__first_name', 'user__last_name', 'address__city' , 'specialization' , 'address__state' , 'address__country']
+#     http_method_names = ['get']
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        name = self.request.query_params.get('name', None)
-        city = self.request.query_params.get('city', None)
-        specialization = self.request.query_params.get('specialization', None)
-        state = self.request.query_params.get('state', None)
-        country = self.request.query_params.get('country', None)
+#     def get_queryset(self):
+#         queryset = super().get_queryset()
+#         name = self.request.query_params.get('name', None)
+#         city = self.request.query_params.get('city', None)
+#         specialization = self.request.query_params.get('specialization', None)
+#         state = self.request.query_params.get('state', None)
+#         country = self.request.query_params.get('country', None)
 
-        if name:
-            queryset = queryset.filter(user__first_name__icontains=name) | queryset.filter(user__last_name__icontains=name)
+#         if name:
+#             queryset = queryset.filter(user__first_name__icontains=name) | queryset.filter(user__last_name__icontains=name)
 
-        if city:
-            queryset = queryset.filter(address__city__icontains=city)
+#         if city:
+#             queryset = queryset.filter(address__city__icontains=city)
 
-        if specialization:
-            queryset = queryset.filter(specialization__icontains=specialization)
+#         if specialization:
+#             queryset = queryset.filter(specialization__icontains=specialization)
 
-        if state:
-            queryset = queryset.filter(address__state__icontains=state)
+#         if state:
+#             queryset = queryset.filter(address__state__icontains=state)
 
-        if country:
-            queryset = queryset.filter(address__country__icontains=country)
+#         if country:
+#             queryset = queryset.filter(address__country__icontains=country)
 
-        return queryset
+#         return queryset
     
     # def list(self, request, *args, **kwargs):
     #     queryset = self.get_queryset()
@@ -293,60 +293,60 @@ class LawyerSearchViewSet(viewsets.ModelViewSet):
 
 
 
-class LawyerSearchCatViewSet(viewsets.ModelViewSet):
-    queryset = LawyerProfile.objects.all()
-    serializer_class = LawyerProfileSerializer
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-    search_fields = ['user__first_name', 'user__last_name', 'address__city', 'specialization']
-    method = ['GET']
+# class LawyerSearchCatViewSet(viewsets.ModelViewSet):
+#     queryset = LawyerProfile.objects.all()
+#     serializer_class = LawyerProfileSerializer
+#     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+#     search_fields = ['user__first_name', 'user__last_name', 'address__city', 'specialization']
+#     method = ['GET']
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        name = self.request.query_params.get('name', None)
-        city = self.request.query_params.get('city', None)
-        specialization = self.request.query_params.get('specialization', None)
+#     def get_queryset(self):
+#         queryset = super().get_queryset()
+#         name = self.request.query_params.get('name', None)
+#         city = self.request.query_params.get('city', None)
+#         specialization = self.request.query_params.get('specialization', None)
 
-        if name:
-            queryset = queryset.filter(user__first_name__icontains=name) | queryset.filter(user__last_name__icontains=name)
+#         if name:
+#             queryset = queryset.filter(user__first_name__icontains=name) | queryset.filter(user__last_name__icontains=name)
 
-        if city:
-            queryset = queryset.filter(address__city__icontains=city)
+#         if city:
+#             queryset = queryset.filter(address__city__icontains=city)
 
-        if specialization:
-            queryset = queryset.filter(specialization__icontains=specialization)
+#         if specialization:
+#             queryset = queryset.filter(specialization__icontains=specialization)
 
-        return queryset
+#         return queryset
 
-class AppointmentLawyerModelViewSet(viewsets.ModelViewSet):
-    serializer_class = AppointmentSerializer
+# class AppointmentLawyerModelViewSet(viewsets.ModelViewSet):
+#     serializer_class = AppointmentSerializer
 
-    def get_queryset(self):
-        # Assuming the user is a lawyer
-        lawyer = self.request.user.lawyer_profile
-        return Appointment.objects.filter(lawyer=lawyer)    
-
-
+#     def get_queryset(self):
+#         # Assuming the user is a lawyer
+#         lawyer = self.request.user.lawyer_profile
+#         return Appointment.objects.filter(lawyer=lawyer)    
 
 
 
-class AppointmentClientModelViewSet(viewsets.ModelViewSet):
-    serializer_class = AppointmentSerializer
-
-    def get_queryset(self):
-        lawyer_id = self.kwargs.get('lawyer_pk')
-        if lawyer_id:
-            lawyer = get_object_or_404(LawyerProfile, id=lawyer_id)
-            return Appointment.objects.filter(lawyer=lawyer, client=self.request.user.client_profile)
-        else:
-            return Appointment.objects.none()
 
 
-    def get_serializer_context(self):
-        context = super().get_serializer_context()
-        lawyer_id = self.kwargs.get('lawyer_pk')
-        context['lawyer_profile'] = LawyerProfile.objects.get(id=lawyer_id)
-        context['client_profile'] = ClientProfile.objects.get(user=self.request.user)
-        return context   
+# class AppointmentClientModelViewSet(viewsets.ModelViewSet):
+#     serializer_class = AppointmentSerializer
+
+#     def get_queryset(self):
+#         lawyer_id = self.kwargs.get('lawyer_pk')
+#         if lawyer_id:
+#             lawyer = get_object_or_404(LawyerProfile, id=lawyer_id)
+#             return Appointment.objects.filter(lawyer=lawyer, client=self.request.user.client_profile)
+#         else:
+#             return Appointment.objects.none()
+
+
+#     def get_serializer_context(self):
+#         context = super().get_serializer_context()
+#         lawyer_id = self.kwargs.get('lawyer_pk')
+#         context['lawyer_profile'] = LawyerProfile.objects.get(id=lawyer_id)
+#         context['client_profile'] = ClientProfile.objects.get(user=self.request.user)
+#         return context   
     # def perform_create(self, serializer):
     #     lawyer_id = self.kwargs.get('lawyer_pk')
     #     print(lawyer_id + "pasdfhosapfdhpsahfd;ksahfkashfk;af;khasfkashfkahfahflshafdlkhalfdkhsakfhakfdsh")

@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'social_django',
     'drf_social_oauth2',
-    'core'
+    'core',
+    'drf_yasg'
 ]
 CORS_ORIGIN_ALLOW_ALL = True
 MIDDLEWARE = [
