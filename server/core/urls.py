@@ -21,6 +21,7 @@ lawyers_dashbord = routers.NestedSimpleRouter(router, r'dashboard', lookup='lawy
 urlpatterns = router.urls + lawyers_router.urls + lawyers_dashbord.urls + [
     path('lawyer-profile-search/', views.lawyer_profile_search),
     path('lawyer-profile-content/', views.lawyer_profile_content),
+    path('schedule-appointment/<int:lawyer_id>/<int:time_slot_id>/', views.schedule_appointment),
     ]
 
 
