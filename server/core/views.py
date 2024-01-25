@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from .models import Address, LawyerProfile, LawyerImage, LawyerDocument , ClientProfile , User , TimeSlot , Review , Appointment
 from .serializers import AddressSerializer, LawyerProfileSerializer, LawyerImageSerializer, LawyerDocumentSerializer , ClientProfileSerializer , TimeSlotSerializer \
-    , ReviewSerializer , AppointmentSerializer
+    , ReviewSerializer 
 from django.contrib.auth.models import Group
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
@@ -26,7 +26,7 @@ from rest_framework import status
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.exceptions import NotFound
 from django.db.models import Avg
-from .serializers import LawyerProfileAdminListSerializer, AppointmentSerializer
+from .serializers import LawyerProfileAdminListSerializer
 from rest_framework import generics
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
