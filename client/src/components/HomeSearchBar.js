@@ -2,26 +2,30 @@ import React from "react";
 import SearchIcon from "../assets/search.svg";
 import SvgColor from "react-svg-color";
 import LocationIcon from "../assets/location.svg";
-import axios from 'axios';
+import axios from "axios";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 const HomeSearchBar = () => {
-  const [lawyerCategory, setLawyerCategory] = useState('');
-  const [location, setLocation] = useState('');
+  const { t } = useTranslation();
 
-  const HandleSubmit=(event)=>{
-    event.preventDefault()
-    console.log('test')
-  axios.get(`http://127.0.0.1:8000/core/lawyer-profile-search/?lawyer_category=${lawyerCategory}&location=${location}`)
-  
-    .then(response => {
-      console.log(response.data);
-    })
-    .catch((error) => {
-      console.error("Erreur lors de la requête ", error);
-    });
-  }
-  
+  const [lawyerCategory, setLawyerCategory] = useState("");
+  const [location, setLocation] = useState("");
 
+  const HandleSubmit = (event) => {
+    event.preventDefault();
+    console.log("test");
+    axios
+      .get(
+        `http://127.0.0.1:8000/core/lawyer-profile-search/?lawyer_category=${lawyerCategory}&location=${location}`
+      )
+
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la requête ", error);
+      });
+  };
 
   return (
     <div className="flex justify-center items-center">
@@ -31,12 +35,11 @@ const HomeSearchBar = () => {
           <SvgColor svg={SearchIcon} colors={["#094b72", "#094b72"]} />
           <input
             type="search"
-            name='lawyerCategory'
-            placeholder="Lawyer, place,..."
+            name="lawyerCategory"
+            placeholder={t("lawyerName")}
             className=" text-[rgba(16,_63,_91,_0.5)]  border-none outline-none w-full"
             value={lawyerCategory}
             onChange={(e) => setLawyerCategory(e.target.value)}
-
           />
         </div>
 
@@ -48,17 +51,18 @@ const HomeSearchBar = () => {
           <input
             type="text"
             name="location"
-            placeholder="Lawyer, place,..."
+            placeholder={t("place")}
             className=" text-[rgba(16,_63,_91,_0.5)] outline-none border-none w-full focus:outline-none"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           />
         </div>
-        <button type="submit" onClick={HandleSubmit}
-         
+        <button
+          type="submit"
+          onClick={HandleSubmit}
           className="bg-[#094b72] flex flex-row justify-center  items-center rounded-full cursor-pointer px-10 py-3 hover:opacity-90"
         >
-          <div className=" text-[#f5fbff]" >Search</div>
+          <div className=" text-[#f5fbff]">{t("search")}</div>
         </button>
       </div>
     </div>

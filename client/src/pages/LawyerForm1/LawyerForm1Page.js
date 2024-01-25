@@ -87,7 +87,7 @@ const LawyerForm1Page = () => {
           </div>
 
           <div className="flex justify-end m-4">
-            <Link to="/user-registration/validation">
+            <Link to="/lawyer-registrationStep2">
               <button className="flex flex-row gap-2 transition-all border-1 bg-[#094B72] py-3 px-10 rounded-full text-white font-normal text-md hover:opacity-90 mb-6">
                 <img src={validation} alt="Validation" />
                 Continue
