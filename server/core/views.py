@@ -487,7 +487,7 @@ class GoogleOAuth2SignUpCallbackView(APIView):
         # a token to the frontend that a framework like React or Angular
         # can use to authenticate further requests.
         frontend_url = "http://localhost:3000/login-handler"
-        return redirect(frontend_url + "?token=" + token.key+"?data="+json.dumps(user_data) + "?signup=true")
+        return redirect(frontend_url + "?token=" + token.key+"&data="+json.dumps(user_data) + "&signup=true")
         return JsonResponse({"data":user_data,"token": token.key})
 
 class GoogleOAuth2LoginView(APIView):
@@ -516,7 +516,7 @@ class GoogleOAuth2LoginCallbackView(APIView):
         # a token to the frontend that a framework like React or Angular
         # can use to authenticate further requests.
         frontend_url = "http://localhost:3000/login-handler"
-        return redirect(frontend_url + "?token=" + token.key+"?data="+json.dumps(user_data))
+        return redirect(frontend_url + "?token=" + token.key+"&data="+json.dumps(user_data))
         return JsonResponse({"token": token.key,"data": user_data})
 
 
