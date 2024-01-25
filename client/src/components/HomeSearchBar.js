@@ -42,7 +42,6 @@ const HomeSearchBar = () => {
             onChange={(e) => setLawyerCategory(e.target.value)}
           />
         </div>
-
         <div className=" flex-row w-full items-center justify-start hidden md:flex">
           {/*a vertical border */}
           <div className="border-r-2 border-[#d8ebf6] h-10 mx-3"></div>
