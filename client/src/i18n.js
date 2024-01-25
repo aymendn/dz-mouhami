@@ -69,6 +69,9 @@ const resources = {
       contactDescription:
         "Prêt pour une assistance juridique? Connectez-vous avec cet avocat pour discuter de votre cas, poser des questions ou prendre rendez-vous.",
       chooseRole: "Choisissez votre rôle",
+      experience: "Adaptons votre expérience à vos besoins.",
+      lawyer:"je suis un avocat",
+      policy:"En continuant, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité"
     },
   },
   ar: {
@@ -134,6 +137,9 @@ const resources = {
       contactDescription:
         "هل أنت مستعد للحصول على المساعدة القانونية؟ اتصل بمحاميك لمناقشة قضيتك أو طرح الأسئلة أو تحديد موعد.",
       chooseRole: "اختر دورك",
+      experience:"لنكمل تجربتك وفقًا لاحتياجاتك",
+      lawyer:"أنا محامٍ",
+      policy:"من خلال المتابعة، أنت توافق على شروط الخدمة وسياسة الخصوصية لدينا",
     },
   },
 };

@@ -33,7 +33,7 @@ const ChoicePage = () => {
           {t("chooseRole")}
         </h1>
         <p className="p-4 text-[#496C80] text-md">
-          Let's tailor your experience.
+          {t("experience")}
         </p>
       </div>
 
@@ -52,8 +52,8 @@ const ChoicePage = () => {
 
       <div className="mb-12 text-center">
         <p className="p-2 text-[#496C80] text-md">
-          By continuing, you agree to our Terms of Service and Privacy Policy.
-        </p>
+         {t("policy")}
+         </p>
       </div>
 
       <Footer />

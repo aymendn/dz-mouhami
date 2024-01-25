@@ -2,7 +2,10 @@ import React from "react";
 import Sidebar from "../../components/Sidebar";
 import Navbar from "../../components/ProfileNavbar";
 import Footer from "../../components/Footer";
+import { useTranslation } from "react-i18next";
+
 const AppointementPage = () => {
+  const {t} = useTranslation()
   const rdvData = [
     { name: "Melissa", surname: "Mellaz", age: "20", schedule: "10h00" },
     { name: "aya", surname: "lamiri", age: "19", schedule: "10h45" },
