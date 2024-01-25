@@ -8,9 +8,9 @@ import axios from "axios";
 // to init i18n
 import "./i18n";
 
-// axios.defaults.baseURL = "localhost:8000";
+axios.defaults.baseURL = "localhost:3000";
 // axios.defaults.headers.common["Authorization"] = "AUTH TOKEN";
-// axios.defaults.headers.post["Content-Type"] = "application/json";
+axios.defaults.headers.post["Content-Type"] = "application/json";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
