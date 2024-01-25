@@ -487,7 +487,7 @@ class GoogleOAuth2SignUpCallbackView(APIView):
         # a token to the frontend that a framework like React or Angular
         # can use to authenticate further requests.
         frontend_url = "http://192.168.228.10:3000/login-handler"
-        return redirect(frontend_url + "?token=" + token.key+"?data="+json.dumps(user_data))
+        return redirect(frontend_url + "?token=" + token.key+"?data="+json.dumps(user_data) + "?signup=true")
         return JsonResponse({"data":user_data,"token": token.key})
 
 class GoogleOAuth2LoginView(APIView):
@@ -623,3 +623,16 @@ def refuse_appointment(request,appointment_id):
     appointment.status = 'Refused'
     appointment.save()
     return Response({"success": True, "message": "Appointment refused."})
+
+
+
+def check_token(request):
+    token = request.GET.get('token', '')
+    if token:
+        try:
+            token = Token.objects.get(key=token)
+            return JsonResponse({"success": True, "message": "Token is valid."})
+        except Token.DoesNotExist:
+            return JsonResponse({"success": False, "message": "Token is invalid."})
+    else:
+        return JsonResponse({"success": False, "message": "Token is invalid."})
