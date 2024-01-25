@@ -71,7 +71,8 @@ const resources = {
       chooseRole: "Choisissez votre rôle",
       experience: "Adaptons votre expérience à vos besoins.",
       lawyer:"je suis un avocat",
-      policy:"En continuant, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité"
+      policy:"En continuant, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité",
+      schedule:" Planning des rendez-vous",
     },
   },
   ar: {
@@ -140,6 +141,9 @@ const resources = {
       experience:"لنكمل تجربتك وفقًا لاحتياجاتك",
       lawyer:"أنا محامٍ",
       policy:"من خلال المتابعة، أنت توافق على شروط الخدمة وسياسة الخصوصية لدينا",
+      schedule:"جدول المواعيد",
+      age:'العمر'
+      
     },
   },
 };

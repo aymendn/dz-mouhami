@@ -20,19 +20,19 @@ const AppointementPage = () => {
         <div className="flex-1 py-4">
           <div className="m-6">
             <h1 className="text-2xl font-bold mb-1 text-[#094B72]">
-              Appointements schedule
+              {t("schedule")}
             </h1>
             <p className="text-[#103F5BB2] text-sm font-medium">
-              You have 20 Appointements
+              You have {rdvData.length} Appointements
             </p>
           </div>
           <table className="min-w-full bg-white border border-slate-200 ">
             <thead>
               <tr className="bg-slate-50 text-[#26495D] text-sm l">
-                <th className="border border-slate-200 px-4 py-2">Name</th>
-                <th className="border border-slate-200 px-4 py-2">Surname</th>
-                <th className="border border-slate-200 px-4 py-2">Age</th>
-                <th className="border border-slate-200 px-4 py-2">Schedule</th>
+                <th className="border border-slate-200 px-4 py-2">{t("firstname")}</th>
+                <th className="border border-slate-200 px-4 py-2">{t(" lastname")}</th>
+                <th className="border border-slate-200 px-4 py-2">{t("age")}</th>
+                <th className="border border-slate-200 px-4 py-2">{t("schedule")}</th>
               </tr>
             </thead>
             <tbody>
