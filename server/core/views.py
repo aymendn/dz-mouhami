@@ -215,34 +215,48 @@ class CustomPageNumberPagination(PageNumberPagination):
 @api_view(['GET'])
 def lawyer_profile_search(request):
     query = request.GET.get('query', '')
-    category_filter = request.GET.get('category', '')
-    day_filter = request.GET.get('day', '')
-    rating_filter = request.GET.get('rating', '')
+    categories = request.GET.getlist('categories')
+    days = request.GET.getlist('days')
+
+    rating = request.GET.get('rating', '')
 
     search_results = LawyerProfile.objects.filter(approved=True)
-    lawyer_filter = (
-        Q(user__first_name__icontains = query) |
-        Q(specialization__icontains = query)
-    )
-    address_filter = (
-        Q(address__street__icontains = query) |
-        Q(address__city__icontains = query) |
-        Q(address__state__icontains = query) |
-        Q(address__country__icontains = query)
-    )
 
-    search_results = search_results.filter(lawyer_filter | address_filter)
+    if query :
+        lawyer_filter = (
+            Q(user__first_name__icontains = query)
+        )
+        address_filter = (
+            Q(address__street__icontains = query) |
+            Q(address__city__icontains = query) |
+            Q(address__state__icontains = query) |
+            Q(address__country__icontains = query)
+        )
 
-    if category_filter :
-        pass
+        search_results = search_results.filter(lawyer_filter | address_filter)
+    
+    if days != ['']:
+        day_filter = Q()
+        for day in days:
+            day_filter |= Q(time_slots__day__iexact=day)
+        search_results = search_results.filter(day_filter)
+    
+    if categories != [''] :
+        category_filter = Q()
+        for category in categories:
+            category_filter |= Q(specialization__iexact=category)
+        search_results = search_results.filter(category_filter)
 
+    if rating:
+        search_results = search_results.filter(rating__gte=rating)
+        
     paginator = CustomPageNumberPagination()
-    paginated_results = paginator.paginate_queryset(search_results, request)
+    search_results = search_results.order_by('-rating',)
 
-    search_results = search_results.order_by('-rating')
-    print(search_results)
+    paginated_results = paginator.paginate_queryset(search_results, request)
     
     serialized_results = LawyerProfileSerializer(paginated_results, many=True).data
+
     return Response({'search_results': serialized_results})
 
 
