@@ -37,7 +37,7 @@ const HomeSearchBar = () => {
             type="search"
             name="lawyerCategory"
             placeholder={t("lawyerName")}
-            className=" text-[rgba(16,_63,_91,_0.5)]  border-none outline-none w-full"
+            className=" text-[rgba(16,_63,_91,_0.5)]  border-none outline-none w-full ms-1"
             value={lawyerCategory}
             onChange={(e) => setLawyerCategory(e.target.value)}
           />
@@ -52,7 +52,7 @@ const HomeSearchBar = () => {
             type="text"
             name="location"
             placeholder={t("place")}
-            className=" text-[rgba(16,_63,_91,_0.5)] outline-none border-none w-full focus:outline-none"
+            className=" text-[rgba(16,_63,_91,_0.5)] outline-none border-none w-full focus:outline-none ms-1"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
           />
