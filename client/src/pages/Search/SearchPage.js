@@ -4,8 +4,31 @@ import FilterSidebar from "./FilterSidebar";
 import SearchBar from "./SearchBar";
 import SearchResults from "./SearchResults";
 import {useTranslation} from "react-i18next";
+import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import axios from 'axios';
+import {UseQuery} from 'react-query'
+
 
 const SearchPage = () => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const query = searchParams.get("query");
+
+  useEffect(() => {
+    // Utiliser la valeur de query comme nécessaire
+    console.log("Query:", query);
+
+     axios.get(`http://127.0.0.1:8000/core/lawyer-profile-search/?query=${query}&days=&categories=&rating=&page=1&limit=5`)
+       .then(response => {
+        console.log(response)
+       })
+       .catch(error => {
+          console.log(error)
+       });
+  }, [query]);
+
+
   const {t} = useTranslation();
   return (
     <>
