@@ -507,7 +507,7 @@ class GoogleOAuth2LoginCallbackView(APIView):
         try:
             user = User.objects.get(username=user_data["email"])
         except User.DoesNotExist:
-            return redirect("http://192.168.228.1.nip.io:8000/core/signup")
+            return redirect("http://localhost:8000/core/signup")
 
         # Create the auth token for the frontend to use.
         token, _ = Token.objects.get_or_create(user=user)
@@ -515,7 +515,7 @@ class GoogleOAuth2LoginCallbackView(APIView):
         # Here we assume that once we are logged in we should send
         # a token to the frontend that a framework like React or Angular
         # can use to authenticate further requests.
-        frontend_url = "http://192.168.228.10:3000/login-handler"
+        frontend_url = "http://localhost:3000/login-handler"
         return redirect(frontend_url + "?token=" + token.key+"?data="+json.dumps(user_data))
         return JsonResponse({"token": token.key,"data": user_data})
 
