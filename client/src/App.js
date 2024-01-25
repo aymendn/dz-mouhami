@@ -24,6 +24,8 @@ import AdminPage from "./pages/Admin/AdminPage";
 import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
+import LoginHandler from "./pages/LoginHandler/LoginHandler";
+
 function App() {
   const { t } = useTranslation();
   const languageCode = t("languageCode");
@@ -71,6 +73,7 @@ function App() {
             <Route path="/terms" Component={TermsPage}></Route>
             <Route path="/user-edit" Component={UserEditProfilePage}></Route>
             <Route path="/admin" Component={AdminPage}></Route>
+            <Route path="/login-handler" Component={LoginHandler}></Route>
           </Routes>
         </Router>
       </div>
