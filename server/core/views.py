@@ -4,7 +4,7 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from .models import Address, LawyerProfile, LawyerImage, LawyerDocument , ClientProfile , User , TimeSlot , Review , Appointment
 from .serializers import AddressSerializer, LawyerProfileSerializer, LawyerImageSerializer, LawyerDocumentSerializer , ClientProfileSerializer , TimeSlotSerializer \
-    , ReviewSerializer 
+    , ReviewSerializer, AppointmentSerializer
 from django.contrib.auth.models import Group
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
@@ -387,40 +387,6 @@ class ReviewViewSet(viewsets.ModelViewSet):
 
     def get_serializer_context(self):
         return {'lawyer_id': self.kwargs['lawyer_pk'] , 'client_id': self.request.user.client_profile.id}
-    
-
-
-
-@api_view(['GET'])
-def lawyer_profile_search(request):
-    lawyer_category = request.GET.get('lawyer_category', '')
-    location = request.GET.get('location', '')
-
-    search_results = LawyerProfile.objects.filter(approved=True)
-
-    if lawyer_category:
-        lawyer_filter = (
-            Q(user__first_name__icontains=lawyer_category) |
-            Q(specialization__icontains=lawyer_category)
-        )
-        search_results = search_results.filter(lawyer_filter)
-
-    if location:
-        address_filter = (
-            Q(address__street__icontains=location) |
-            Q(address__city__icontains=location) |
-            Q(address__state__icontains=location) |
-            Q(address__country__icontains=location)
-        )
-        search_results = search_results.filter(address_filter)
-
-    search_results = search_results.order_by('-rating')
-    
-    serialized_results = LawyerProfileSerializer(search_results, many=True).data
-    return Response({'search_results': serialized_results})
-
-
-
 
 # def index(request,):
 #     if request.method == 'POST':
@@ -525,7 +491,7 @@ class CustomPageNumberPagination(PageNumberPagination):
     page_size_query_param = 'page_size'
     max_page_size = 100
 
-@api_view(['GET'])
+@api_view(['GET']) #http://127.0.0.1:8000/core/lawyer-profile-search/?query=lawyer_location&days=days&categories=categories&rating=rating&page=1&limit=5
 def lawyer_profile_search(request):
     query = request.GET.get('query', '')
     categories = request.GET.getlist('categories')
@@ -579,11 +545,37 @@ def lawyer_profile_content(request):
     serializer = LawyerProfileSerializer(lawyer_profile)
     return Response(serializer.data)
 
+@api_view(['GET'])
+def appointments_request(request,lawyer_id):
+    #lawyer_id = request.user.id
+    appointments = Appointment.objects.filter(lawyer_id = lawyer_id,status='Pending')
+    paginator = CustomPageNumberPagination()
+    appointments = appointments.order_by('-date',)
+
+    paginated_results = paginator.paginate_queryset(appointments, request)
+    
+    serialized_results = AppointmentSerializer(paginated_results, many=True).data
+
+    return Response(serialized_results)
+
+@api_view(['GET'])
+def appointments(request,lawyer_id):
+    #lawyer_id = request.user.id
+    appointments = Appointment.objects.filter(lawyer_id = lawyer_id, status='Accepted')
+    paginator = CustomPageNumberPagination()
+    appointments = appointments.order_by('-date',)
+
+    paginated_results = paginator.paginate_queryset(appointments, request)
+    
+    serialized_results = AppointmentSerializer(paginated_results, many=True).data
+
+    return Response(serialized_results)
+
 @api_view(['POST'])
 def schedule_appointment(request, lawyer_id, time_slot_id):
-    if request.user.is_authenticated and hasattr(request.user,'clientprofile'):
-        client_id = request.user.id
-         # client_id = 31 #testing
+    #if request.user.is_authenticated and hasattr(request.user,'clientprofile'):
+        #client_id = request.user.id
+        client_id = 31 #testing
 
         client_profile = ClientProfile.objects.get(id=client_id)
         lawyer_profile = LawyerProfile.objects.get(id=lawyer_id)
@@ -594,7 +586,7 @@ def schedule_appointment(request, lawyer_id, time_slot_id):
             client_id=client_id
         ).first()
         if existing_appointment:
-            return {"success": False, "message": "Appointment already exists for this time slot."}
+            return Response({"success": False, "message": "Appointment already exists for this time slot."})
 
         appointment = Appointment.objects.create(
             time_slot=time_slot,
@@ -602,12 +594,9 @@ def schedule_appointment(request, lawyer_id, time_slot_id):
             client=client_profile,
             status="Pending"
         )
-
-        print(appointment)
-
         return Response({"success": True, "message": "Appointment created."})
-    else :
-        return {"success": False, "message": "You need to login first."}
+    #else :
+        #return {"success": False, "message": "You need to login first."}
     
 
 @api_view(['POST'])
@@ -620,9 +609,25 @@ def accept_appointment(request,appointment_id):
 @api_view(['POST'])
 def refuse_appointment(request,appointment_id):
     appointment = Appointment.objects.get(id=appointment_id)
+    print(int(appointment.lawyer_id))
+    if request.user.id == appointment.lawyer_id :
+        pass
     appointment.status = 'Refused'
     appointment.save()
     return Response({"success": True, "message": "Appointment refused."})
+
+@api_view(['POST'])
+def accept_lawyer(request,lawyer_id):
+    lawyer = LawyerProfile.objects.get(id=lawyer_id)
+    lawyer.approved = True
+    lawyer.save()
+    return Response({"success": True, "message": "Lawyer accepted."})
+
+@api_view(['POST'])
+def refuse_lawyer(request,lawyer_id):
+    lawyer = get_object_or_404(LawyerProfile, id=lawyer_id)
+    lawyer.delete()
+    return Response({"success": True, "message": "Lawyer deleted."})
 
 
 

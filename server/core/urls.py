@@ -15,9 +15,9 @@ lawyers_router.register(r'documents', views.LawyerDocumentViewSet, basename='law
 # lawyers_router.register(r'appointments', views.AppointmentLawyerModelViewSet, basename='lawyer-appointments')
 
 
-lawyers_dashbord = routers.NestedDefaultRouter(router, r'dashboard', lookup='lawyer')
+lawyers_dashbord = routers.NestedSimpleRouter(router, r'dashboard', lookup='lawyer')
 
-# lawyers_view = routers.NestedDefaultRouter(router, r'lawyer-search', lookup='lawyer')
+# lawyers_view = routers.NestedSimpleRouter(router, r'lawyer-search', lookup='lawyer')
 # lawyers_view.register(r'appointments', views.AppointmentClientModelViewSet, basename='appointments')
 # lawyers_view.register(r'reviews', views.ReviewViewSet, basename='lawyer-reviews')
 
@@ -27,6 +27,10 @@ urlpatterns = router.urls + lawyers_router.urls + lawyers_dashbord.urls + [
     path('<int:lawyer_id>/schedule-appointment/<int:time_slot_id>/', views.schedule_appointment),
     path('accept-appointment/<int:appointment_id>/', views.accept_appointment),
     path('refuse-appointment/<int:appointment_id>/', views.refuse_appointment),
+    path('accept-lawyer/<int:lawyer_id>/', views.accept_lawyer),
+    path('refuse-lawyer/<int:lawyer_id>/', views.refuse_lawyer),
+    path('<int:lawyer_id>/appointments-request', views.appointments_request),
+    path('<int:lawyer_id>/appointments', views.appointments),
     ]
 # urlpatterns = urlpatterns + lawyers_view.urls
 

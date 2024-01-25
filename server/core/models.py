@@ -88,8 +88,8 @@ class Administrator(models.Model):
 # TimeSlot model
 class TimeSlot(models.Model):
     day = models.CharField(max_length=255)
-    start_time = models.TimeField()
-    end_time = models.TimeField()
+    start_time = models.TimeField(default=timezone.now)
+    end_time = models.TimeField(default=timezone.now)
     lawyer = models.ForeignKey(LawyerProfile, on_delete=models.CASCADE , related_name='time_slots')
 
 # Appointment model
@@ -101,7 +101,7 @@ class TimeSlot(models.Model):
 #     client = models.ForeignKey(ClientProfile, on_delete=models.CASCADE)
 #     status = models.CharField(max_length=255)
 class Appointment(models.Model):
-    time_slot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE)
+    time_slot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE, default=1)
     lawyer = models.ForeignKey(LawyerProfile, on_delete=models.CASCADE)
     client = models.ForeignKey(ClientProfile, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.now)
