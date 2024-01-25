@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
 from allauth.socialaccount.models import SocialAccount, SocialToken
 from rest_framework import generics, permissions
-from .models import LawyerProfile
+from .models import LawyerProfile, Appointment
 from .serializers import UserSerializer
 from django.contrib.auth.models import User
 from .serializers import LawyerProfileAdminListSerializer
@@ -261,10 +261,36 @@ def lawyer_profile_search(request):
 
 @api_view(['GET'])
 def lawyer_profile_content(request):
-    lawyer_id = request.GET.get('id')
+    lawyer_id = request.GET.get('lawyer_id')
     lawyer_profile = get_object_or_404(LawyerProfile, id=lawyer_id)
     serializer = LawyerProfileSerializer(lawyer_profile)
     return Response(serializer.data)
 
 
+def schedule_appointment(request):
+    if request.user.is_authenticated and hasattr(request.user,'clientprofile'):
+        lawyer_id = request.POST.get('lawyer_id')
+        client_id = request.user.id
+        time_slot_id = request.POST.get('time_slot_id')
 
+        client_profile = ClientProfile.objects.get(id=client_id)
+        lawyer_profile = LawyerProfile.objects.get(id=lawyer_id)
+        time_slot = TimeSlot.objects.get(id=time_slot_id, lawyer_id=lawyer_id)
+
+        existing_appointment = Appointment.objects.filter(
+            time_slot_id=time_slot_id,
+            client_id=client_id
+        ).first()
+        if existing_appointment:
+            return {"success": False, "message": "Appointment already exists for this time slot."}
+
+        appointment = Appointment.objects.create(
+            time_slot=time_slot,
+            lawyer=lawyer_profile,
+            client=client_profile,
+            status="Pending"
+        )
+
+        return {"success": True, "message": "Appointment created."}
+    else :
+        return {"success": False, "message": "You need to login first."}
