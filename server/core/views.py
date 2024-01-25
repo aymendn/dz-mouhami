@@ -259,5 +259,12 @@ def lawyer_profile_search(request):
 
     return Response({'search_results': serialized_results})
 
+@api_view(['GET'])
+def lawyer_profile_content(request):
+    lawyer_id = request.GET.get('id')
+    lawyer_profile = get_object_or_404(LawyerProfile, id=lawyer_id)
+    serializer = LawyerProfileSerializer(lawyer_profile)
+    return Response(serializer.data)
+
 
 
