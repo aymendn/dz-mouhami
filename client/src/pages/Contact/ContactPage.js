@@ -21,7 +21,7 @@ const ContactPage = () => {
             <p class="text-gray-700">
               Vous pouvez nous contacter aux coordonnées suivantes :
             </p>
-            <ul class="list-disc ml-6 mt-2">
+            <ul class="list-disc ms-6 mt-2">
               <li>
                 Email :{" "}
                 <a href="mailto:contact@dzmouhami.com" class="text-blue-500">
@@ -39,7 +39,7 @@ const ContactPage = () => {
               Notre équipe est disponible pour vous aider aux horaires suivants
               :
             </p>
-            <ul class="list-disc ml-6 mt-2">
+            <ul class="list-disc ms-6 mt-2">
               <li>Lundi - Vendredi : 9h00 - 18h00</li>
               <li>Samedi : 10h00 - 15h00</li>
               <li>Dimanche : Fermé</li>

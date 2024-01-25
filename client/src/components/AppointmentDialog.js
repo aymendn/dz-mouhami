@@ -11,7 +11,7 @@ const AppointmentDialog = ({ trigger }) => {
             <div className="text-center text-2xl font-bold text-[#094b72]">
               Planifiez une Consultation Juridique
             </div>
-            <div className="text-center text-sm text-[#496c80] ml-4 md:w-5/6">
+            <div className="text-center text-sm text-[#496c80] ms-4 md:w-5/6">
               Sélectionnez une date et un créneau horaire pour rencontrer votre
               avocat et discuter de votre affaire en toute confidentialité.
             </div>

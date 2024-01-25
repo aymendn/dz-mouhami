@@ -2,8 +2,15 @@ import lawyerImage from "../../assets/lawyer_placeholder.png";
 import LocationIcon from "../../assets/location.svg";
 import categoryIcon from "../../assets/category.svg";
 import Availability from "../../components/Availability";
+import Rating from "react-rating";
+import starFilled from "../../assets/star_filled.svg";
+import star from "../../assets/star.svg";
+import { useTranslation } from "react-i18next";
 
 const MainInfo = () => {
+  const { t } = useTranslation();
+  const direction = t("direction");
+
   const name = "Lawyer Name";
   const categories = ["Category 1", "Category 2", "Category 3"];
   const location = "Location";
@@ -16,7 +23,7 @@ const MainInfo = () => {
         {/* Image on the left */}
         <img
           src={lawyerImage}
-          className="w-64 h-[280px] rounded-md mr-4 object-cover"
+          className="w-64 h-[280px] rounded-md me-4 object-cover"
         />
 
         <div className="rounded-lg overflow-hidden">
@@ -26,11 +33,18 @@ const MainInfo = () => {
           </h2>
 
           {/* Rating */}
-          <p className="mb-2">Rating here</p>
+          <Rating
+            className="mb-1"
+            direction={direction}
+            initialRating={4}
+            readonly={true}
+            emptySymbol={<img src={star} className="icon" width={30} />}
+            fullSymbol={<img src={starFilled} className="icon" width={30} />}
+          />
 
           {/* Categories Title */}
           <p className="text-lg font-bold flex items-center  text-[#193647]">
-            Categories
+            {t("categories")}
           </p>
 
           {/* Categories psk c un tableau asslan */}
@@ -40,7 +54,7 @@ const MainInfo = () => {
 
           {/* Description Title */}
           <p className="text-lg font-bold flex items-center  text-[#193647] mt-4">
-            Description
+            {t("description")}
           </p>
           {/* Description */}
           <p className="text-[#708FA2] text-sm mt-1">{description}</p>
@@ -48,7 +62,7 @@ const MainInfo = () => {
       </div>
       {/* Availability Title */}
       <p className="text-lg font-bold flex items-center  text-[#193647] mt-4 mb-1">
-        Availability
+        {t("availability")}
       </p>
 
       {/* Availability */}

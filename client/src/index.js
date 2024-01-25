@@ -1,10 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import axios from "axios";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// to init i18n
+import "./i18n";
+
+// axios.defaults.baseURL = "localhost:8000";
+// axios.defaults.headers.common["Authorization"] = "AUTH TOKEN";
+// axios.defaults.headers.post["Content-Type"] = "application/json";
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <App />

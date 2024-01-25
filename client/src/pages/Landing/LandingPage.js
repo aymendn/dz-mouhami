@@ -6,7 +6,11 @@ import TopRated from "./TopRated";
 import GetStared from "./GetStarted";
 import Main from "./Main";
 import BgImage from "../../assets/bg.svg";
+import { useTranslation } from "react-i18next";
+import axios from "axios";
 const LandingPage = () => {
+  const { t } = useTranslation();
+
   return (
     <div>
       <Navbar></Navbar>
@@ -18,6 +22,20 @@ const LandingPage = () => {
       >
         <Main></Main>
       </div>
+      <a href="http://192.168.228.1.nip.io:8000/core/login">
+        <button>login</button>
+      </a>
+      <button
+        onClick={() => {
+          axios
+            .get("http://192.168.228.1:8000/core/lawyer-search")
+            .then((res) => {
+              console.log(res.data);
+            });
+        }}
+      >
+        try
+      </button>
       <Services></Services>
       <TopRated></TopRated>
       <GetStared></GetStared>

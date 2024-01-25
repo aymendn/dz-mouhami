@@ -2,8 +2,11 @@ import { useState } from "react";
 import profileIcon from "../../assets/profile.svg";
 import TextField from "../../components/TextField";
 import SelectField from "../../components/SelectField";
+import { useTranslation } from "react-i18next";
 
 const UserEditView = () => {
+  const { t } = useTranslation();
+
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageChange = (event) => {
@@ -22,14 +25,14 @@ const UserEditView = () => {
       <div className="flex items-center gap-4">
         <img src={profileIcon} alt="Edit Profile" className="w-8 h-8" />
         <h1 className="text-3xl  font-semibold text-[#094B72]">
-          Edit your profile
+          {t("editProfile")}
         </h1>
       </div>
       <label
         htmlFor="imageInput"
         className="block text-md m-6 font-medium text-[#094B72] "
       >
-        Upload a Picture
+        {t("changePicture")}
       </label>
       <div className="mt-1 flex items-center">
         <input
@@ -49,23 +52,18 @@ const UserEditView = () => {
           }}
         ></div>
         {selectedImage && (
-          <div className="ml-3">
+          <div className="ms-3">
             <p className="text-sm text-gray-500">{selectedImage.name}</p>
           </div>
         )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 m-8">
-        <TextField id={"name"} label={"Name"} placeholder={"John"} />
+        <TextField id={"name"} label={t("lastName")} placeholder={"John"} />
 
-        <TextField id={"surname"} label={"Surname"} placeholder={"Doe"} />
+        <TextField id={"surname"} label={t("firstName")} placeholder={"Doe"} />
+        <TextField id={"name"} label={t("lastName")} placeholder={"John"} />
 
-        <TextField id={"email"} label={"Email"} placeholder={"a@mail.com"} />
-
-        <TextField
-          id={"phone"}
-          label={"Phone"}
-          placeholder={"06 00 00 00 00"}
-        />
+        <TextField id={"surname"} label={t("firstName")} placeholder={"Doe"} />
 
         <SelectField
           id={"Specification"}
@@ -78,12 +76,12 @@ const UserEditView = () => {
           ]}
         />
 
-        <TextField id={"address"} label={"Address"} placeholder={"Paris"} />
+        <TextField id={"surname"} label={t("firstName")} placeholder={"Doe"} />
       </div>
 
       <div className="flex justify-end m-4">
         <button className="transition-transform transform hover:opacity-90 duration-500  mx-4 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
-          Save changes
+          <p>{t("save")}</p>
         </button>
       </div>
     </form>

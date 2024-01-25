@@ -13,7 +13,7 @@ const LeaveReviewDialog = ({ trigger }) => {
             <div className="text-center text-2xl font-bold text-[#094b72]">
               Leave a Review
             </div>
-            <div className="text-center text-sm text-[#496c80] ml-4 md:w-5/6">
+            <div className="text-center text-sm text-[#496c80] ms-4 md:w-5/6">
               Please share your experience with us and help us improve our
               services.
             </div>
@@ -21,7 +21,7 @@ const LeaveReviewDialog = ({ trigger }) => {
 
           <div className="flex flex-col gap-8 w-full items-start">
             <div className="flex flex-col gap-2 w-full items-start">
-              <div className="opacity-80 text-sm font-medium text-[#094b72] ml-1">
+              <div className="opacity-80 text-sm font-medium text-[#094b72] ms-1">
                 Rating
               </div>
               <Rating

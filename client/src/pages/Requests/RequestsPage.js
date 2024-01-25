@@ -4,6 +4,7 @@ import Delete from "../../assets/delete.svg";
 import Accept from "../../assets/check.svg";
 import Navbar from "../../components/ProfileNavbar";
 import SvgColor from "react-svg-color";
+import Footer from "../../components/Footer";
 const RequestsPage = () => {
   const requestsData = [
     {
@@ -20,7 +21,9 @@ const RequestsPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Navbar></Navbar>
+      <div className="z-50">
+        <Navbar></Navbar>
+      </div>
       <div className="flex flex-1">
         <Sidebar></Sidebar>
         <div className="flex-1 py-4">
@@ -68,6 +71,9 @@ const RequestsPage = () => {
             </tbody>
           </table>
         </div>
+      </div>
+      <div className=" lg:hidden">
+        <Footer />
       </div>
     </div>
   );

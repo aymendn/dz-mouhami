@@ -2,23 +2,44 @@ import React from "react";
 import SearchIcon from "../assets/search.svg";
 import SvgColor from "react-svg-color";
 import LocationIcon from "../assets/location.svg";
-
+import axios from "axios";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 const HomeSearchBar = () => {
-  const handleSearch = () => {
-    // Implement your search logic here
-    console.log("Performing search...");
+  const { t } = useTranslation();
+
+  const [lawyerCategory, setLawyerCategory] = useState("");
+  const [location, setLocation] = useState("");
+
+  const HandleSubmit = (event) => {
+    event.preventDefault();
+    console.log("test");
+    axios
+      .get(
+        `http://127.0.0.1:8000/core/lawyer-profile-search/?lawyer_category=${lawyerCategory}&location=${location}`
+      )
+
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la requête ", error);
+      });
   };
 
   return (
     <div className="flex justify-center items-center">
-      <div className=" max-w-4xl  mx-4 border-solid border-2 border-[#d8ebf6] bg-white flex flex-row justify-between items-center w-full  p-[6px] pl-8  rounded-full">
+      <div className=" max-w-4xl  mx-4 border-solid border-2 border-[#d8ebf6] bg-white flex flex-row justify-between items-center w-full  p-[6px] ps-8  rounded-full">
         <div className="flex flex-row w-full items-center justify-start">
           {/* category icon */}
           <SvgColor svg={SearchIcon} colors={["#094b72", "#094b72"]} />
           <input
             type="search"
-            placeholder="Lawyer, place,..."
-            className=" text-[rgba(16,_63,_91,_0.5)]  border-none outline-none w-full"
+            name="lawyerCategory"
+            placeholder={t("lawyerName")}
+            className=" text-[rgba(16,_63,_91,_0.5)]  border-none outline-none w-full ms-1"
+            value={lawyerCategory}
+            onChange={(e) => setLawyerCategory(e.target.value)}
           />
         </div>
         <div className=" flex-row w-full items-center justify-start hidden md:flex">
@@ -28,15 +49,19 @@ const HomeSearchBar = () => {
           <SvgColor svg={LocationIcon} colors={["#094b72", "#094b72"]} />
           <input
             type="text"
-            placeholder="Lawyer, place,..."
-            className=" text-[rgba(16,_63,_91,_0.5)] outline-none border-none w-full focus:outline-none"
+            name="location"
+            placeholder={t("place")}
+            className=" text-[rgba(16,_63,_91,_0.5)] outline-none border-none w-full focus:outline-none ms-1"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
           />
         </div>
         <button
-          onClick={handleSearch}
+          type="submit"
+          onClick={HandleSubmit}
           className="bg-[#094b72] flex flex-row justify-center  items-center rounded-full cursor-pointer px-10 py-3 hover:opacity-90"
         >
-          <div className=" text-[#f5fbff]">Search</div>
+          <div className=" text-[#f5fbff]">{t("search")}</div>
         </button>
       </div>
     </div>
