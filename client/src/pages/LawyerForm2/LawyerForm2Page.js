@@ -1,8 +1,11 @@
 import Footer from "../../components/Footer";
+import React, { useState } from "react";
 import Navbar from "../../components/NavbarNoAction";
 import { Stepper } from "react-form-stepper";
 import validation from "../../assets/person_check.svg";
 import { Link } from "react-router-dom";
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 const LawyerForm2Page = () => {
   const styleConfig = {
     activeBgColor: "#007BFF", // Bleu vif pour les étapes actives
@@ -15,6 +18,35 @@ const LawyerForm2Page = () => {
     completedColor: "#4682B4", // Couleur du connecteur pour les étapes complétées
     disabledColor: "#B0C4DE", // Couleur du connecteur pour les étapes inactives
   };
+
+  const [data, setData] = useState(
+   );
+
+   const handleChange = (e) =>{
+
+    setData(prev=>({...prev,[e.target.name]: e.target.value}))
+   
+} 
+
+   const Navigate = useNavigate()
+   const handleSubmit =  (e) => {
+    e.preventDefault();
+    
+   const token = "533ba7c8dccd71003fedea92076ab3ef94aaa243"
+   console.log("Data to be sent:", { ...data, token: token });
+    axios.post('http://127.0.0.1:8000/core/lawyers/', {...data,token:token }
+)
+      .then(response => {
+        //Handle the response data as needed
+        console.log(response.data);
+        Navigate(`/`);
+      })
+      .catch(error => {
+        //Handle errors
+        console.error('Error:', error);
+      });
+  };
+
   return (
     <div className="flex flex-col items-center">
       <Navbar></Navbar>
@@ -55,6 +87,7 @@ const LawyerForm2Page = () => {
         file:bg-slate-50 file:text-[#103F5BE5]
         hover:file:bg-slate-100
         "
+        onChange={handleChange}
           />
         </label>
       </form>
@@ -78,12 +111,13 @@ const LawyerForm2Page = () => {
         file:bg-slate-50 file:text-[#103F5BE5]
         hover:file:bg-slate-100
         "
+        onChange={handleChange}
           />
         </label>
       </form>
       <div className="flex justify-end m-4">
         <Link to="/lawyer-registrationStep2/validation">
-          <button className="mb-10 transition-all hover:opacity-90   mx-4 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
+          <button onClick={handleSubmit} className="mb-10 transition-all hover:opacity-90   mx-4 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
             <img src={validation} alt="Validation" />
             Continue
           </button>
