@@ -27,11 +27,11 @@ const UserFormPage = () => {
     setData(prev=>({...prev,[e.target.name]: e.target.value}))
    
 } 
-  /*const handleSubmit =  (e) => {
+  const handleSubmit =  (e) => {
     e.preventDefault();
     //http://127.0.0.1:8000/core/clients/
 
-    axios.post('http://127.0.0.1:8000/core/login-handler', data)
+    axios.post('http://localhost:8000/core/clients/', data)
       .then(response => {
         // Handle the response data as needed
         console.log(response.data);
@@ -41,7 +41,7 @@ const UserFormPage = () => {
         console.error('Error:', error);
       });
   };
-*/
+
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="w-full">
@@ -64,13 +64,15 @@ const UserFormPage = () => {
           <TextField id={"age"} 
           name={"age"} 
           label={"age"} 
+          type={"number"}
           placeholder={"45"} 
            onChange={handleChange}/>
-
+             
           <SelectField
               id={"gender"}
               label={"gender"}
               placeholder={"gender"}
+              type={"text"}
               options={[
                 { value: "Femme", label: "Femme" },
                 { value: "homme", label: "homme" },
@@ -80,15 +82,15 @@ const UserFormPage = () => {
             <TextField id={"phone"} name={"phone_number"} label={"Phone"} type={"number"} placeholder={"06 00 00 00 00"} onChange={handleChange}/>
 
 
-          <TextField id={"street"} name={"street"} label={"street"}  onChange={handleChange}/>
+          <TextField id={"street"} type={"text"} name={"street"} label={"street"}  onChange={handleChange}/>
 
-          <TextField id={"city"} label={"city"} placeholder={"Paris"} onChange={handleChange}/>
+          <TextField id={"city"} type={"text"} name={"city"} label={"city"} placeholder={"Paris"} onChange={handleChange}/>
 
-          <TextField id={"state"} name={"state"} label={"state"}  onChange={handleChange}/>
+          <TextField id={"state"} type={"text"} name={"state"} label={"state"}  onChange={handleChange}/>
 
-          <TextField id={"zip_code"} name={"zip_code"} label={"zip code"} type={"number"} onChange={handleChange}/>
+          <TextField id={"zip_code"} type={"text"} name={"zip_code"} label={"zip code"}  onChange={handleChange}/>
 
-          <TextField id={"country"} name={"country"} label={"country"}  onChange={handleChange}/>
+          <TextField id={"country"} type={"text"} name={"country"} label={"country"}  onChange={handleChange}/>
         </div>
 
        
@@ -97,7 +99,7 @@ const UserFormPage = () => {
           <Link to="/user-registration/validation">
             <button
               type="submit"
-             // onClick={handleSubmit}
+             onClick={handleSubmit}
               className="flex flex-row gap-2 transition-all border-1 bg-[#094B72] py-3 px-10 rounded-full text-white font-normal text-md hover:opacity-90 mb-6"
             >
               <img src={validation} alt="Validation" />

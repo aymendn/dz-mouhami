@@ -70,7 +70,7 @@ const RequestsPage = () => {
                         Accept
                       </button>
                       <button className=" transition-transform transform hover:scale-105  bg-red-500 py-2  px-6  rounded-3xl text-white font-normal text-md flex hover:bg-red-700 duration-300 items-center gap-2 ">
-                        <img src={Delete} alt="Refus" />
+                        <img src={Delete} alt="Refuse" />
                         Refuse
                       </button>
                     </div>
