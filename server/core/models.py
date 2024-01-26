@@ -51,9 +51,9 @@ class ClientProfile(models.Model):
 # LawyerProfile model, using OneToOneField for a one-to-one relationship with User
 class LawyerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE , related_name='lawyer_profile')
-    specialization = models.CharField(max_length=255)
+    specialization = models.CharField(max_length=1000)
     phone_number = models.CharField(max_length=500)
-    bio = models.CharField(max_length=255)
+    bio = models.CharField(max_length=1000)
     address = models.ForeignKey(Address, on_delete=models.CASCADE , related_name='lawyer_address')
     language = models.CharField(max_length=255)
     approved = models.BooleanField(null = True , blank = True)
