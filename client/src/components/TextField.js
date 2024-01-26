@@ -9,6 +9,7 @@ const TextField = ({
   divClassName,
   fieldClassName,
   labelClassName,
+  name
 }) => {
   return (
     <div className={divClassName}>
@@ -22,6 +23,7 @@ const TextField = ({
       <input
         type={type}
         id={id}
+        name={name}
         placeholder={placeholder}
         value={value}
         onChange={onChange}

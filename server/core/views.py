@@ -2,9 +2,9 @@
 
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
-from .models import Address, LawyerProfile, LawyerImage, LawyerDocument , ClientProfile , User , TimeSlot , Review , Appointment
+from .models import Address, LawyerProfile, LawyerImage, LawyerDocument , ClientProfile , User , TimeSlot , Review , Appointment , ClientImage
 from .serializers import AddressSerializer, LawyerProfileSerializer, LawyerImageSerializer, LawyerDocumentSerializer , ClientProfileSerializer , TimeSlotSerializer \
-    , ReviewSerializer , AppointmentSerializer
+    , ReviewSerializer , AppointmentSerializer , ClientImageSerializer
 from django.contrib.auth.models import Group
 from django.shortcuts import get_object_or_404
 from rest_framework.decorators import api_view
@@ -114,6 +114,22 @@ class LawyerImageViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         lawyer_profile_pk = self.kwargs['lawyer_pk']
         return LawyerImage.objects.filter(lawyer_id=lawyer_profile_pk)
+    
+
+class ClientImageViewSet(viewsets.ModelViewSet):
+    serializer_class = ClientImageSerializer
+
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        # user = self.request.data['token']
+        token = 'ec3cce742b1fc84f23c0b427dffeb9890cd3041e'
+        user = Token.objects.get(key=token).user
+        context['user'] = user
+        return context
+    
+    def get_queryset(self):
+        user = self.request.user
+        return ClientImage.objects.filter(user=user)
 
 
 
@@ -148,6 +164,7 @@ class LawyerProfileViewSet(viewsets.ModelViewSet):
             return PermissionDenied("access denied")
             
         # token = "6aaeffb7d25c4697859f4135245956eec6012708"
+        # token = '6aaeffb7d25c4697859f4135245956eec6012708'
         user = Token.objects.get(key=token).user
         return LawyerProfile.objects.filter(user=user, approved=True)
 
@@ -161,10 +178,11 @@ class LawyerProfileViewSet(viewsets.ModelViewSet):
         else :
             return PermissionDenied("access denied")
             
-        # token = "6aaeffb7d25c4697859f4135245956eec6012708"
+        token = "6aaeffb7d25c4697859f4135245956eec6012708"
+        user = Token.objects.get(key=token).user
+
+        # token = '6aaeffb7d25c4697859f4135245956eec6012708'
         # user = Token.objects.get(key=token).user
-
-
         # Check if the user is a client
         if ClientProfile.objects.filter(user=user).exists():
             raise PermissionDenied('Clients cannot create a lawyer profile')
@@ -225,13 +243,13 @@ class ClientProfileViewSet(viewsets.ModelViewSet):
                 user = Token.objects.get(key=token).user
             except Token.DoesNotExist:
                 raise PermissionDenied('Client profile not found')
-        # token = "3a398a6a080114686cd922310b84b3d0b2adac29"
         
         else :
             return PermissionDenied("access denied")
             
         
-
+        # token = 'fa5b5b71139ace340120b57070f14a5429764199'
+        # user = Token.objects.get(key=token).user
         if LawyerProfile.objects.filter(user=user).exists():
             raise PermissionDenied('Lawyers cannot see a client profile')
         else:
@@ -244,11 +262,13 @@ class ClientProfileViewSet(viewsets.ModelViewSet):
                 user = Token.objects.get(key=token).user
             except Token.DoesNotExist:
                 raise PermissionDenied('Lawyer profile not found or not approved.')
-        # token = "6aaeffb7d25c4697859f4135245956eec6012708"
-        # user = Token.objects.get(key=token).user
         else :
             return PermissionDenied("access denied")
 
+
+        # token = 'ec3cce742b1fc84f23c0b427dffeb9890cd3041e'
+        # token = 'fa5b5b71139ace340120b57070f14a5429764199'
+        # user = Token.objects.get(key=token).user
         if LawyerProfile.objects.filter(user=user).exists():
             raise PermissionDenied('Lawyers cannot create a client profile')
 
@@ -275,10 +295,11 @@ class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
                 user = Token.objects.get(key=token).user
             except Token.DoesNotExist:
                 raise PermissionDenied('access denied.')
-        # token = "c942aa39c46d86e5d4d4647c971e1c6db6ff397f"
         else :
             return PermissionDenied("access denied")
         
+        # token = '6aaeffb7d25c4697859f4135245956eec6012708'
+        # user = Token.objects.get(key=token).user
         if user.is_superuser:
 
             instance = serializer.save()
@@ -438,9 +459,20 @@ class ReviewViewSet(viewsets.ModelViewSet):
         serializer.save()
 
     def get_serializer_context(self):
-        return {'lawyer_id': self.kwargs['lawyer_pk'] , 'client_id': self.request.user.client_profile.id}
-    
+        token = self.request.data["token"]
+        if token:
+            try:
+                user = Token.objects.get(key=token).user
+            except Token.DoesNotExist:
+                raise PermissionDenied('Lawyer profile not found or not approved.')
+        else :
+            return PermissionDenied("access denied")
 
+
+        # token = 'ec3cce742b1fc84f23c0b427dffeb9890cd3041e'
+        user = Token.objects.get(key=token).user
+        client = ClientProfile.objects.get(user=user)
+        return {'lawyer_id': self.kwargs['lawyer_pk'] , 'client_id': client.id}
 
 
 # def index(request,):
@@ -502,7 +534,7 @@ class GoogleOAuth2SignUpCallbackView(APIView):
             user=user, defaults={"google_id": user_data["id"]}
         )
         try:
-            LawyerImage.objects.get_or_create(lawyer=user.lawyer_profile , defaults={"image": user_data["picture"]})
+            ClientImage.objects.get_or_create(user=user , defaults={"image": user_data["picture"]})
         except:
             pass
 

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib import admin
 from django.utils import timezone
 from django.db.models import Avg
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class UserProfile(models.Model):
@@ -55,7 +56,7 @@ class LawyerProfile(models.Model):
     bio = models.CharField(max_length=255)
     address = models.ForeignKey(Address, on_delete=models.CASCADE , related_name='lawyer_address')
     language = models.CharField(max_length=255)
-    approved = models.BooleanField(default=False)
+    approved = models.BooleanField(null = True , blank = True)
     rating = models.IntegerField(null=True, blank=True)
 
     # def save(self, *args, **kwargs):
@@ -111,9 +112,10 @@ class Appointment(models.Model):
 class Review(models.Model):
     lawyer = models.ForeignKey(LawyerProfile, on_delete=models.CASCADE, related_name='reviews')
     client = models.ForeignKey(ClientProfile, on_delete=models.CASCADE)
-    rating = models.PositiveIntegerField()
+    rating = models.PositiveIntegerField(validators=[MaxValueValidator(5)])
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='core/images', blank=True, null=True)   
 
     def __str__(self):
         return f'Review for {self.lawyer.user.get_full_name()} by {self.client.user.get_full_name()}'
@@ -133,4 +135,12 @@ class LawyerDocument(models.Model):
 
     def __str__(self):
         return f"Document for {self.lawyer.user.username}"
+    
+
+class ClientImage(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='image')
+    image = models.ImageField(upload_to='core/images', blank=True, null=True)
+
+    def __str__(self):
+        return f"Image for {self.client.user.username}"
 
