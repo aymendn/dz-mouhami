@@ -635,13 +635,20 @@ def lawyer_profile_search(request):
     paginator = CustomPageNumberPagination()
     search_results = search_results.order_by('-rating')
 
-    print(search_results)
-
     paginated_results = paginator.paginate_queryset(search_results, request)
-    
+
     serialized_results = LawyerProfileSerializer(paginated_results, many=True).data
 
-    return Response({'search_results': serialized_results, 'num_pages' : paginator.page.paginator.num_pages })
+    lawyer_ids = [result['id'] for result in serialized_results]  
+    lawyer_images = LawyerImage.objects.filter(lawyer_id__in=lawyer_ids)
+    serialized_images = LawyerImageSerializer(lawyer_images, many=True).data
+
+    image_dict = {image['id']: image['image'] for image in serialized_images}
+
+    for result in serialized_results:
+        result['image'] = image_dict.get(result['id'], None)
+    
+    return Response({'search_results': serialized_results, 'num_pages': paginator.page.paginator.num_pages})
 
 
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
