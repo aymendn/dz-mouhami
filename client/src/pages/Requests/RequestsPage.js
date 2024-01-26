@@ -17,11 +17,7 @@ const RequestsPage = () => {
       const fetchAllrequestsData = async ()=>{
           try{
               const token = "6aaeffb7d25c4697859f4135245956eec6012708"
-              const res =await axios.get('http://127.0.0.1:8000/core/appointments-requests' ,{
-                headers: {
-                  Authorization: `Bearer ${token}`, 
-                },
-              }) 
+              const res =await axios.get('http://127.0.0.1:8000/core/appointments-requests' ,{ ...requestsData, token: token }) 
               setrequestsData(res.data)
               console.log(res.data)
           }catch(err){
@@ -36,11 +32,7 @@ const RequestsPage = () => {
   const handleAccept = async (id) => {
     const token = "6aaeffb7d25c4697859f4135245956eec6012708"
       try {
-          const response = await axios.post(`http://localhost:8000/core/accept-appointment/${id}/`,{},{
-            headers: {
-              Authorization: `Bearer ${token}`, 
-            },
-          }
+          const response = await axios.post(`http://localhost:8000/core/accept-appointment/${id}/`,{},{ ...requestsData, token: token }
           );
 
           // Traitez la réponse si nécessaire
@@ -53,11 +45,7 @@ const RequestsPage = () => {
     try {
         const token = "6aaeffb7d25c4697859f4135245956eec6012708"
         const response = await axios.post(`http://localhost:8000/core/refuse-appointment/${id}/`,{},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`, 
-          },
-        }
+        { ...requestsData, token: token }
         );
 
         // Traitez la réponse si nécessaire
