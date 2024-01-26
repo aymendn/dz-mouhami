@@ -9,7 +9,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import Loading from "../../components/Loading";
 
-const getLawyer = async ({ id }) => {
+const getLawyer = async (id) => {
   const { data } = await axios.get(`core/lawyer-view/${id}/`);
   return data;
 };
@@ -17,7 +17,7 @@ const getLawyer = async ({ id }) => {
 const LawyerPage = () => {
   const { id } = useParams();
   const { data, isLoading, isError, error } = useQuery(["lawyer", { id }], () =>
-    getLawyer({ id })
+    getLawyer(id)
   );
 
   if (isLoading) {
@@ -50,7 +50,7 @@ const LawyerPage = () => {
 
           {/* Reviews */}
           <div className="rounded-2xl border-2 border-slate-100 p-8 ">
-            <Reviews />
+            <Reviews lawyerId={id} />
           </div>
         </div>
         {/* sidebar (1/3) */}
