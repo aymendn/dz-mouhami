@@ -613,10 +613,19 @@ def lawyer_profile_content(request):
     serializer = LawyerProfileSerializer(lawyer_profile)
     return Response(serializer.data)
 
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
+
 @api_view(['GET'])
-def appointments_request(request,lawyer_id):
+@authentication_classes([])  # No authentication classes for unauthenticated access
+@permission_classes([AllowAny])  # Allow access to anyone, authenticated or not
+def appointments_request(request):
     #lawyer_id = request.user.id
-    appointments = Appointment.objects.filter(lawyer_id = lawyer_id,status='Pending')
+    token_key = request.GET.get('token', None)
+    print(token_key)
+    appointments = Appointment.objects.filter(status='Pending') #should add lawyer id
     paginator = CustomPageNumberPagination()
     appointments = appointments.order_by('-date',)
 

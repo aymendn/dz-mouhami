@@ -22,7 +22,7 @@ const LandingPage = () => {
       >
         <Main></Main>
       </div>
-      <a href="http://192.168.228.1.nip.io:8000/core/login">
+      <a href="http://127.0.0.1:8000/core/login">
         <button>login</button>
       </a>
       <button
