@@ -66,7 +66,7 @@ function App() {
             <Route path="/appointments" Component={AppointementPage}></Route>
             <Route path="/edit" Component={EditProfilePage}></Route>
             <Route path="/search" Component={SearchPage}></Route>
-            <Route path="/lawyer" Component={LawyerPage}></Route>
+            <Route path="/lawyer/:id" Component={LawyerPage}></Route>
             <Route path="/contact" Component={ContactPage}></Route>
             <Route path="/about" Component={AboutPage}></Route>
             <Route path="/privacy" Component={PrivacyPage}></Route>
