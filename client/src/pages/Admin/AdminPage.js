@@ -9,32 +9,32 @@ import { useEffect , useState } from "react";
 import axios from "axios";
 
 const AdminPage = () => {
-
-  const [requestsData, setrequestsData] = useState([])
-  useEffect(()=>{
-      const fetchAllrequestsData = async ()=>{
-          try{
-              const token = "6aaeffb7d25c4697859f4135245956eec6012708"
-              const res =await axios.get('http://127.0.0.1:8000/core/appointments-requests' ,{
-                headers: {
-                  Authorization: `Bearer ${token}`, 
-                },
-              }) 
-              setrequestsData(res.data)
-              console.log(res.data)
-          }catch(err){
-              console.log('erreur ',err)
-          }
-      } 
-      fetchAllrequestsData()
-  },[])
+  
+   const [requestsData, setrequestsData] = useState([])
+   useEffect(()=>{
+       const fetchAllrequestsData = async ()=>{
+           try{
+               const token = "6aaeffb7d25c4697859f4135245956eec6012708"
+               const res =await axios.get('http://127.0.0.1:8000/core/lawyers_pending' ,{
+                 headers: {
+                   Authorization: `Bearer ${token}`, 
+                 },
+               }) 
+               setrequestsData(res.data)
+               console.log(res.data)
+           }catch(err){
+               console.log('erreur ',err)
+           }
+       } 
+       fetchAllrequestsData()
+   },[])
 
   const [requests, setRequests] = useState();
 
   const handleAccept = async (id) => {
     const token = "6aaeffb7d25c4697859f4135245956eec6012708"
       try {
-          const response = await axios.post(`http://localhost:8000/core/accept-appointment/${id}/`,{},{
+          const response = await axios.post(`http://localhost:8000/core/accept-lawyer/${id}/`,{},{
             headers: {
               Authorization: `Bearer ${token}`, 
             },
@@ -50,7 +50,7 @@ const AdminPage = () => {
   const handleRefuse = async (id) => {
     try {
         const token = "6aaeffb7d25c4697859f4135245956eec6012708"
-        const response = await axios.post(`http://localhost:8000/core/refuse-appointment/${id}/`,{},
+        const response = await axios.post(`http://localhost:8000/core/refuse-lawyer/${id}/`,{},
         {
           headers: {
             Authorization: `Bearer ${token}`, 
