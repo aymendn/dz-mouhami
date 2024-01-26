@@ -1,6 +1,6 @@
 # serializers.py
 from rest_framework import serializers
-from .models import Address, LawyerProfile, LawyerImage, LawyerDocument , ClientProfile , User , TimeSlot , Appointment , Review
+from .models import Address, LawyerProfile, LawyerImage, LawyerDocument , ClientProfile , User , TimeSlot , Appointment , Review , ClientImage
 from django.shortcuts import get_object_or_404
 
 
@@ -8,6 +8,16 @@ class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = ['id', 'street', 'city', 'state', 'zip_code', 'country']
+
+
+class ClientImageSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        User_pk = self.context['User_pk']
+        return ClientImage.objects.create(user_id=User_pk, **validated_data)
+
+    class Meta:
+        model = ClientImage
+        fields = ['id', 'image']
 
 class TimeSlotSerializer(serializers.ModelSerializer):
     class Meta:
@@ -178,9 +188,10 @@ class LawyerProfileAdminListSerializer(serializers.ModelSerializer):
 
     
 class ReviewSerializer(serializers.ModelSerializer):
+    image = ClientImageSerializer(read_only=True)
     class Meta:
         model = Review
-        fields = ['id', 'rating', 'comment', 'created_at']
+        fields = ['id', 'rating', 'comment', 'created_at' , 'image']
 
     def create(self, validated_data):
         lawyer = self.context.get('lawyer_id')
@@ -188,13 +199,19 @@ class ReviewSerializer(serializers.ModelSerializer):
         
         # Get the ClientProfile instance using the provided client_id
         client = get_object_or_404(ClientProfile, id=client_id)
+        user = User.objects.get(id= ClientProfile.objects.get(id=client_id).user_id)
+        image_instance = ClientImage.objects.filter(user_id=user.id)
+        image = image_instance.image if image_instance else None
 
         review_instance = Review.objects.create(
             lawyer_id=lawyer,
             client=client,
             rating=validated_data['rating'],
-            comment=validated_data['comment']
+            comment=validated_data['comment'],
+            image=image
         )
         return review_instance
 
-    
+
+
+
