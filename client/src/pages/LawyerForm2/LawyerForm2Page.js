@@ -33,10 +33,10 @@ const LawyerForm2Page = () => {
    const handleSubmit = async (e) => {
     e.preventDefault();
     
-   const token = "533ba7c8dccd71003fedea92076ab3ef94aaa243"
+   const token = "6aaeffb7d25c4697859f4135245956eec6012708"
    
    console.log("Data to be sent:", { ...data, token: token });
-  await axios.post(`http://127.0.0.1:8000/core/lawyers/284/documents/`,{...data, token:token})
+  await axios.post(`http://127.0.0.1:8000/core/lawyers/lawyer_2/documents/`,{...data, token:token})
     
       .then(response => {
         //Handle the response data as needed
