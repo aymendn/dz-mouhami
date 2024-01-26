@@ -654,7 +654,7 @@ from rest_framework.response import Response
 @authentication_classes([])
 @permission_classes([AllowAny])
 def schedule_appointment(request, lawyer_id, time_slot_id):
-    token_key = request.headers.get('token', None)
+    token_key = request.headers.get('Authorization', None)
     time = request.POST.get('startTime',None)
     note = request.POST.get('note','')
     
@@ -699,7 +699,7 @@ def schedule_appointment(request, lawyer_id, time_slot_id):
 @authentication_classes([])  # No authentication classes for unauthenticated access
 @permission_classes([AllowAny])  # Allow access to anyone, authenticated or not
 def appointments_requests(request):
-    token_key = request.headers.get('token', None)
+    token_key = request.headers.get('Authorization', None)
 
     if token_key:
         try:
@@ -712,12 +712,9 @@ def appointments_requests(request):
     if hasattr(user, 'lawyer_profile'):
         try:
             appointments = Appointment.objects.filter(lawyer_id=user.lawyer_profile, status='Pending')
-            paginator = CustomPageNumberPagination()
             appointments = appointments.order_by('-date',)
-            
-            paginated_results = paginator.paginate_queryset(appointments, request)
-            
-            serialized_results = AppointmentSerializer(paginated_results, many=True).data
+                        
+            serialized_results = AppointmentSerializer(appointments, many=True).data
 
             return Response(serialized_results)
         
@@ -731,7 +728,7 @@ def appointments_requests(request):
 @authentication_classes([])
 @permission_classes([AllowAny])  
 def appointments(request):
-    token_key = request.headers.get('token', None)
+    token_key = request.headers.get('Authorization', None)
 
     if token_key:
         try:
@@ -744,12 +741,9 @@ def appointments(request):
     if hasattr(user, 'lawyer_profile'):
         try:
             appointments = Appointment.objects.filter(lawyer_id=user.lawyer_profile, status='Accepted')
-            paginator = CustomPageNumberPagination()
             appointments = appointments.order_by('-date',)
-            
-            paginated_results = paginator.paginate_queryset(appointments, request)
-            
-            serialized_results = AppointmentSerializer(paginated_results, many=True).data
+                        
+            serialized_results = AppointmentSerializer(appointments, many=True).data
 
             return Response(serialized_results) #add the success variable
         
@@ -763,7 +757,7 @@ def appointments(request):
 @authentication_classes([])
 @permission_classes([AllowAny])  
 def accept_appointment(request, appointment_id):
-    token_key = request.headers.get('token', None)
+    token_key = request.headers.get('Authorization', None)
     
     if token_key:
         try:
@@ -786,7 +780,7 @@ def accept_appointment(request, appointment_id):
 
 @api_view(['POST']) #lawyer
 def refuse_appointment(request, appointment_id):
-    token_key = request.headers.get('token', None)
+    token_key = request.headers.get('Authorization', None)
     
     if token_key:
         try:
@@ -809,7 +803,7 @@ def refuse_appointment(request, appointment_id):
 
 
 def verify_token(request):
-    token = request.headers.get('token', None)
+    token = request.headers.get('Authorization', None)
     if token:
         try:
             user = Token.objects.get(key=token).user
