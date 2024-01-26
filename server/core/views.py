@@ -718,6 +718,8 @@ def lawyers_pending(request):
     # return Response({"success" : True, "message": token_key})
 
 @api_view(['POST']) #admin
+@authentication_classes([])
+@permission_classes([AllowAny])  
 def accept_lawyer(request,lawyer_id):
     lawyer = LawyerProfile.objects.get(id=lawyer_id)
     lawyer.approved = True
@@ -725,6 +727,8 @@ def accept_lawyer(request,lawyer_id):
     return Response({"success": True, "message": "Lawyer accepted."})
 
 @api_view(['POST']) #admin
+@authentication_classes([])
+@permission_classes([AllowAny])  
 def refuse_lawyer(request,lawyer_id):
     lawyer = LawyerProfile.objects.get(id=lawyer_id)
     lawyer.delete()
