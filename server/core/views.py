@@ -700,18 +700,33 @@ def schedule_appointment(request, lawyer_id, time_slot_id):
 @authentication_classes([])  # No authentication classes for unauthenticated access
 @permission_classes([AllowAny])  # Allow access to anyone, authenticated or not
 def appointments_requests(request):
-    #lawyer_id = request.user.id
-    token_key = request.GET.get('token', None)
-    print(token_key)
-    appointments = Appointment.objects.filter(status='Pending') #should add lawyer id
-    paginator = CustomPageNumberPagination()
-    appointments = appointments.order_by('-date',)
+    token_key = request.data.get('token', None)
 
-    paginated_results = paginator.paginate_queryset(appointments, request)
-    
-    serialized_results = AppointmentSerializer(paginated_results, many=True).data
+    if token_key:
+        try:
+            user = Token.objects.get(key=token_key).user
+        except Token.DoesNotExist:
+            return Response({"success": False, "message": "Access denied. Invalid token."})
+    else:
+        return Response({"success": False, "message": "Access denied. Token not provided."})
 
-    return Response(serialized_results)
+    if hasattr(user, 'lawyer_profile'):
+        try:
+            appointments = Appointment.objects.filter(lawyer_id=user.lawyer_profile, status='Pending')
+            paginator = CustomPageNumberPagination()
+            appointments = appointments.order_by('-date',)
+            
+            paginated_results = paginator.paginate_queryset(appointments, request)
+            
+            serialized_results = AppointmentSerializer(paginated_results, many=True).data
+
+            return Response(serialized_results)
+        
+        except Http404:
+            return Response({"success": False, "message": "No appointments for this user"})
+    else:
+        return Response({"success": False, "message": "User has no lawyer profile."})
+
 
 @api_view(['GET']) #lawyer
 @authentication_classes([])
