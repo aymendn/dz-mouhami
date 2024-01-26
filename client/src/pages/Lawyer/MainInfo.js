@@ -17,6 +17,7 @@ const MainInfo = ({ lawyerData }) => {
   const location = lawyerData.location;
   const description = lawyerData.bio;
   const rating = lawyerData.rating;
+  const time_slots = lawyerData.time_slots;
   // get the first image from images
   const getImage = () => {
     try {
@@ -33,10 +34,10 @@ const MainInfo = ({ lawyerData }) => {
         <Image
           src={getImage()}
           alt="Picture of the author"
-          width={220}
+          width={280}
           height={280}
           placeholderColor="#dde7ee"
-          className="w-64 h-[280px] rounded-md me-4 object-cover"
+          className="  rounded-md me-4 object-cover"
         />
 
         <div className="rounded-lg overflow-hidden">
@@ -79,7 +80,7 @@ const MainInfo = ({ lawyerData }) => {
       </p>
 
       {/* Availability */}
-      <Availability />
+      <Availability data={time_slots} />
     </>
   );
 };

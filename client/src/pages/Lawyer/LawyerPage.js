@@ -21,12 +21,7 @@ const LawyerPage = () => {
   );
 
   if (isLoading) {
-    return (
-      <div>
-        <p>id: {id}</p>
-        <Loading className="h-screen" />;
-      </div>
-    );
+    return <Loading className="h-screen" />;
   }
 
   if (isError) {
