@@ -10,12 +10,7 @@ import { useEffect, useState } from "react";
 
 const RequestsPage = () => {
 
-// const requestsData = [
-//   { id:5 ,name: "Melissa", surname: "Mellaz", age: "20", schedule: "10h00" },
-//   { id:6 ,name: "aya", surname: "lamiri", age: "19", schedule: "10h45" },
-//   { id:7 ,name: "Melissa", surname: "Mellaz", age: "20", schedule: "10h00" },
-//   { id:8 ,name: "aya", surname: "lamiri", age: "19", schedule: "10h45" },
-// ];
+
 
  const [requestsData, setrequestsData] = useState([])
   useEffect(()=>{

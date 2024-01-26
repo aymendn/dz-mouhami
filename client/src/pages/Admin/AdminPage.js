@@ -5,19 +5,66 @@ import Accept from "../../assets/check.svg";
 import AdminNavbar from "./AdminNavbar";
 import SvgColor from "react-svg-color";
 import Footer from "../../components/Footer";
+import { useEffect , useState } from "react";
+import axios from "axios";
+
 const AdminPage = () => {
-  const requestsData = [
-    {
-      name: "maya",
-      surname: "mellaz",
-      age: 20,
-    },
-    {
-      name: "aya",
-      surname: "lamiri",
-      age: 19,
-    },
-  ];
+
+  const [requestsData, setrequestsData] = useState([])
+  useEffect(()=>{
+      const fetchAllrequestsData = async ()=>{
+          try{
+              const token = "6aaeffb7d25c4697859f4135245956eec6012708"
+              const res =await axios.get('http://127.0.0.1:8000/core/appointments-requests' ,{
+                headers: {
+                  Authorization: `Bearer ${token}`, 
+                },
+              }) 
+              setrequestsData(res.data)
+              console.log(res.data)
+          }catch(err){
+              console.log('erreur ',err)
+          }
+      } 
+      fetchAllrequestsData()
+  },[])
+
+  const [requests, setRequests] = useState();
+
+  const handleAccept = async (id) => {
+    const token = "6aaeffb7d25c4697859f4135245956eec6012708"
+      try {
+          const response = await axios.post(`http://localhost:8000/core/accept-appointment/${id}/`,{},{
+            headers: {
+              Authorization: `Bearer ${token}`, 
+            },
+          }
+          );
+
+          // Traitez la réponse si nécessaire
+          console.log('Réponse du serveur :', response.data);
+      } catch (error) {
+          console.error('Erreur lors de la soumission de la demande', error);
+      }
+  };
+  const handleRefuse = async (id) => {
+    try {
+        const token = "6aaeffb7d25c4697859f4135245956eec6012708"
+        const response = await axios.post(`http://localhost:8000/core/refuse-appointment/${id}/`,{},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+        }
+        );
+
+        // Traitez la réponse si nécessaire
+        console.log('Réponse du serveur :', response.data);
+    } catch (error) {
+        console.error('Erreur lors de la soumission de la demande', error);
+    }
+};
+
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-center">
@@ -57,14 +104,16 @@ const AdminPage = () => {
                 </td>
                 <td className="border border-slate-200 px-4 py-2 ">
                   <div className="flex gap-2 ">
-                    <button className="transition-transform transform hover:scale-105   bg-green-500 py-2  px-6  rounded-3xl text-white font-normal text-md flex hover:bg-green-700 duration-300  items-center gap-2 ">
-                      <SvgColor svg={Accept} colors={["#FFF", "#FFF"]} />
-                      Accept
-                    </button>
-                    <button className=" transition-transform transform hover:scale-105  bg-red-500 py-2  px-6  rounded-3xl text-white font-normal text-md flex hover:bg-red-700 duration-300 items-center gap-2 ">
-                      <img src={Delete} alt="Refus" />
-                      Refuse
-                    </button>
+                  <button
+                      onClick={()=>handleAccept(requests.id)}
+                      className="transition-transform transform hover:scale-105   bg-green-500 py-2  px-6  rounded-3xl text-white font-normal text-md flex hover:bg-green-700 duration-300  items-center gap-2 ">
+                        <SvgColor svg={Accept} colors={["#FFF", "#FFF"]} />
+                        Accept
+                      </button>
+                      <button onClick={()=>handleRefuse(requests.id)} className=" transition-transform transform hover:scale-105  bg-red-500 py-2  px-6  rounded-3xl text-white font-normal text-md flex hover:bg-red-700 duration-300 items-center gap-2 ">
+                        <img src={Delete} alt="Refuse" />
+                        Refuse
+                      </button>
                   </div>
                 </td>
               </tr>
