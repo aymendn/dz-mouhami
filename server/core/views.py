@@ -37,7 +37,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
-from django.http import request
+from django.http import Http404,request
 
 # samy's import 
 from django.urls import reverse
@@ -650,10 +650,56 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
-@api_view(['GET'])
+
+@api_view(['POST']) #client
+@authentication_classes([])
+@permission_classes([AllowAny])
+def schedule_appointment(request, lawyer_id, time_slot_id):
+    token_key = request.data.get('token', None)
+    time = request.POST.get('startTime',None)
+    note = request.POST.get('note','')
+    
+    if token_key:
+        try:
+            user = Token.objects.get(key=token_key).user
+        except Token.DoesNotExist:
+            return Response({"success": False, "message": "Access denied. Invalid token."})
+    else:
+        return Response({"success": False, "message": "Access denied. Token not provided."})
+    
+
+    if hasattr(user,'client_profile'):
+        try:
+            time_slot = get_object_or_404(TimeSlot, id=time_slot_id, lawyer_id=lawyer_id)
+        except Http404:
+            return Response({"success": False, "message": "Time slot doesn't exist."})
+        
+        check_existing_appointment = Appointment.objects.filter(
+            time_slot_id = time_slot_id,
+            client_id = user.client_profile
+        ).first()
+        if check_existing_appointment:
+            return Response({"success": False, "message": "Appointment already exists."})
+        
+        lawyer_profile = LawyerProfile.objects.get(id=lawyer_id)
+        appointment = Appointment.objects.create(
+            time_slot = time_slot,
+            lawyer = lawyer_profile,
+            client = user.client_profile,
+            start_time = time,
+            note = note,
+            status = "Pending"
+        )
+        appointment.save()
+        return Response({"success": True, "message": "Appointment scheduled successfully."})
+    else:
+        return Response({"success": False, "message": "You don't have permission to schedule an appointment."})
+    
+
+@api_view(['GET']) #lawyer
 @authentication_classes([])  # No authentication classes for unauthenticated access
 @permission_classes([AllowAny])  # Allow access to anyone, authenticated or not
-def appointments_request(request):
+def appointments_requests(request):
     #lawyer_id = request.user.id
     token_key = request.GET.get('token', None)
     print(token_key)
@@ -672,7 +718,7 @@ def appointments_request(request):
 @permission_classes([AllowAny])  
 def appointments(request):
     #lawyer_id = request.user.id
-    token_key = request.GET.get('token', None)
+    token_key = request.data.get('token', None)
     print(token_key)
     appointments = Appointment.objects.filter(status='Accepted') #should add lawyer id
     paginator = CustomPageNumberPagination()
@@ -685,86 +731,55 @@ def appointments(request):
     return Response(serialized_results)
     # return Response({"success" : True, "message": token_key})
 
-@api_view(['POST']) #client
-def schedule_appointment(request, lawyer_id, time_slot_id):
-    #if request.user.is_authenticated and hasattr(request.user,'client_profile'):
-    #   client_id = request.user.id
-        client_id = 31 #testing
-
-        client_profile = ClientProfile.objects.get(id=client_id)
-        lawyer_profile = LawyerProfile.objects.get(id=lawyer_id)
-        time_slot = TimeSlot.objects.get(id=time_slot_id, lawyer_id=lawyer_id)
-
-        existing_appointment = Appointment.objects.filter(
-            time_slot_id=time_slot_id,
-            client_id=client_id
-        ).first()
-        if existing_appointment:
-            return {"success": False, "message": "Appointment already exists for this time slot."}
-
-        appointment = Appointment.objects.create(
-            time_slot=time_slot,
-            lawyer=lawyer_profile,
-            client=client_profile,
-            status="Pending"
-        )
-
-        print(appointment)
-
-        return Response({"success": True, "message": "Appointment created."})
-    #else :
-    #    return {"success": False, "message": "You need to login first."}
-    
 
 @api_view(['POST']) #lawyer
 @authentication_classes([])
 @permission_classes([AllowAny])  
-def accept_appointment(request,appointment_id):
-    appointment = Appointment.objects.get(id=appointment_id)
-    appointment.status = 'Accepted'
-    appointment.save()
-    return Response({"success": True, "message": "Appointment accepted."})
+def accept_appointment(request, appointment_id):
+    token_key = request.data.get('token', None)
+    
+    if token_key:
+        try:
+            user = Token.objects.get(key=token_key).user
+        except Token.DoesNotExist:
+            raise PermissionDenied('Access denied. Invalid token.')
+    else:
+        return PermissionDenied("Access denied. Token not provided.")
+
+    if user.client_profile is not None:
+        try:
+            appointment = get_object_or_404(Appointment, id=appointment_id, lawyer=user.lawyer_profile)
+        except Http404:
+            return Response({"success": False, "message": "Appointment not found or not associated with your profile"})
+        appointment.status = 'Accepted'
+        appointment.save()
+        return Response({"success": True, "message": "Appointment accepted."})
+    else:
+        return Response({"success": False, "message": "You don't have permission to accept an appointment."})
 
 @api_view(['POST']) #lawyer
-def refuse_appointment(request,appointment_id):
-    appointment = Appointment.objects.get(id=appointment_id)
-    appointment.status = 'Refused'
-    appointment.save()
-    return Response({"success": True, "message": "Appointment refused."})
-
-
-@api_view(['GET']) #admin
-@authentication_classes([])
-@permission_classes([AllowAny])  
-def lawyers_pending(request):
-    #lawyer_id = request.user.id
-    token_key = request.GET.get('token', None)
-    print(token_key)
-    lawyers = LawyerProfile.objects.filter(status='Pending')
-
-    lawyers = lawyers.order_by('-first_name')
+def refuse_appointment(request, appointment_id):
+    token_key = request.data.get('token', None)
     
-    serialized_results = LawyerProfileSerializer(lawyers, many=True).data
+    if token_key:
+        try:
+            user = Token.objects.get(key=token_key).user
+        except Token.DoesNotExist:
+            raise PermissionDenied('Access denied. Invalid token.')
+    else:
+        return PermissionDenied("Access denied. Token not provided.")
 
-    return Response(serialized_results)
-    # return Response({"success" : True, "message": token_key})
+    if user.lawyer_profile is not None:
+        try:
+            appointment = get_object_or_404(Appointment, id=appointment_id, lawyer=user.lawyer_profile)
+        except Http404:
+            return Response({"success": False, "message": "Appointment not found or not associated with your profile."})
+        appointment.status = 'Refused'
+        appointment.save()
+        return Response({"success": True, "message": "Appointment refused."})
+    else:
+        return Response({"success": False, "message": "You don't have permission to refused an appointment."})
 
-@api_view(['POST']) #admin
-@authentication_classes([])
-@permission_classes([AllowAny])  
-def accept_lawyer(request,lawyer_id):
-    lawyer = LawyerProfile.objects.get(id=lawyer_id)
-    lawyer.approved = True
-    lawyer.save()
-    return Response({"success": True, "message": "Lawyer accepted."})
-
-@api_view(['POST']) #admin
-@authentication_classes([])
-@permission_classes([AllowAny])  
-def refuse_lawyer(request,lawyer_id):
-    lawyer = LawyerProfile.objects.get(id=lawyer_id)
-    lawyer.approved = False
-    return Response({"success": True, "message": "Lawyer refused."})
 
 def verify_token(request):
     token = request.GET.get('token')
