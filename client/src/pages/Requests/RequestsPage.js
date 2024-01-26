@@ -39,8 +39,14 @@ const RequestsPage = () => {
   const [requests, setRequests] = useState();
 
   const handleAccept = async (id) => {
+    const token = "6aaeffb7d25c4697859f4135245956eec6012708"
       try {
-          const response = await axios.post(`http://localhost:8000/core/accept-appointment/${id}/`,{});
+          const response = await axios.post(`http://localhost:8000/core/accept-appointment/${id}/`,{},{
+            headers: {
+              Authorization: `Bearer ${token}`, 
+            },
+          }
+          );
 
           // Traitez la réponse si nécessaire
           console.log('Réponse du serveur :', response.data);
@@ -50,7 +56,14 @@ const RequestsPage = () => {
   };
   const handleRefuse = async (id) => {
     try {
-        const response = await axios.post(`http://localhost:8000/core/refuse-appointment/${id}/`,{});
+        const token = "6aaeffb7d25c4697859f4135245956eec6012708"
+        const response = await axios.post(`http://localhost:8000/core/refuse-appointment/${id}/`,{},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, 
+          },
+        }
+        );
 
         // Traitez la réponse si nécessaire
         console.log('Réponse du serveur :', response.data);

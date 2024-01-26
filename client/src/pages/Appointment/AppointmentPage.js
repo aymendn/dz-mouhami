@@ -2,14 +2,33 @@ import React from "react";
 import Sidebar from "../../components/Sidebar";
 import Navbar from "../../components/ProfileNavbar";
 import Footer from "../../components/Footer";
+import { useEffect } from "react";
+import { useState } from "react";
+import axios from "axios";
 import { useTranslation } from "react-i18next";
 
 const AppointementPage = () => {
   const {t} = useTranslation()
-  const rdvData = [
-    { name: "Melissa", surname: "Mellaz", age: "20", schedule: "10h00" },
-    { name: "aya", surname: "lamiri", age: "19", schedule: "10h45" },
-  ];
+  
+  const [rdvData, setrdvData] = useState([])
+  useEffect(()=>{
+      const fetchAllrdvData = async ()=>{
+          try{
+              const token = "6aaeffb7d25c4697859f4135245956eec6012708"
+              const res =await axios.get('http://127.0.0.1:8000/core/appointments' ,{
+                headers: {
+                  Authorization: `Bearer ${token}`, 
+                },
+              }) 
+              setrdvData(res.data)
+              console.log(res.data)
+          }catch(err){
+              console.log('erreur ',err)
+          }
+      } 
+      fetchAllrdvData()
+  },[])
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="z-50">
