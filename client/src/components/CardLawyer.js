@@ -18,12 +18,13 @@ const CardLawyer = ({
       <div className="transform duration-150 hover:bg-gray-100 hover:border-gray-300 border-gray-100 transition  ease-in-out  h-[234px] bg-white p-4 rounded-lg my-2 flex cursor-pointer border-2 w-full">
         {/* Image on the left */}
         <Image
-          src="/me.png"
+          key={image}
+          src={image}
           alt="Picture of the author"
           width={200}
           height={200}
           placeholderColor="#dde7ee"
-          className="w-full aspect-auto md:aspect-square  rounded-md me-4 object-cover"
+          className="aspect-auto md:aspect-square  rounded-md me-4 object-cover"
         />
 
         <div className="rounded-lg">
