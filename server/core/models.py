@@ -51,9 +51,9 @@ class ClientProfile(models.Model):
 # LawyerProfile model, using OneToOneField for a one-to-one relationship with User
 class LawyerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE , related_name='lawyer_profile')
-    specialization = models.CharField(max_length=1000)
+    specialization = models.CharField(max_length=1500)
     phone_number = models.CharField(max_length=500)
-    bio = models.CharField(max_length=1000)
+    bio = models.CharField(max_length=1500)
     address = models.ForeignKey(Address, on_delete=models.CASCADE , related_name='lawyer_address')
     language = models.CharField(max_length=255)
     approved = models.BooleanField(null = True , blank = True)
@@ -123,7 +123,7 @@ class Review(models.Model):
 # LawyerDocument model
 class LawyerImage(models.Model):
     lawyer = models.ForeignKey(LawyerProfile, on_delete=models.CASCADE, related_name='image')
-    image = models.ImageField(upload_to='core/images', blank=True, null=True)
+    image = models.ImageField(upload_to='core/images', blank=True, null=True, max_length=500)
 
     def __str__(self):
         return f"Image for {self.lawyer.user.username}"
