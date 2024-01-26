@@ -138,13 +138,16 @@ class ClientProfileSerializer(serializers.ModelSerializer):
         # Update Address
         address_data = validated_data.get('address')
         if address_data:
-            instance.address.street = address_data.get('street', instance.address.street)
-            instance.address.city = address_data.get('city', instance.address.city)
-            instance.address.state = address_data.get('state', instance.address.state)
-            instance.address.zip_code = address_data.get('zip_code', instance.address.zip_code)
-            instance.address.country = address_data.get('country', instance.address.country)
-            instance.address.save()
-            
+            if instance.address:
+                instance.address.street = address_data.get('street', instance.address.street)
+                instance.address.city = address_data.get('city', instance.address.city)
+                instance.address.state = address_data.get('state', instance.address.state)
+                instance.address.zip_code = address_data.get('zip_code', instance.address.zip_code)
+                instance.address.country = address_data.get('country', instance.address.country)
+                instance.address.save()
+            else:
+                instance.address = Address.objects.create(**address_data)
+
         instance.save()
         return instance
     
