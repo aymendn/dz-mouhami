@@ -636,7 +636,7 @@ def lawyer_profile_search(request):
     
     serialized_results = LawyerProfileSerializer(paginated_results, many=True).data
 
-    return Response({'search_results': serialized_results})
+    return Response({'search_results': serialized_results, 'num_pages' : paginator.page.paginator.num_pages })
 
 @api_view(['GET'])
 def lawyer_profile_content(request):
