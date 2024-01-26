@@ -20,22 +20,26 @@ const LawyerForm2Page = () => {
   };
   const Navigate = useNavigate()
 
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    document1: null,
+    document2: null,
+  });
   
 
-  const handleChange = (e) =>{
-
-    setData(prev=>({...prev,[e.target.name]: e.target.value}))
-   
-} 
-
+  const handleChange = (e) => {
+    setData((prev) => ({ ...prev, [e.target.name]: e.target.files[0] }));
+  };
  
    const handleSubmit = async (e) => {
     e.preventDefault();
     
    const token = "6aaeffb7d25c4697859f4135245956eec6012708"
-   
-   console.log("Data to be sent:", { ...data, token: token });
+   const formData = new FormData();
+   formData.append("document1", data.document1);
+   formData.append("document2", data.document2);
+   formData.append("token", token);
+
+  //  console.log("Data to be sent:", { ...data, token: token });
   await axios.post(`http://127.0.0.1:8000/core/lawyers/lawyer_2/documents/`,{...data, token:token})
     
       .then(response => {
