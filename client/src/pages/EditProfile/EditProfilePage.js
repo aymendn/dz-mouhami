@@ -41,7 +41,7 @@ const EditProfilePage = () => {
     setData(prev=>({...prev,[e.target.name]: e.target.value}))
    
 } 
-  const handleSubmit = (e) => {
+  /*const handleSubmit = (e) => {
     e.preventDefault();
     const apiUrl = 'http://127.0.0.1:8000/core/dashboard/{id}/';
   
@@ -53,7 +53,7 @@ const EditProfilePage = () => {
       .catch(error => {
         console.error('Erreur :', error);
       });
-  };
+  };*/
   return (
     <div className="flex flex-col min-h-screen">
       <div className="z-50">
@@ -128,7 +128,7 @@ const EditProfilePage = () => {
 
 
           <div className="flex justify-end m-4">
-            <button onClick={handleSubmit} className="transition-all hover:opacity-90 mx-4 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
+            <button  /*onClick={handleSubmit}*/ className="transition-all hover:opacity-90 mx-4 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
               <p>{t("save")}</p>
             </button>
           </div>

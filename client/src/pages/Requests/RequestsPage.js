@@ -5,19 +5,28 @@ import Accept from "../../assets/check.svg";
 import Navbar from "../../components/ProfileNavbar";
 import SvgColor from "react-svg-color";
 import Footer from "../../components/Footer";
+import axios from "axios";
+import { useEffect, useState } from "react";
 const RequestsPage = () => {
-  const requestsData = [
-    {
-      name: "maya",
-      surname: "mellaz",
-      age: 20,
-    },
-    {
-      name: "aya",
-      surname: "lamiri",
-      age: 19,
-    },
-  ];
+  const [requestsData, setrequestsData] = useState([])
+  useEffect(()=>{
+      const fetchAllrequestsData = async ()=>{
+          try{
+              const token = "6aaeffb7d25c4697859f4135245956eec6012708"
+              const res =await axios.get('http://127.0.0.1:8000/core/appointments-request' ,{
+                headers: {
+                  Authorization: `Bearer ${token}`, 
+                },
+              }) 
+              setrequestsData(res.data)
+              console.log(res.data)
+          }catch(err){
+              console.log('erreur ',err)
+          }
+      } 
+      fetchAllrequestsData()
+  },[])
+
 
   return (
     <div className="flex flex-col min-h-screen">

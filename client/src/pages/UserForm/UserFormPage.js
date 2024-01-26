@@ -27,11 +27,11 @@ const UserFormPage = () => {
     setData(prev=>({...prev,[e.target.name]: e.target.value}))
    
 } 
-  const handleSubmit =  (e) => {
+  /*const handleSubmit =  (e) => {
     e.preventDefault();
     //http://127.0.0.1:8000/core/clients/
 
-    axios.post('http://127.0.0.1:8000/core/clients/', data)
+    axios.post('http://127.0.0.1:8000/core/login-handler', data)
       .then(response => {
         // Handle the response data as needed
         console.log(response.data);
@@ -41,7 +41,7 @@ const UserFormPage = () => {
         console.error('Error:', error);
       });
   };
-
+*/
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="w-full">
@@ -59,7 +59,7 @@ const UserFormPage = () => {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="min-w-full sm:min-w-[600px] max-w-3xl w-full px-2"  >
+      <form className="min-w-full sm:min-w-[600px] max-w-3xl w-full px-2"  >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
           <TextField id={"age"} 
           name={"age"} 
@@ -97,7 +97,7 @@ const UserFormPage = () => {
           <Link to="/user-registration/validation">
             <button
               type="submit"
-              onClick={handleSubmit}
+             // onClick={handleSubmit}
               className="flex flex-row gap-2 transition-all border-1 bg-[#094B72] py-3 px-10 rounded-full text-white font-normal text-md hover:opacity-90 mb-6"
             >
               <img src={validation} alt="Validation" />
