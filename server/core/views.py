@@ -700,6 +700,23 @@ def refuse_appointment(request,appointment_id):
     appointment.save()
     return Response({"success": True, "message": "Appointment refused."})
 
+
+@api_view(['GET']) #admin
+@authentication_classes([])
+@permission_classes([AllowAny])  
+def lawyers_pending(request):
+    #lawyer_id = request.user.id
+    token_key = request.GET.get('token', None)
+    print(token_key)
+    lawyers = LawyerProfile.objects.filter(status='Pending')
+
+    lawyers = lawyers.order_by('-first_name')
+    
+    serialized_results = LawyerProfileSerializer(lawyers, many=True).data
+
+    return Response(serialized_results)
+    # return Response({"success" : True, "message": token_key})
+
 @api_view(['POST']) #admin
 def accept_lawyer(request,lawyer_id):
     lawyer = LawyerProfile.objects.get(id=lawyer_id)

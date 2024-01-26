@@ -33,6 +33,7 @@ urlpatterns = router.urls + lawyers_router.urls + lawyers_dashbord.urls + [
     path('refuse-lawyer/<int:lawyer_id>/', views.refuse_lawyer),
     path('appointments-requests', views.appointments_request),
     path('appointments', views.appointments),
+    path('lawyers_pending', views.lawyers_pending),
     ]
 # urlpatterns = urlpatterns + lawyers_view.urls
 
