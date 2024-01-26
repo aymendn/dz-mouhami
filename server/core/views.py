@@ -134,7 +134,7 @@ class LawyerDocumentViewSet(viewsets.ModelViewSet):
 
 
 class LawyerProfileViewSet(viewsets.ModelViewSet):
-    queryset = LawyerProfile.objects.prefetch_related('images', 'documents').all()
+    queryset = LawyerProfile.objects.prefetch_related('image', 'documents').all()
     serializer_class = LawyerProfileSerializer
 
     def get_queryset(self):
@@ -259,7 +259,7 @@ class ClientProfileViewSet(viewsets.ModelViewSet):
 
 
 class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
-    queryset = LawyerProfile.objects.prefetch_related('images', 'documents').all()
+    queryset = LawyerProfile.objects.prefetch_related('image', 'documents').all()
     # permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
     serializer_class = LawyerProfileAdminListSerializer
 
@@ -295,8 +295,8 @@ class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
 
 
 
-class LawyerSearchViewSet(viewsets.ModelViewSet):
-    queryset = LawyerProfile.objects.all()
+class LawyerViewSet(viewsets.ModelViewSet):
+    queryset = LawyerProfile.objects.prefetch_related('image').all()
     serializer_class = LawyerProfileSerializer
     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     search_fields = ['user__first_name', 'user__last_name', 'address__city' , 'specialization' , 'address__state' , 'address__country']
@@ -530,6 +530,10 @@ class GoogleOAuth2SignUpCallbackView(APIView):
         UserProfile.objects.get_or_create(
             user=user, defaults={"google_id": user_data["id"]}
         )
+        try:
+            LawyerImage.objects.get_or_create(lawyer=user.lawyer_profile , defaults={"image": user_data["picture"]})
+        except:
+            pass
 
         # Create the auth token for the frontend to use.
         token, _ = Token.objects.get_or_create(user=user)

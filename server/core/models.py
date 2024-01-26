@@ -120,7 +120,7 @@ class Review(models.Model):
 
 # LawyerDocument model
 class LawyerImage(models.Model):
-    lawyer = models.ForeignKey(LawyerProfile, on_delete=models.CASCADE, related_name='images')
+    lawyer = models.ForeignKey(LawyerProfile, on_delete=models.CASCADE, related_name='image')
     image = models.ImageField(upload_to='core/images', blank=True, null=True)
 
     def __str__(self):

@@ -7,7 +7,7 @@ router = routers.DefaultRouter()
 router.register(r'lawyers', views.LawyerProfileViewSet , basename='lawyer-profile')
 router.register(r'clients', views.ClientProfileViewSet, basename='client-profile')
 router.register(r'dashboard', views.LawyerAdminDashboardViewSet , basename='lawyer-admin-dashboard')
-router.register(r'lawyer-search', views.LawyerSearchViewSet, basename='lawyer-search')
+router.register(r'lawyer-view', views.LawyerViewSet, basename='lawyer-search')
 
 lawyers_router = routers.NestedSimpleRouter(router, r'lawyers', lookup='lawyer')
 lawyers_router.register(r'images', views.LawyerImageViewSet, basename='lawyer-images')
@@ -17,9 +17,11 @@ lawyers_router.register(r'documents', views.LawyerDocumentViewSet, basename='law
 
 lawyers_dashbord = routers.NestedSimpleRouter(router, r'dashboard', lookup='lawyer')
 
-# lawyers_view = routers.NestedSimpleRouter(router, r'lawyer-search', lookup='lawyer')
+lawyers_view = routers.NestedSimpleRouter(router, r'lawyer-view', lookup='lawyer')
+lawyers_view.register(r'reviews', views.ReviewViewSet, basename='lawyer-reviews')
+
 # lawyers_view.register(r'appointments', views.AppointmentClientModelViewSet, basename='appointments')
-# lawyers_view.register(r'reviews', views.ReviewViewSet, basename='lawyer-reviews')
+
 
 urlpatterns = router.urls + lawyers_router.urls + lawyers_dashbord.urls + [
     path('lawyer-profile-search/', views.lawyer_profile_search),
