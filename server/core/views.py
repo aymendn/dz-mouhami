@@ -731,8 +731,8 @@ def accept_lawyer(request,lawyer_id):
 @permission_classes([AllowAny])  
 def refuse_lawyer(request,lawyer_id):
     lawyer = LawyerProfile.objects.get(id=lawyer_id)
-    lawyer.delete()
-    return Response({"success": True, "message": "Lawyer deleted."})
+    lawyer.approved = False
+    return Response({"success": True, "message": "Lawyer refused."})
 
 def verify_token(request):
     token = request.GET.get('token')
