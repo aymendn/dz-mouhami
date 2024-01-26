@@ -155,34 +155,34 @@ class LawyerProfileViewSet(viewsets.ModelViewSet):
     serializer_class = LawyerProfileSerializer
 
     def get_queryset(self):
-        # token = self.request.data["token"]
-        # if token:
-        #     try:
-        #         user = Token.objects.get(key=token).user
-        #     except Token.DoesNotExist:
-        #         raise PermissionDenied('Lawyer profile not found or not approved.')
-        # else :
-        #     return PermissionDenied("access denied")
+        token = self.request.headers.get('Authorization')
+        if token:
+            try:
+                user = Token.objects.get(key=token).user
+            except Token.DoesNotExist:
+                raise PermissionDenied('Lawyer profile not found or not approved.')
+        else :
+            return PermissionDenied("access denied")
             
         # token = "6aaeffb7d25c4697859f4135245956eec6012708"
         # token = '6aaeffb7d25c4697859f4135245956eec6012708'
-        token = "533ba7c8dccd71003fedea92076ab3ef94aaa243"
+        # token = "533ba7c8dccd71003fedea92076ab3ef94aaa243"
         user = Token.objects.get(key=token).user
         return LawyerProfile.objects.filter(user=user, approved=True)
 
 
     def perform_create(self, serializer):
-        # token = self.request.data["token"]
-        # if token:
-        #     try:
-        #         user = Token.objects.get(key=token).user
-        #     except Token.DoesNotExist:
-        #         raise PermissionDenied('Lawyer profile not found or not approved.')
-        # else :
-        #     return PermissionDenied("access denied")
+        token = self.request.headers.get('Authorization')
+        if token:
+            try:
+                user = Token.objects.get(key=token).user
+            except Token.DoesNotExist:
+                raise PermissionDenied('Lawyer profile not found or not approved.')
+        else :
+            return PermissionDenied("access denied")
             
         # token = "6aaeffb7d25c4697859f4135245956eec6012708"
-        token = "533ba7c8dccd71003fedea92076ab3ef94aaa243"
+        # token = "533ba7c8dccd71003fedea92076ab3ef94aaa243"
         user = Token.objects.get(key=token).user
 
         # token = '6aaeffb7d25c4697859f4135245956eec6012708'
@@ -242,18 +242,18 @@ class ClientProfileViewSet(viewsets.ModelViewSet):
 
 
     def get_queryset(self):
-        # token = self.request.data["token"]
-        # if token:
-        #     try:
-        #         user = Token.objects.get(key=token).user
-        #     except Token.DoesNotExist:
-        #         raise PermissionDenied('Client profile not found')
+        token = self.request.headers.get('Authorization')
+        if token:
+            try:
+                user = Token.objects.get(key=token).user
+            except Token.DoesNotExist:
+                raise PermissionDenied('Client profile not found')
         
-        # else :
-        #     return PermissionDenied("access denied")
+        else :
+            return PermissionDenied("access denied")
             
         
-        token = 'fa5b5b71139ace340120b57070f14a5429764199'
+        # token = 'fa5b5b71139ace340120b57070f14a5429764199'
         user = Token.objects.get(key=token).user
         if LawyerProfile.objects.filter(user=user).exists():
             raise PermissionDenied('Lawyers cannot see a client profile')
@@ -261,18 +261,18 @@ class ClientProfileViewSet(viewsets.ModelViewSet):
             return ClientProfile.objects.filter(user=user)
 
     def perform_create(self, serializer):
-        # token = self.request.data["token"]
-        # if token:
-        #     try:
-        #         user = Token.objects.get(key=token).user
-        #     except Token.DoesNotExist:
-        #         raise PermissionDenied('Lawyer profile not found or not approved.')
-        # else :
-        #     return PermissionDenied("access denied")
+        token = self.request.headers.get('Authorization')
+        if token:
+            try:
+                user = Token.objects.get(key=token).user
+            except Token.DoesNotExist:
+                raise PermissionDenied('Lawyer profile not found or not approved.')
+        else :
+            return PermissionDenied("access denied")
 
 
         # token = 'ec3cce742b1fc84f23c0b427dffeb9890cd3041e'
-        token = 'fa5b5b71139ace340120b57070f14a5429764199'
+        # token = 'fa5b5b71139ace340120b57070f14a5429764199'
         user = Token.objects.get(key=token).user
         if LawyerProfile.objects.filter(user=user).exists():
             raise PermissionDenied('Lawyers cannot create a client profile')
@@ -294,7 +294,7 @@ class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
         return Response({'error': 'Method Not Allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
     
     def perform_update(self, serializer):
-        token = self.request.data["token"]
+        token = self.request.headers.get('Authorization')
         if token:
             try:
                 user = Token.objects.get(key=token).user
@@ -304,7 +304,7 @@ class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
             return PermissionDenied("access denied")
         
         # token = '6aaeffb7d25c4697859f4135245956eec6012708'
-        # user = Token.objects.get(key=token).user
+        user = Token.objects.get(key=token).user
         if user.is_superuser:
 
             instance = serializer.save()
@@ -464,7 +464,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
         serializer.save()
 
     def get_serializer_context(self):
-        token = self.request.data["token"]
+        token = self.request.headers.get('Authorization')
         if token:
             try:
                 user = Token.objects.get(key=token).user
