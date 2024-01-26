@@ -148,7 +148,7 @@ class LawyerProfileViewSet(viewsets.ModelViewSet):
             return PermissionDenied("access denied")
             
         # token = "6aaeffb7d25c4697859f4135245956eec6012708"
-        # user = Token.objects.get(key=token).user
+        user = Token.objects.get(key=token).user
         return LawyerProfile.objects.filter(user=user, approved=True)
 
     def perform_create(self, serializer):
@@ -226,9 +226,11 @@ class ClientProfileViewSet(viewsets.ModelViewSet):
             except Token.DoesNotExist:
                 raise PermissionDenied('Client profile not found')
         # token = "3a398a6a080114686cd922310b84b3d0b2adac29"
-        # user = Token.objects.get(key=token).user
+        
         else :
             return PermissionDenied("access denied")
+            
+        
 
         if LawyerProfile.objects.filter(user=user).exists():
             raise PermissionDenied('Lawyers cannot see a client profile')
