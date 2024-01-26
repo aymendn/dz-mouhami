@@ -136,7 +136,6 @@ class LawyerDocumentViewSet(viewsets.ModelViewSet):
 class LawyerProfileViewSet(viewsets.ModelViewSet):
     queryset = LawyerProfile.objects.prefetch_related('images', 'documents').all()
     serializer_class = LawyerProfileSerializer
-    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         token = self.request.data["token"]
@@ -145,6 +144,8 @@ class LawyerProfileViewSet(viewsets.ModelViewSet):
                 user = Token.objects.get(key=token).user
             except Token.DoesNotExist:
                 raise PermissionDenied('Lawyer profile not found or not approved.')
+        else :
+            return PermissionDenied("access denied")
             
         # token = "6aaeffb7d25c4697859f4135245956eec6012708"
         # user = Token.objects.get(key=token).user
@@ -157,6 +158,8 @@ class LawyerProfileViewSet(viewsets.ModelViewSet):
                 user = Token.objects.get(key=token).user
             except Token.DoesNotExist:
                 raise PermissionDenied('Lawyer profile not found or not approved.')
+        else :
+            return PermissionDenied("access denied")
             
         # token = "6aaeffb7d25c4697859f4135245956eec6012708"
         # user = Token.objects.get(key=token).user
@@ -212,7 +215,6 @@ class LawyerProfileViewSet(viewsets.ModelViewSet):
 class ClientProfileViewSet(viewsets.ModelViewSet):
     queryset = ClientProfile.objects.all()
     serializer_class = ClientProfileSerializer
-    permission_classes = [IsAuthenticated]
     
 
 
@@ -222,9 +224,11 @@ class ClientProfileViewSet(viewsets.ModelViewSet):
             try:
                 user = Token.objects.get(key=token).user
             except Token.DoesNotExist:
-                raise PermissionDenied('Lawyer profile not found or not approved.')
+                raise PermissionDenied('Client profile not found')
         # token = "3a398a6a080114686cd922310b84b3d0b2adac29"
         # user = Token.objects.get(key=token).user
+        else :
+            return PermissionDenied("access denied")
 
         if LawyerProfile.objects.filter(user=user).exists():
             raise PermissionDenied('Lawyers cannot see a client profile')
@@ -240,6 +244,9 @@ class ClientProfileViewSet(viewsets.ModelViewSet):
                 raise PermissionDenied('Lawyer profile not found or not approved.')
         # token = "6aaeffb7d25c4697859f4135245956eec6012708"
         # user = Token.objects.get(key=token).user
+        else :
+            return PermissionDenied("access denied")
+
         if LawyerProfile.objects.filter(user=user).exists():
             raise PermissionDenied('Lawyers cannot create a client profile')
 
@@ -253,7 +260,7 @@ class ClientProfileViewSet(viewsets.ModelViewSet):
 
 class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
     queryset = LawyerProfile.objects.prefetch_related('images', 'documents').all()
-    permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
+    # permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
     serializer_class = LawyerProfileAdminListSerializer
 
     def create(self, request, *args, **kwargs):
@@ -265,10 +272,14 @@ class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
             try:
                 user = Token.objects.get(key=token).user
             except Token.DoesNotExist:
-                raise PermissionDenied('Lawyer profile not found or not approved.')
+                raise PermissionDenied('access denied.')
         # token = "c942aa39c46d86e5d4d4647c971e1c6db6ff397f"
+        else :
+            return PermissionDenied("access denied")
+        
+        if user.is_superuser:
 
-        instance = serializer.save()
+            instance = serializer.save()
 
         # Check if 'approved' was updated to True
         if serializer.validated_data.get('approved', False) and not instance.approved:
@@ -280,8 +291,6 @@ class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
 
             send_mail(subject, message, from_email, to_email, fail_silently=False)
 
-    def create(self, request, *args, **kwargs):
-        return Response({'error': 'Method Not Allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 
