@@ -62,38 +62,36 @@ const EditProfilePage = () => {
             )}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 m-8">
-            <TextField id={"name"} label={t("lastName")} placeholder={"John"} />
+          <TextField id={"age"} 
+          name={"age"} 
+          label={"age"} 
+          placeholder={"45"} 
+           />
 
-            <TextField
-              id={"surname"}
-              label={t("firstName")}
-              placeholder={"Doe"}
-            />
-            <TextField id={"name"} label={t("lastName")} placeholder={"John"} />
-
-            <TextField
-              id={"surname"}
-              label={t("firstName")}
-              placeholder={"Doe"}
-            />
-
-            <SelectField
-              id={"Specification"}
-              label={"Legal Specification"}
-              placeholder={"Select a specification"}
+          <SelectField
+              id={"gender"}
+              label={"gender"}
+              placeholder={"gender"}
               options={[
-                { value: "Agression", label: "Agression" },
-                { value: "Crime", label: "Crime" },
-                { value: "Robbing", label: "Robbing" },
+                { value: "Femme", label: "Femme" },
+                { value: "homme", label: "homme" },
               ]}
+              
             />
+            <TextField id={"phone"} name={"phone_number"} label={"Phone"} type={"number"} placeholder={"06 00 00 00 00"} />
 
-            <TextField
-              id={"surname"}
-              label={t("firstName")}
-              placeholder={"Doe"}
-            />
-          </div>
+
+          <TextField id={"street"} name={"street"} label={"street"}  />
+
+          <TextField id={"city"} label={"city"} placeholder={"Paris"} />
+
+          <TextField id={"state"} name={"state"} label={"state"}  />
+
+          <TextField id={"zip_code"} name={"zip_code"} label={"zip code"} type={"number"} />
+
+          <TextField id={"country"} name={"country"} label={"country"}  />
+        </div>
+
 
           <div className="flex justify-end m-4">
             <button className="transition-all hover:opacity-90 mx-4 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
