@@ -642,16 +642,16 @@ def appointments(request):
     #lawyer_id = request.user.id
     token_key = request.GET.get('token', None)
     print(token_key)
-    # appointments = Appointment.objects.filter(status='Accepted') #should add lawyer id
-    # paginator = CustomPageNumberPagination()
-    # appointments = appointments.order_by('-date',)
+    appointments = Appointment.objects.filter(status='Accepted') #should add lawyer id
+    paginator = CustomPageNumberPagination()
+    appointments = appointments.order_by('-date',)
 
-    # paginated_results = paginator.paginate_queryset(appointments, request)
+    paginated_results = paginator.paginate_queryset(appointments, request)
     
-    # serialized_results = AppointmentSerializer(paginated_results, many=True).data
+    serialized_results = AppointmentSerializer(paginated_results, many=True).data
 
-    # return Response(serialized_results)
-    return Response({"success" : True, "message": token_key})
+    return Response(serialized_results)
+    # return Response({"success" : True, "message": token_key})
 
 @api_view(['POST']) #client
 def schedule_appointment(request, lawyer_id, time_slot_id):
