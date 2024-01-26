@@ -27,20 +27,20 @@ const UserFormPage = () => {
     setData(prev=>({...prev,[e.target.name]: e.target.value}))
    
 } 
-  // const handleSubmit =  (e) => {
-  //   e.preventDefault();
-  //   //http://127.0.0.1:8000/core/clients/
-
-  //   axios.post('http://localhost:8000/core/clients/', data)
-  //     .then(response => {
-  //       // Handle the response data as needed
-  //       console.log(response.data);
-  //     })
-  //     .catch(error => {
-  //       // Handle errors
-  //       console.error('Error:', error);
-  //     });
-  // };
+  const handleSubmit =  (e) => {
+    e.preventDefault();
+   //http://127.0.0.1:8000/core/clients/
+   const token = "fa5b5b71139ace340120b57070f14a5429764199"
+    axios.post('http://localhost:8000/core/clients/', {...data,"token":token})
+      .then(response => {
+        //Handle the response data as needed
+        console.log(response.data);
+      })
+      .catch(error => {
+        //Handle errors
+        console.error('Error:', error);
+      });
+  };
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -74,8 +74,8 @@ const UserFormPage = () => {
               placeholder={"gender"}
               type={"text"}
               options={[
-                { value: "Femme", label: "Femme" },
-                { value: "homme", label: "homme" },
+                { value: "F", label: "F" },
+                { value: "M", label: "M" },
               ]}
               onChange={handleChange}
             />
@@ -99,7 +99,7 @@ const UserFormPage = () => {
           <Link to="/user-registration/validation">
             <button
               type="submit"
-             //onClick={handleSubmit}
+             onClick={handleSubmit}
               className="flex flex-row gap-2 transition-all border-1 bg-[#094B72] py-3 px-10 rounded-full text-white font-normal text-md hover:opacity-90 mb-6"
             >
               <img src={validation} alt="Validation" />

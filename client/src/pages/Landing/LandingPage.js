@@ -20,13 +20,10 @@ const LandingPage = () => {
           backgroundImage: `url(${BgImage})`,
         }}
       >
-        <Main></Main>
-      </div>
-<<<<<<< Updated upstream
+        <Main></Main> </div>
+     
       <a href="http://127.0.0.1:8000/core/login">
-=======
-      <a href="http://localhost:8000/core/login">
->>>>>>> Stashed changes
+        
         <button>login</button>
       </a>
       <button
