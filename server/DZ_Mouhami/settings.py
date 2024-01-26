@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost' ,'127.0.0.1',"192.168.228.1","192.168.228.1.nip.io"]
 
+# settings.py
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
 
 # Application definition
 
