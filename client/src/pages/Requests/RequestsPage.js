@@ -7,13 +7,20 @@ import SvgColor from "react-svg-color";
 import Footer from "../../components/Footer";
 import axios from "axios";
 import { useEffect, useState } from "react";
+
 const RequestsPage = () => {
-  const [requestsData, setrequestsData] = useState([])
+
+const requestsData = [
+  { id:1 ,name: "Melissa", surname: "Mellaz", age: "20", schedule: "10h00" },
+  { id:2 ,name: "aya", surname: "lamiri", age: "19", schedule: "10h45" },
+];
+
+ /* const [requestsData, setrequestsData] = useState([])
   useEffect(()=>{
       const fetchAllrequestsData = async ()=>{
           try{
               const token = "6aaeffb7d25c4697859f4135245956eec6012708"
-              const res =await axios.get('http://127.0.0.1:8000/core/appointments-request' ,{
+              const res =await axios.get('http://127.0.0.1:8000/core/appointments-requests' ,{
                 headers: {
                   Authorization: `Bearer ${token}`, 
                 },
@@ -25,8 +32,30 @@ const RequestsPage = () => {
           }
       } 
       fetchAllrequestsData()
-  },[])
+  },[])*/
 
+  const [requests, setRequests] = useState();
+
+  const handleAccept = async (id) => {
+      try {
+          const response = await axios.post(`http://localhost:8000/core/accept-lawyer/${id}/`,{});
+
+          // Traitez la réponse si nécessaire
+          console.log('Réponse du serveur :', response.data);
+      } catch (error) {
+          console.error('Erreur lors de la soumission de la demande', error);
+      }
+  };
+  const handleRefuse = async (id) => {
+    try {
+        const response = await axios.post(`http://localhost:8000/core/refuse-lawyer/${id}/`,{});
+
+        // Traitez la réponse si nécessaire
+        console.log('Réponse du serveur :', response.data);
+    } catch (error) {
+        console.error('Erreur lors de la soumission de la demande', error);
+    }
+};
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -54,6 +83,9 @@ const RequestsPage = () => {
             <tbody>
               {requestsData.map((requests, index) => (
                 <tr key={index}>
+                   <td className="border border-slate-200 px-4 py-2">
+                    {requests.id}
+                  </td>
                   <td className="border border-slate-200 px-4 py-2">
                     {requests.name}
                   </td>
@@ -65,11 +97,13 @@ const RequestsPage = () => {
                   </td>
                   <td className="border border-slate-200 px-4 py-2 ">
                     <div className="flex gap-2 ">
-                      <button className="transition-transform transform hover:scale-105   bg-green-500 py-2  px-6  rounded-3xl text-white font-normal text-md flex hover:bg-green-700 duration-300  items-center gap-2 ">
+                      <button
+                      onClick={()=>handleAccept(requests.id)}
+                      className="transition-transform transform hover:scale-105   bg-green-500 py-2  px-6  rounded-3xl text-white font-normal text-md flex hover:bg-green-700 duration-300  items-center gap-2 ">
                         <SvgColor svg={Accept} colors={["#FFF", "#FFF"]} />
                         Accept
                       </button>
-                      <button className=" transition-transform transform hover:scale-105  bg-red-500 py-2  px-6  rounded-3xl text-white font-normal text-md flex hover:bg-red-700 duration-300 items-center gap-2 ">
+                      <button onClick={()=>handleRefuse(requests.id)} className=" transition-transform transform hover:scale-105  bg-red-500 py-2  px-6  rounded-3xl text-white font-normal text-md flex hover:bg-red-700 duration-300 items-center gap-2 ">
                         <img src={Delete} alt="Refuse" />
                         Refuse
                       </button>
