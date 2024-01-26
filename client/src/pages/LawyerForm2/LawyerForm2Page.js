@@ -18,24 +18,26 @@ const LawyerForm2Page = () => {
     completedColor: "#4682B4", // Couleur du connecteur pour les étapes complétées
     disabledColor: "#B0C4DE", // Couleur du connecteur pour les étapes inactives
   };
+  const Navigate = useNavigate()
 
-  const [data, setData] = useState(
-   );
+  const [data, setData] = useState({});
+  
 
-   const handleChange = (e) =>{
+  const handleChange = (e) =>{
 
     setData(prev=>({...prev,[e.target.name]: e.target.value}))
    
 } 
 
-   const Navigate = useNavigate()
-   const handleSubmit =  (e) => {
+ 
+   const handleSubmit = async (e) => {
     e.preventDefault();
     
    const token = "533ba7c8dccd71003fedea92076ab3ef94aaa243"
+   
    console.log("Data to be sent:", { ...data, token: token });
-    axios.post('http://127.0.0.1:8000/core/lawyers/', {...data,token:token }
-)
+  await axios.post(`http://127.0.0.1:8000/core/lawyers/284/documents/`,{...data, token:token})
+    
       .then(response => {
         //Handle the response data as needed
         console.log(response.data);
@@ -79,6 +81,7 @@ const LawyerForm2Page = () => {
         </label>
         <label class="block">
           <input
+          name="document2"
             type="file"
             className="block text-sm text-slate-500
         file:me-4 file:py-2 file:px-4
@@ -88,6 +91,7 @@ const LawyerForm2Page = () => {
         hover:file:bg-slate-100
         "
         onChange={handleChange}
+
           />
         </label>
       </form>
@@ -103,6 +107,7 @@ const LawyerForm2Page = () => {
         </label>
         <label class="block">
           <input
+          name="document1"
             type="file"
             className="block text-sm text-slate-500
         file:me-4 file:py-2 file:px-4
@@ -112,6 +117,7 @@ const LawyerForm2Page = () => {
         hover:file:bg-slate-100
         "
         onChange={handleChange}
+
           />
         </label>
       </form>
@@ -129,6 +135,6 @@ const LawyerForm2Page = () => {
       </div>
     </div>
   );
-};
+  };
 
 export default LawyerForm2Page;
