@@ -638,12 +638,6 @@ def lawyer_profile_search(request):
 
     return Response({'search_results': serialized_results, 'num_pages' : paginator.page.paginator.num_pages })
 
-@api_view(['GET'])
-def lawyer_profile_content(request):
-    lawyer_id = request.GET.get('lawyer_id')
-    lawyer_profile = get_object_or_404(LawyerProfile, id=lawyer_id)
-    serializer = LawyerProfileSerializer(lawyer_profile)
-    return Response(serializer.data)
 
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.authentication import TokenAuthentication
