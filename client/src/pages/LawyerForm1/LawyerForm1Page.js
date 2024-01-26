@@ -6,7 +6,8 @@ import { Stepper } from "react-form-stepper";
 import { Link } from "react-router-dom";
 import TextField from "../../components/TextField";
 import SelectField from "../../components/SelectField";
-
+import textAreaField from  "../../components/TextAreaField"
+import TextAreaField from "../../components/TextAreaField";
 const LawyerForm1Page = () => {
   const styleConfig = {
     activeBgColor: "#007BFF", // Bleu vif pour les étapes actives
@@ -56,34 +57,61 @@ const LawyerForm1Page = () => {
 
         <form className="min-w-full sm:min-w-[600px] max-w-3xl w-full px-2">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6  ">
-            <TextField id={"name"} label={"Name"} placeholder={"John"} />
-
-            <TextField id={"surname"} label={"Surname"} placeholder={"Doe"} />
+           
 
             <TextField
-              id={"email"}
-              label={"Email"}
-              placeholder={"a@mail.com"}
+              id={"phone_number"}
+              name={"phone_number"}
+              label={"phone number"}
+              placeholder={"555-222-333"}
             />
 
-            <TextField
-              id={"phone"}
-              label={"Phone"}
-              placeholder={"06 00 00 00 00"}
-            />
 
+            <TextField 
+            id={"street"}  
+            label={"street"}
+            name={"street"}  
+             />
             <SelectField
-              id={"Specification"}
-              label={"Legal Specification"}
-              placeholder={"Select a specification"}
+              id={"specialization"}
+              name={"specialization"}
+              label={"Legal specialization"}
+              placeholder={"Select a specialization"}
               options={[
                 { value: "Agression", label: "Agression" },
                 { value: "Crime", label: "Crime" },
                 { value: "Robbing", label: "Robbing" },
               ]}
             />
+            <TextField 
+            id={"city"}  
+            label={"city"}
+            name={"city"}  
+             />
+            <TextField 
+            id={"state"}  
+            label={"state"}
+            name={"state"} 
+             
+             />
 
-            <TextField id={"address"} label={"Address"} placeholder={"Paris"} />
+            <TextField 
+            id={"country"}  
+            label={"country"}
+            name={"country"}  
+             />
+
+          <TextField 
+            id={"zip_code"}  
+            label={"zip code"}
+            name={"zip_code"}  
+            type={"number"}
+             />
+            <TextAreaField
+            id={"bio"}  
+            label={"bio"}
+            name={"bio"}
+            />
           </div>
 
           <div className="flex justify-end m-4">
