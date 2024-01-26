@@ -59,7 +59,7 @@ const UserFormPage = () => {
         </p>
       </div>
 
-      <form className="min-w-full sm:min-w-[600px] max-w-3xl w-full px-2"  >
+      <form onSubmit={handleSubmit} className="min-w-full sm:min-w-[600px] max-w-3xl w-full px-2"  >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
           <TextField id={"age"} 
           name={"age"} 
