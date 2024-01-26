@@ -20,8 +20,6 @@ const UserFormPage = () => {
     country:"",
    }
   );
-  
-
   const handleChange = (e) =>{
 
     setData(prev=>({...prev,[e.target.name]: e.target.value}))
@@ -29,10 +27,20 @@ const UserFormPage = () => {
 } 
   const handleSubmit =  (e) => {
     e.preventDefault();
-   //http://127.0.0.1:8000/core/clients/
+
    const token = "fa5b5b71139ace340120b57070f14a5429764199"
    console.log("Data to be sent:", { ...data, token: token });
-    axios.post('http://127.0.0.1:8000/core/clients/', {...data,"token":token})
+    axios.post('http://127.0.0.1:8000/core/clients/', {token:token,     age: data.age,
+    gender:data.gender,
+    phone_number:data.phone_number,
+    address:{
+      street:data.street,
+      city:data.city,
+      state:data.state,
+      zip_code:data.zip_code,
+      country:data.country,
+    }
+})
       .then(response => {
         //Handle the response data as needed
         console.log(response.data);
@@ -98,7 +106,7 @@ const UserFormPage = () => {
         <div className="flex justify-end m-4">
           <Link to="/user-registration/validation">
             <button
-              type="submit"
+              
              onClick={handleSubmit}
               className="flex flex-row gap-2 transition-all border-1 bg-[#094B72] py-3 px-10 rounded-full text-white font-normal text-md hover:opacity-90 mb-6"
             >

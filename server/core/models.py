@@ -18,11 +18,11 @@ class UserProfile(models.Model):
             raise ValidationError("One of google_id or github_id must be set.")
 # Address model
 class Address(models.Model):
-    street = models.CharField(max_length=255)
-    city = models.CharField(max_length=255)
-    state = models.CharField(max_length=255)
-    zip_code = models.CharField(max_length=255)
-    country = models.CharField(max_length=255)
+    street = models.CharField(max_length=255, null=True)
+    city = models.CharField(max_length=255, null=True)
+    state = models.CharField(max_length=255, null=True)
+    zip_code = models.CharField(max_length=255, null=True)
+    country = models.CharField(max_length=255, null=True)
     latitude = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True)
     longitude = models.DecimalField(max_digits=10, decimal_places=6, null=True, blank=True)
 
