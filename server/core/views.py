@@ -635,7 +635,9 @@ def appointments_request(request):
 
     return Response(serialized_results)
 
-@api_view(['GET'])
+@api_view(['GET']) #lawyer
+@authentication_classes([])
+@permission_classes([AllowAny])  
 def appointments(request,lawyer_id):
     #lawyer_id = request.user.id
     appointments = Appointment.objects.filter(lawyer_id = lawyer_id, status='Accepted')
@@ -648,7 +650,7 @@ def appointments(request,lawyer_id):
 
     return Response(serialized_results)
 
-@api_view(['POST'])
+@api_view(['POST']) #client
 def schedule_appointment(request, lawyer_id, time_slot_id):
     #if request.user.is_authenticated and hasattr(request.user,'client_profile'):
     #   client_id = request.user.id
@@ -679,28 +681,30 @@ def schedule_appointment(request, lawyer_id, time_slot_id):
     #    return {"success": False, "message": "You need to login first."}
     
 
-@api_view(['POST'])
+@api_view(['POST']) #lawyer
+@authentication_classes([])
+@permission_classes([AllowAny])  
 def accept_appointment(request,appointment_id):
     appointment = Appointment.objects.get(id=appointment_id)
     appointment.status = 'Accepted'
     appointment.save()
     return Response({"success": True, "message": "Appointment accepted."})
 
-@api_view(['POST'])
+@api_view(['POST']) #lawyer
 def refuse_appointment(request,appointment_id):
     appointment = Appointment.objects.get(id=appointment_id)
     appointment.status = 'Refused'
     appointment.save()
     return Response({"success": True, "message": "Appointment refused."})
 
-@api_view(['POST'])
+@api_view(['POST']) #admin
 def accept_lawyer(request,lawyer_id):
     lawyer = LawyerProfile.objects.get(id=lawyer_id)
     lawyer.approved = True
     lawyer.save()
     return Response({"success": True, "message": "Lawyer accepted."})
 
-@api_view(['POST'])
+@api_view(['POST']) #admin
 def refuse_lawyer(request,lawyer_id):
     lawyer = LawyerProfile.objects.get(id=lawyer_id)
     lawyer.delete()
