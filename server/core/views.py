@@ -633,7 +633,7 @@ def lawyer_profile_search(request):
         search_results = search_results.filter(rating__gte=rating)
         
     paginator = CustomPageNumberPagination()
-    search_results = search_results.order_by('-rating',)
+    search_results = search_results.order_by('-rating')
 
     print(search_results)
 
@@ -654,7 +654,7 @@ from rest_framework.response import Response
 @authentication_classes([])
 @permission_classes([AllowAny])
 def schedule_appointment(request, lawyer_id, time_slot_id):
-    token_key = request.data.get('token', None)
+    token_key = request.headers.get('token', None)
     time = request.POST.get('startTime',None)
     note = request.POST.get('note','')
     
@@ -699,7 +699,7 @@ def schedule_appointment(request, lawyer_id, time_slot_id):
 @authentication_classes([])  # No authentication classes for unauthenticated access
 @permission_classes([AllowAny])  # Allow access to anyone, authenticated or not
 def appointments_requests(request):
-    token_key = request.data.get('token', None)
+    token_key = request.headers.get('token', None)
 
     if token_key:
         try:
@@ -731,26 +731,39 @@ def appointments_requests(request):
 @authentication_classes([])
 @permission_classes([AllowAny])  
 def appointments(request):
-    #lawyer_id = request.user.id
-    token_key = request.data.get('token', None)
-    print(token_key)
-    appointments = Appointment.objects.filter(status='Accepted') #should add lawyer id
-    paginator = CustomPageNumberPagination()
-    appointments = appointments.order_by('-date',)
+    token_key = request.headers.get('token', None)
 
-    paginated_results = paginator.paginate_queryset(appointments, request)
-    
-    serialized_results = AppointmentSerializer(paginated_results, many=True).data
+    if token_key:
+        try:
+            user = Token.objects.get(key=token_key).user
+        except Token.DoesNotExist:
+            return Response({"success": False, "message": "Access denied. Invalid token."})
+    else:
+        return Response({"success": False, "message": "Access denied. Token not provided."})
 
-    return Response(serialized_results)
-    # return Response({"success" : True, "message": token_key})
+    if hasattr(user, 'lawyer_profile'):
+        try:
+            appointments = Appointment.objects.filter(lawyer_id=user.lawyer_profile, status='Accepted')
+            paginator = CustomPageNumberPagination()
+            appointments = appointments.order_by('-date',)
+            
+            paginated_results = paginator.paginate_queryset(appointments, request)
+            
+            serialized_results = AppointmentSerializer(paginated_results, many=True).data
+
+            return Response(serialized_results) #add the success variable
+        
+        except Http404:
+            return Response({"success": False, "message": "No appointments for this user"})
+    else:
+        return Response({"success": False, "message": "User has no lawyer profile."})
 
 
 @api_view(['POST']) #lawyer
 @authentication_classes([])
 @permission_classes([AllowAny])  
 def accept_appointment(request, appointment_id):
-    token_key = request.data.get('token', None)
+    token_key = request.headers.get('token', None)
     
     if token_key:
         try:
@@ -773,7 +786,7 @@ def accept_appointment(request, appointment_id):
 
 @api_view(['POST']) #lawyer
 def refuse_appointment(request, appointment_id):
-    token_key = request.data.get('token', None)
+    token_key = request.headers.get('token', None)
     
     if token_key:
         try:
@@ -796,7 +809,7 @@ def refuse_appointment(request, appointment_id):
 
 
 def verify_token(request):
-    token = request.GET.get('token')
+    token = request.headers.get('token', None)
     if token:
         try:
             user = Token.objects.get(key=token).user
