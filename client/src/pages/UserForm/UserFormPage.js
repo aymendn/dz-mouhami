@@ -31,7 +31,8 @@ const UserFormPage = () => {
     e.preventDefault();
    //http://127.0.0.1:8000/core/clients/
    const token = "fa5b5b71139ace340120b57070f14a5429764199"
-    axios.post('http://localhost:8000/core/clients/', {...data,"token":token})
+   console.log("Data to be sent:", { ...data, token: token });
+    axios.post('http://127.0.0.1:8000/core/clients/', {...data,"token":token})
       .then(response => {
         //Handle the response data as needed
         console.log(response.data);
@@ -67,7 +68,6 @@ const UserFormPage = () => {
           type={"number"}
           placeholder={"45"} 
            onChange={handleChange}/>
-             
           <SelectField
               id={"gender"}
               label={"gender"}
