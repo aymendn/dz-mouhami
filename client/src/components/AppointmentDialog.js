@@ -47,7 +47,6 @@ const AppointmentDialog = ({ trigger, timeSlots, lawyerId }) => {
   const [exactTime, setExactTime] = useState(timesListOfDay[0] || null);
 
   const handleTimeSlotChange = (e) => {
-    console.log(e.target.value);
     const selectedSlotId = e.target.value;
     if (selectedSlotId) {
       setExactTime(null);
@@ -56,8 +55,6 @@ const AppointmentDialog = ({ trigger, timeSlots, lawyerId }) => {
   };
 
   const handleExactTimeChange = (e) => {
-    console.log(e.target.value);
-
     if (e.target.value === "Select a time" || e.target.value === null) {
       console.log("null");
     }
