@@ -7,7 +7,7 @@ router = routers.DefaultRouter()
 router.register(r'lawyers', views.LawyerProfileViewSet , basename='lawyer-profile')
 router.register(r'clients', views.ClientProfileViewSet, basename='client-profile')
 router.register(r'dashboard', views.LawyerAdminDashboardViewSet , basename='lawyer-admin-dashboard')
-# router.register(r'lawyer-search', views.LawyerSearchViewSet, basename='lawyer-search')
+router.register(r'lawyer-search', views.LawyerSearchViewSet, basename='lawyer-search')
 
 lawyers_router = routers.NestedSimpleRouter(router, r'lawyers', lookup='lawyer')
 lawyers_router.register(r'images', views.LawyerImageViewSet, basename='lawyer-images')

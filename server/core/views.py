@@ -295,50 +295,50 @@ class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
 
 
 
-# class LawyerSearchViewSet(viewsets.ModelViewSet):
-#     queryset = LawyerProfile.objects.all()
-#     serializer_class = LawyerProfileSerializer
-#     filter_backends = [DjangoFilterBackend, filters.SearchFilter]
-#     search_fields = ['user__first_name', 'user__last_name', 'address__city' , 'specialization' , 'address__state' , 'address__country']
-#     http_method_names = ['get']
+class LawyerSearchViewSet(viewsets.ModelViewSet):
+    queryset = LawyerProfile.objects.all()
+    serializer_class = LawyerProfileSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ['user__first_name', 'user__last_name', 'address__city' , 'specialization' , 'address__state' , 'address__country']
+    http_method_names = ['get']
 
-#     def get_queryset(self):
-#         queryset = super().get_queryset()
-#         name = self.request.query_params.get('name', None)
-#         city = self.request.query_params.get('city', None)
-#         specialization = self.request.query_params.get('specialization', None)
-#         state = self.request.query_params.get('state', None)
-#         country = self.request.query_params.get('country', None)
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        name = self.request.query_params.get('name', None)
+        city = self.request.query_params.get('city', None)
+        specialization = self.request.query_params.get('specialization', None)
+        state = self.request.query_params.get('state', None)
+        country = self.request.query_params.get('country', None)
 
-#         if name:
-#             queryset = queryset.filter(user__first_name__icontains=name) | queryset.filter(user__last_name__icontains=name)
+        if name:
+            queryset = queryset.filter(user__first_name__icontains=name) | queryset.filter(user__last_name__icontains=name)
 
-#         if city:
-#             queryset = queryset.filter(address__city__icontains=city)
+        if city:
+            queryset = queryset.filter(address__city__icontains=city)
 
-#         if specialization:
-#             queryset = queryset.filter(specialization__icontains=specialization)
+        if specialization:
+            queryset = queryset.filter(specialization__icontains=specialization)
 
-#         if state:
-#             queryset = queryset.filter(address__state__icontains=state)
+        if state:
+            queryset = queryset.filter(address__state__icontains=state)
 
-#         if country:
-#             queryset = queryset.filter(address__country__icontains=country)
+        if country:
+            queryset = queryset.filter(address__country__icontains=country)
 
-#         return queryset
+        return queryset
     
-    # def list(self, request, *args, **kwargs):
-    #     queryset = self.get_queryset()
-    #     serializer = self.get_serializer(queryset, many=True)
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
 
-    #     # Calculate and include the rating information in the serialized response
-    #     data = serializer.data
-    #     for item in data:
-    #         lawyer_id = item['id']
-    #         rating = Review.objects.filter(lawyer__id=lawyer_id).aggregate(Avg('rating'))['rating__avg']
-    #         item['rating'] = rating
+        # Calculate and include the rating information in the serialized response
+        data = serializer.data
+        for item in data:
+            lawyer_id = item['id']
+            rating = Review.objects.filter(lawyer__id=lawyer_id).aggregate(Avg('rating'))['rating__avg']
+            item['rating'] = rating
 
-    #     return Response(data)
+        return Response(data)
 
 
 
