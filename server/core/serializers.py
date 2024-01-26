@@ -115,6 +115,24 @@ class ClientProfileSerializer(serializers.ModelSerializer):
         client_profile = ClientProfile.objects.create(**validated_data)
         return client_profile
     
+    def update(self, instance, validated_data):
+        instance.age = validated_data.get('age', instance.age)
+        instance.gender = validated_data.get('gender', instance.gender)
+        instance.phone_number = validated_data.get('phone_number', instance.phone_number)
+
+        # Update Address
+        address_data = validated_data.get('address')
+        if address_data:
+            instance.address.street = address_data.get('street', instance.address.street)
+            instance.address.city = address_data.get('city', instance.address.city)
+            instance.address.state = address_data.get('state', instance.address.state)
+            instance.address.zip_code = address_data.get('zip_code', instance.address.zip_code)
+            instance.address.country = address_data.get('country', instance.address.country)
+            instance.address.save()
+            
+        instance.save()
+        return instance
+    
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

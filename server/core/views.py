@@ -37,7 +37,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
-
+from django.http import request
 
 # samy's import 
 from django.urls import reverse
@@ -139,11 +139,28 @@ class LawyerProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        user = self.request.user
+        token = self.request.data["token"]
+        if token:
+            try:
+                user = Token.objects.get(key=token).user
+            except Token.DoesNotExist:
+                raise PermissionDenied('Lawyer profile not found or not approved.')
+            
+        # token = "6aaeffb7d25c4697859f4135245956eec6012708"
+        # user = Token.objects.get(key=token).user
         return LawyerProfile.objects.filter(user=user, approved=True)
 
     def perform_create(self, serializer):
-        user = self.request.user
+        token = self.request.data["token"]
+        if token:
+            try:
+                user = Token.objects.get(key=token).user
+            except Token.DoesNotExist:
+                raise PermissionDenied('Lawyer profile not found or not approved.')
+            
+        # token = "6aaeffb7d25c4697859f4135245956eec6012708"
+        # user = Token.objects.get(key=token).user
+
 
         # Check if the user is a client
         if ClientProfile.objects.filter(user=user).exists():
@@ -195,17 +212,34 @@ class LawyerProfileViewSet(viewsets.ModelViewSet):
 class ClientProfileViewSet(viewsets.ModelViewSet):
     queryset = ClientProfile.objects.all()
     serializer_class = ClientProfileSerializer
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
+    
+
 
     def get_queryset(self):
-        user = self.request.user
+        token = self.request.data["token"]
+        if token:
+            try:
+                user = Token.objects.get(key=token).user
+            except Token.DoesNotExist:
+                raise PermissionDenied('Lawyer profile not found or not approved.')
+        # token = "3a398a6a080114686cd922310b84b3d0b2adac29"
+        # user = Token.objects.get(key=token).user
+
         if LawyerProfile.objects.filter(user=user).exists():
             raise PermissionDenied('Lawyers cannot see a client profile')
         else:
             return ClientProfile.objects.filter(user=user)
 
     def perform_create(self, serializer):
-        user = self.request.user
+        token = self.request.data["token"]
+        if token:
+            try:
+                user = Token.objects.get(key=token).user
+            except Token.DoesNotExist:
+                raise PermissionDenied('Lawyer profile not found or not approved.')
+        # token = "6aaeffb7d25c4697859f4135245956eec6012708"
+        # user = Token.objects.get(key=token).user
         if LawyerProfile.objects.filter(user=user).exists():
             raise PermissionDenied('Lawyers cannot create a client profile')
 
@@ -214,7 +248,7 @@ class ClientProfileViewSet(viewsets.ModelViewSet):
         else:
             serializer.save(user=user)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-            
+                
 
 
 class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
@@ -226,6 +260,13 @@ class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
         return Response({'error': 'Method Not Allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
     
     def perform_update(self, serializer):
+        token = self.request.data["token"]
+        if token:
+            try:
+                user = Token.objects.get(key=token).user
+            except Token.DoesNotExist:
+                raise PermissionDenied('Lawyer profile not found or not approved.')
+        # token = "c942aa39c46d86e5d4d4647c971e1c6db6ff397f"
 
         instance = serializer.save()
 
@@ -471,8 +512,9 @@ class GoogleOAuth2SignUpCallbackView(APIView):
         # Use get_or_create since an existing user may end up signing in
         # through the sign up route.
         user, _ = User.objects.get_or_create(
-            username=user_data["email"],
-            defaults={"first_name": user_data["given_name"]},
+            email=user_data["email"],
+            username=user_data["given_name"],
+            defaults={"first_name": user_data["given_name"],"last_name": user_data["family_name"]},
         )
 
         # Populate the extended user data stored in UserProfile.
@@ -487,7 +529,10 @@ class GoogleOAuth2SignUpCallbackView(APIView):
         # a token to the frontend that a framework like React or Angular
         # can use to authenticate further requests.
         frontend_url = "http://localhost:3000/login-handler"
-        return redirect(frontend_url + "?token=" + token.key+"&data="+json.dumps(user_data) + "&signup=true")
+        is_superuser = user.is_superuser
+        is_lawyer = hasattr(user,'lawyer_profile')
+        is_client = hasattr(user,'client_profile')
+        return redirect(frontend_url + "?token=" + token.key+"&data="+json.dumps(user_data) + "&signup=true" + "&is_superuser="+str(is_superuser)+"&is_lawyer="+str(is_lawyer)+"&is_client="+str(is_client))
         return JsonResponse({"data":user_data,"token": token.key})
 
 class GoogleOAuth2LoginView(APIView):
@@ -516,7 +561,10 @@ class GoogleOAuth2LoginCallbackView(APIView):
         # a token to the frontend that a framework like React or Angular
         # can use to authenticate further requests.
         frontend_url = "http://localhost:3000/login-handler"
-        return redirect(frontend_url + "?token=" + token.key+"&data="+json.dumps(user_data))
+        is_superuser = user.is_superuser
+        is_lawyer = hasattr(user,'lawyer_profile')
+        is_client = hasattr(user,'client_profile')
+        return redirect(frontend_url + "?token=" + token.key+"&data="+json.dumps(user_data)+"&is_superuser="+str(is_superuser)+"&is_lawyer="+str(is_lawyer)+"&is_client="+str(is_client))
         return JsonResponse({"token": token.key,"data": user_data})
 
 
@@ -626,13 +674,14 @@ def refuse_appointment(request,appointment_id):
 
 
 
-def check_token(request):
-    token = request.GET.get('token', '')
+def verify_token(request):
+    token = request.GET.get('token')
     if token:
         try:
-            token = Token.objects.get(key=token)
-            return JsonResponse({"success": True, "message": "Token is valid."})
+            user = Token.objects.get(key=token).user
         except Token.DoesNotExist:
-            return JsonResponse({"success": False, "message": "Token is invalid."})
+            return Response({"success": False, "message": "Invalid token."})
+        else:
+            return Response({"success": True, "message": "Valid token."})
     else:
-        return JsonResponse({"success": False, "message": "Token is invalid."})
+        return Response({"success": False, "message": "Token not provided."})

@@ -101,7 +101,7 @@ class TimeSlot(models.Model):
 #     client = models.ForeignKey(ClientProfile, on_delete=models.CASCADE)
 #     status = models.CharField(max_length=255)
 class Appointment(models.Model):
-    time_slot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE)
+    time_slot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE )
     lawyer = models.ForeignKey(LawyerProfile, on_delete=models.CASCADE)
     client = models.ForeignKey(ClientProfile, on_delete=models.CASCADE)
     date = models.DateField(default=timezone.now)
