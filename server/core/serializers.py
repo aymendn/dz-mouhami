@@ -14,6 +14,11 @@ class TimeSlotSerializer(serializers.ModelSerializer):
         model = TimeSlot
         fields = ['id', 'day', 'start_time', 'end_time']
 
+class AppointmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Appointment
+        fields = ['id', 'time_slot', 'lawyer', 'client', 'date', 'status']
+
 class LawyerImageSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         lawyer_profile_pk = self.context['lawyer_profile_pk']
