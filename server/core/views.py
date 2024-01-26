@@ -716,7 +716,7 @@ def appointments_requests(request):
                         
             serialized_results = AppointmentSerializer(appointments, many=True).data
 
-            return Response(serialized_results)
+            return Response({"success": True, "serialized_results": serialized_results}) #add the success variable
         
         except Http404:
             return Response({"success": False, "message": "No appointments for this user"})
@@ -745,7 +745,7 @@ def appointments(request):
                         
             serialized_results = AppointmentSerializer(appointments, many=True).data
 
-            return Response(serialized_results) #add the success variable
+            return Response({"success": True, "serialized_results": serialized_results}) #add the success variable
         
         except Http404:
             return Response({"success": False, "message": "No appointments for this user"})
@@ -767,7 +767,7 @@ def accept_appointment(request, appointment_id):
     else:
         return PermissionDenied("Access denied. Token not provided.")
 
-    if user.client_profile is not None:
+    if hasattr(user, 'lawyer_profile'):
         try:
             appointment = get_object_or_404(Appointment, id=appointment_id, lawyer=user.lawyer_profile)
         except Http404:
@@ -790,11 +790,12 @@ def refuse_appointment(request, appointment_id):
     else:
         return PermissionDenied("Access denied. Token not provided.")
 
-    if user.lawyer_profile is not None:
+    if hasattr(user, 'lawyer_profile'):
         try:
             appointment = get_object_or_404(Appointment, id=appointment_id, lawyer=user.lawyer_profile)
         except Http404:
             return Response({"success": False, "message": "Appointment not found or not associated with your profile."})
+        
         appointment.status = 'Refused'
         appointment.save()
         return Response({"success": True, "message": "Appointment refused."})
