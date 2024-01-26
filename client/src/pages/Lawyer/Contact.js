@@ -4,13 +4,22 @@ import CallIcon from "../../assets/call.svg";
 import AppointmentDialog from "../../components/AppointmentDialog";
 import { useTranslation } from "react-i18next";
 
-const Contact = () => {
+const Contact = ({ lawyerData }) => {
   const { t } = useTranslation();
+
+  const lawyerId = lawyerData.id;
+  const timeSlots = lawyerData.time_slots;
+
+  console.log("lawyerData", lawyerData);
+  console.log("timeSlots", timeSlots);
+  console.log("lawyerId", lawyerId);
   return (
     <>
       <p className="mb-4">{t("contactDescription")}</p>
       <AppointmentDialog
         key="appointment"
+        lawyerId={lawyerId}
+        timeSlots={timeSlots}
         trigger={
           <div className="bg-[#094b72] flex flex-row justify-center gap-2 py-3 px-5 rounded-full hover:opacity-90 cursor-pointer transition-all mb-2">
             <img src={CalendarIcon} alt="Calendar Icon" />

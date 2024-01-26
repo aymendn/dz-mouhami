@@ -25,12 +25,16 @@ import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import LoginHandler from "./pages/LoginHandler/LoginHandler";
-
+import { userObjectAtom } from "./utils/Auth";
+import { useAtomValue } from "jotai";
+import { stringify } from "json5";
 function App() {
   const { t } = useTranslation();
   const languageCode = t("languageCode");
 
   const queryClient = new QueryClient();
+
+  // const user = useAtomValue(userObjectAtom);
 
   useEffect(() => {
     document.documentElement.lang = languageCode;

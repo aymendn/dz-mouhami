@@ -6,23 +6,36 @@ import Rating from "react-rating";
 import starFilled from "../../assets/star_filled.svg";
 import star from "../../assets/star.svg";
 import { useTranslation } from "react-i18next";
+import { Image } from "react-img-placeholder";
 
-const MainInfo = () => {
+const MainInfo = ({ lawyerData }) => {
   const { t } = useTranslation();
   const direction = t("direction");
 
-  const name = "Lawyer Name";
-  const categories = ["Category 1", "Category 2", "Category 3"];
-  const location = "Location";
-  const description =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla euismod, nisl eget fermentum aliquam, sem diam aliquet mauris, nec";
+  const name = lawyerData.first_name + " " + lawyerData.last_name;
+  const categories = [lawyerData.specialization];
+  const location = lawyerData.location;
+  const description = lawyerData.bio;
+  const rating = lawyerData.rating;
+  // get the first image from images
+  const getImage = () => {
+    try {
+      return lawyerData.images[0].image || "placeholder";
+    } catch (error) {
+      return "placeholder";
+    }
+  };
 
   return (
     <>
       <div className="flex flex-col md:flex-row items-center justify-center md:items-start md:justify-start mb-10">
         {/* Image on the left */}
-        <img
-          src={lawyerImage}
+        <Image
+          src={getImage()}
+          alt="Picture of the author"
+          width={220}
+          height={280}
+          placeholderColor="#dde7ee"
           className="w-64 h-[280px] rounded-md me-4 object-cover"
         />
 
@@ -36,7 +49,7 @@ const MainInfo = () => {
           <Rating
             className="mb-1"
             direction={direction}
-            initialRating={4}
+            initialRating={rating || 0}
             readonly={true}
             emptySymbol={<img src={star} className="icon" width={30} />}
             fullSymbol={<img src={starFilled} className="icon" width={30} />}

@@ -4,6 +4,10 @@ import { useSearchParams } from "react-router-dom";
 const LoginHandler = () => {
   const [searchParams] = useSearchParams();
   const keys = Array.from(searchParams.keys());
+
+  const token = searchParams.get("token");
+  const data = searchParams.get("data");
+
   return (
     <div className="flex flex-col justify-center items-center h-screen w-screen">
       <Loading className="py-4 px-2" />

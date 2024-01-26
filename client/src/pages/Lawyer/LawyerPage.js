@@ -4,8 +4,42 @@ import MainInfo from "./MainInfo";
 import Reviews from "./Reviews";
 import Contact from "./Contact";
 import Address from "./Address";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { useQuery } from "react-query";
+import Loading from "../../components/Loading";
+
+const getLawyer = async ({ id }) => {
+  const { data } = await axios.get(`core/lawyer-view/${id}/`);
+  return data;
+};
 
 const LawyerPage = () => {
+  const { id } = useParams();
+  const { data, isLoading, isError, error } = useQuery(["lawyer", { id }], () =>
+    getLawyer({ id })
+  );
+
+  if (isLoading) {
+    return (
+      <div>
+        <p>id: {id}</p>
+        <Loading className="h-screen" />;
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="text-red-500 flex flex-col justify-center items-center h-screen w-screen p-8">
+        Error: {error.message}
+        <div className="text-sm text-gray-500 text-center">
+          Error data: {JSON.stringify(error)}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="w-full">
@@ -16,7 +50,7 @@ const LawyerPage = () => {
         <div className="w-full md:w-2/3 h-full flex flex-col gap-6">
           {/* Main info */}
           <div className="rounded-2xl border-2 border-slate-100 p-8">
-            <MainInfo />
+            <MainInfo lawyerData={data} />
           </div>
 
           {/* Reviews */}
@@ -28,7 +62,7 @@ const LawyerPage = () => {
         <div className="w-full md:w-1/3 h-full flex flex-col gap-6">
           {/* Contact */}
           <div className="rounded-2xl border-2 border-slate-100 p-8 ">
-            <Contact />
+            <Contact lawyerData={data} />
           </div>
 
           {/* Address */}
