@@ -11,8 +11,10 @@ import { useEffect, useState } from "react";
 const RequestsPage = () => {
 
 const requestsData = [
-  { id:1 ,name: "Melissa", surname: "Mellaz", age: "20", schedule: "10h00" },
-  { id:2 ,name: "aya", surname: "lamiri", age: "19", schedule: "10h45" },
+  { id:5 ,name: "Melissa", surname: "Mellaz", age: "20", schedule: "10h00" },
+  { id:6 ,name: "aya", surname: "lamiri", age: "19", schedule: "10h45" },
+  { id:7 ,name: "Melissa", surname: "Mellaz", age: "20", schedule: "10h00" },
+  { id:8 ,name: "aya", surname: "lamiri", age: "19", schedule: "10h45" },
 ];
 
  /* const [requestsData, setrequestsData] = useState([])
@@ -38,7 +40,7 @@ const requestsData = [
 
   const handleAccept = async (id) => {
       try {
-          const response = await axios.post(`http://localhost:8000/core/accept-lawyer/${id}/`,{});
+          const response = await axios.post(`http://localhost:8000/core/accept-appointment/${id}/`,{});
 
           // Traitez la réponse si nécessaire
           console.log('Réponse du serveur :', response.data);
@@ -48,7 +50,7 @@ const requestsData = [
   };
   const handleRefuse = async (id) => {
     try {
-        const response = await axios.post(`http://localhost:8000/core/refuse-lawyer/${id}/`,{});
+        const response = await axios.post(`http://localhost:8000/core/refuse-appointment/${id}/`,{});
 
         // Traitez la réponse si nécessaire
         console.log('Réponse du serveur :', response.data);
