@@ -20,8 +20,9 @@ const LandingPage = () => {
           backgroundImage: `url(${BgImage})`,
         }}
       >
-        <Main></Main>
+        <Main></Main>{" "}
       </div>
+
       <a href="http://127.0.0.1:8000/core/login">
         <button>login</button>
       </a>
