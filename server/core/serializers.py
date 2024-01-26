@@ -192,9 +192,11 @@ class LawyerProfileAdminListSerializer(serializers.ModelSerializer):
     
 class ReviewSerializer(serializers.ModelSerializer):
     image = ClientImageSerializer(read_only=True)
+    first_name = serializers.CharField(source='client.user.first_name', read_only=True)
+    last_name = serializers.CharField(source='client.user.last_name', read_only=True)
     class Meta:
         model = Review
-        fields = ['id', 'rating', 'comment', 'created_at' , 'image']
+        fields = ['id', 'first_name', 'last_name', 'rating', 'comment', 'image']
 
     def create(self, validated_data):
         lawyer = self.context.get('lawyer_id')
@@ -204,7 +206,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         client = get_object_or_404(ClientProfile, id=client_id)
         user = User.objects.get(id= ClientProfile.objects.get(id=client_id).user_id)
         image_instance = ClientImage.objects.filter(user_id=user.id)
-        image = image_instance.image if image_instance else None
+        image = image_instance[0].image
 
         review_instance = Review.objects.create(
             lawyer_id=lawyer,

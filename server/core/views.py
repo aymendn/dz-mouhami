@@ -155,34 +155,34 @@ class LawyerProfileViewSet(viewsets.ModelViewSet):
     serializer_class = LawyerProfileSerializer
 
     def get_queryset(self):
-        # token = self.request.data["token"]
-        # if token:
-        #     try:
-        #         user = Token.objects.get(key=token).user
-        #     except Token.DoesNotExist:
-        #         raise PermissionDenied('Lawyer profile not found or not approved.')
-        # else :
-        #     return PermissionDenied("access denied")
+        token = self.request.headers.get('Authorization')
+        if token:
+            try:
+                user = Token.objects.get(key=token).user
+            except Token.DoesNotExist:
+                raise PermissionDenied('Lawyer profile not found or not approved.')
+        else :
+            return PermissionDenied("access denied")
             
         # token = "6aaeffb7d25c4697859f4135245956eec6012708"
         # token = '6aaeffb7d25c4697859f4135245956eec6012708'
-        token = "533ba7c8dccd71003fedea92076ab3ef94aaa243"
+        # token = "533ba7c8dccd71003fedea92076ab3ef94aaa243"
         user = Token.objects.get(key=token).user
         return LawyerProfile.objects.filter(user=user, approved=True)
 
 
     def perform_create(self, serializer):
-        # token = self.request.data["token"]
-        # if token:
-        #     try:
-        #         user = Token.objects.get(key=token).user
-        #     except Token.DoesNotExist:
-        #         raise PermissionDenied('Lawyer profile not found or not approved.')
-        # else :
-        #     return PermissionDenied("access denied")
+        token = self.request.headers.get('Authorization')
+        if token:
+            try:
+                user = Token.objects.get(key=token).user
+            except Token.DoesNotExist:
+                raise PermissionDenied('Lawyer profile not found or not approved.')
+        else :
+            return PermissionDenied("access denied")
             
         # token = "6aaeffb7d25c4697859f4135245956eec6012708"
-        token = "533ba7c8dccd71003fedea92076ab3ef94aaa243"
+        # token = "533ba7c8dccd71003fedea92076ab3ef94aaa243"
         user = Token.objects.get(key=token).user
 
         # token = '6aaeffb7d25c4697859f4135245956eec6012708'
@@ -242,18 +242,18 @@ class ClientProfileViewSet(viewsets.ModelViewSet):
 
 
     def get_queryset(self):
-        # token = self.request.data["token"]
-        # if token:
-        #     try:
-        #         user = Token.objects.get(key=token).user
-        #     except Token.DoesNotExist:
-        #         raise PermissionDenied('Client profile not found')
+        token = self.request.headers.get('Authorization')
+        if token:
+            try:
+                user = Token.objects.get(key=token).user
+            except Token.DoesNotExist:
+                raise PermissionDenied('Client profile not found')
         
-        # else :
-        #     return PermissionDenied("access denied")
+        else :
+            return PermissionDenied("access denied")
             
         
-        token = 'fa5b5b71139ace340120b57070f14a5429764199'
+        # token = 'fa5b5b71139ace340120b57070f14a5429764199'
         user = Token.objects.get(key=token).user
         if LawyerProfile.objects.filter(user=user).exists():
             raise PermissionDenied('Lawyers cannot see a client profile')
@@ -261,18 +261,18 @@ class ClientProfileViewSet(viewsets.ModelViewSet):
             return ClientProfile.objects.filter(user=user)
 
     def perform_create(self, serializer):
-        # token = self.request.data["token"]
-        # if token:
-        #     try:
-        #         user = Token.objects.get(key=token).user
-        #     except Token.DoesNotExist:
-        #         raise PermissionDenied('Lawyer profile not found or not approved.')
-        # else :
-        #     return PermissionDenied("access denied")
+        token = self.request.headers.get('Authorization')
+        if token:
+            try:
+                user = Token.objects.get(key=token).user
+            except Token.DoesNotExist:
+                raise PermissionDenied('Lawyer profile not found or not approved.')
+        else :
+            return PermissionDenied("access denied")
 
 
         # token = 'ec3cce742b1fc84f23c0b427dffeb9890cd3041e'
-        token = 'fa5b5b71139ace340120b57070f14a5429764199'
+        # token = 'fa5b5b71139ace340120b57070f14a5429764199'
         user = Token.objects.get(key=token).user
         if LawyerProfile.objects.filter(user=user).exists():
             raise PermissionDenied('Lawyers cannot create a client profile')
@@ -294,7 +294,7 @@ class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
         return Response({'error': 'Method Not Allowed'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
     
     def perform_update(self, serializer):
-        token = self.request.data["token"]
+        token = self.request.headers.get('Authorization')
         if token:
             try:
                 user = Token.objects.get(key=token).user
@@ -304,7 +304,7 @@ class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
             return PermissionDenied("access denied")
         
         # token = '6aaeffb7d25c4697859f4135245956eec6012708'
-        # user = Token.objects.get(key=token).user
+        user = Token.objects.get(key=token).user
         if user.is_superuser:
 
             instance = serializer.save()
@@ -464,7 +464,7 @@ class ReviewViewSet(viewsets.ModelViewSet):
         serializer.save()
 
     def get_serializer_context(self):
-        token = self.request.data["token"]
+        token = self.request.headers.get('Authorization')
         if token:
             try:
                 user = Token.objects.get(key=token).user
@@ -633,7 +633,7 @@ def lawyer_profile_search(request):
         search_results = search_results.filter(rating__gte=rating)
         
     paginator = CustomPageNumberPagination()
-    search_results = search_results.order_by('-rating',)
+    search_results = search_results.order_by('-rating')
 
     print(search_results)
 
@@ -654,7 +654,7 @@ from rest_framework.response import Response
 @authentication_classes([])
 @permission_classes([AllowAny])
 def schedule_appointment(request, lawyer_id, time_slot_id):
-    token_key = request.data.get('token', None)
+    token_key = request.headers.get('Authorization', None)
     time = request.POST.get('startTime',None)
     note = request.POST.get('note','')
     
@@ -699,7 +699,7 @@ def schedule_appointment(request, lawyer_id, time_slot_id):
 @authentication_classes([])  # No authentication classes for unauthenticated access
 @permission_classes([AllowAny])  # Allow access to anyone, authenticated or not
 def appointments_requests(request):
-    token_key = request.data.get('token', None)
+    token_key = request.headers.get('Authorization', None)
 
     if token_key:
         try:
@@ -712,14 +712,11 @@ def appointments_requests(request):
     if hasattr(user, 'lawyer_profile'):
         try:
             appointments = Appointment.objects.filter(lawyer_id=user.lawyer_profile, status='Pending')
-            paginator = CustomPageNumberPagination()
             appointments = appointments.order_by('-date',)
-            
-            paginated_results = paginator.paginate_queryset(appointments, request)
-            
-            serialized_results = AppointmentSerializer(paginated_results, many=True).data
+                        
+            serialized_results = AppointmentSerializer(appointments, many=True).data
 
-            return Response(serialized_results)
+            return Response({"success": True, "serialized_results": serialized_results}) #add the success variable
         
         except Http404:
             return Response({"success": False, "message": "No appointments for this user"})
@@ -731,26 +728,36 @@ def appointments_requests(request):
 @authentication_classes([])
 @permission_classes([AllowAny])  
 def appointments(request):
-    #lawyer_id = request.user.id
-    token_key = request.data.get('token', None)
-    print(token_key)
-    appointments = Appointment.objects.filter(status='Accepted') #should add lawyer id
-    paginator = CustomPageNumberPagination()
-    appointments = appointments.order_by('-date',)
+    token_key = request.headers.get('Authorization', None)
 
-    paginated_results = paginator.paginate_queryset(appointments, request)
-    
-    serialized_results = AppointmentSerializer(paginated_results, many=True).data
+    if token_key:
+        try:
+            user = Token.objects.get(key=token_key).user
+        except Token.DoesNotExist:
+            return Response({"success": False, "message": "Access denied. Invalid token."})
+    else:
+        return Response({"success": False, "message": "Access denied. Token not provided."})
 
-    return Response(serialized_results)
-    # return Response({"success" : True, "message": token_key})
+    if hasattr(user, 'lawyer_profile'):
+        try:
+            appointments = Appointment.objects.filter(lawyer_id=user.lawyer_profile, status='Accepted')
+            appointments = appointments.order_by('-date',)
+                        
+            serialized_results = AppointmentSerializer(appointments, many=True).data
+
+            return Response({"success": True, "serialized_results": serialized_results}) #add the success variable
+        
+        except Http404:
+            return Response({"success": False, "message": "No appointments for this user"})
+    else:
+        return Response({"success": False, "message": "User has no lawyer profile."})
 
 
 @api_view(['POST']) #lawyer
 @authentication_classes([])
 @permission_classes([AllowAny])  
 def accept_appointment(request, appointment_id):
-    token_key = request.data.get('token', None)
+    token_key = request.headers.get('Authorization', None)
     
     if token_key:
         try:
@@ -760,7 +767,7 @@ def accept_appointment(request, appointment_id):
     else:
         return PermissionDenied("Access denied. Token not provided.")
 
-    if user.client_profile is not None:
+    if hasattr(user, 'lawyer_profile'):
         try:
             appointment = get_object_or_404(Appointment, id=appointment_id, lawyer=user.lawyer_profile)
         except Http404:
@@ -773,7 +780,7 @@ def accept_appointment(request, appointment_id):
 
 @api_view(['POST']) #lawyer
 def refuse_appointment(request, appointment_id):
-    token_key = request.data.get('token', None)
+    token_key = request.headers.get('Authorization', None)
     
     if token_key:
         try:
@@ -783,11 +790,12 @@ def refuse_appointment(request, appointment_id):
     else:
         return PermissionDenied("Access denied. Token not provided.")
 
-    if user.lawyer_profile is not None:
+    if hasattr(user, 'lawyer_profile'):
         try:
             appointment = get_object_or_404(Appointment, id=appointment_id, lawyer=user.lawyer_profile)
         except Http404:
             return Response({"success": False, "message": "Appointment not found or not associated with your profile."})
+        
         appointment.status = 'Refused'
         appointment.save()
         return Response({"success": True, "message": "Appointment refused."})
@@ -796,7 +804,7 @@ def refuse_appointment(request, appointment_id):
 
 
 def verify_token(request):
-    token = request.GET.get('token')
+    token = request.headers.get('Authorization', None)
     if token:
         try:
             user = Token.objects.get(key=token).user
