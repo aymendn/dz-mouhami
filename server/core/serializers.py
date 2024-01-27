@@ -195,7 +195,7 @@ class ReviewSerializer(serializers.ModelSerializer):
     last_name = serializers.CharField(source='client.user.last_name', read_only=True)
     class Meta:
         model = Review
-        fields = ['id', 'first_name', 'last_name', 'rating', 'comment']
+        fields = ['id', 'first_name', 'last_name', 'rating', 'comment', 'created_at']
 
     def create(self, validated_data):
         lawyer = self.context.get('lawyer_id')
