@@ -15,7 +15,11 @@ const AppointementPage = () => {
       const fetchAllrdvData = async ()=>{
           try{
               const token = "6aaeffb7d25c4697859f4135245956eec6012708"
-              const res =await axios.get('http://127.0.0.1:8000/core/appointments' ,{ ...rdvData, token: token }) 
+              const res =await axios.get('http://127.0.0.1:8000/core/appointments' ,{
+                headers: {
+                  Authorization: `Bearer ${token}`, 
+                },
+              }) 
               setrdvData(res.data)
               console.log(res.data)
           }catch(err){
