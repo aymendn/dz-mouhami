@@ -168,7 +168,7 @@ class LawyerProfileViewSet(viewsets.ModelViewSet):
         # token = '6aaeffb7d25c4697859f4135245956eec6012708'
         # token = "533ba7c8dccd71003fedea92076ab3ef94aaa243"
         user = Token.objects.get(key=token).user
-        return LawyerProfile.objects.filter(user=user, approved=True)
+        return LawyerProfile.objects.filter(user=user)
 
 
     def perform_create(self, serializer):
