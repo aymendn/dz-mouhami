@@ -665,7 +665,7 @@ from rest_framework.response import Response
 @permission_classes([AllowAny])
 def schedule_appointment(request, lawyer_id, time_slot_id):
     token_key = request.headers.get('Authorization', None)
-    time = request.POST.get('startTime',None)
+    time = request.POST.get('startTime','')
     note = request.POST.get('note','')
     
     if token_key:
