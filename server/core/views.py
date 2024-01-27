@@ -593,8 +593,7 @@ class GoogleOAuth2LoginCallbackView(APIView):
 
 
 class CustomPageNumberPagination(PageNumberPagination):
-    page_size = 5
-    page_size_query_param = 'page_size'
+    page_size_query_param = 'limit'
     max_page_size = 100
 
 @api_view(['GET'])
@@ -635,9 +634,9 @@ def lawyer_profile_search(request):
     if rating:
         search_results = search_results.filter(rating__gte=rating)
         
-    paginator = CustomPageNumberPagination()
     search_results = search_results.order_by('-rating')
-
+    
+    paginator = CustomPageNumberPagination()
     paginated_results = paginator.paginate_queryset(search_results, request)
 
     serialized_results = LawyerProfileSerializer(paginated_results, many=True).data
