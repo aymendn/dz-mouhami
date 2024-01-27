@@ -38,14 +38,24 @@ class LawyerImageSerializer(serializers.ModelSerializer):
         model = LawyerImage
         fields = ['id', 'image']
 
+from django.db.models import Avg
 
 class LawyerProfileSerializer(serializers.ModelSerializer):
     address = AddressSerializer(required=False, allow_null=True)
     time_slots = TimeSlotSerializer(required=False, allow_null=True, many=True)
-    rating = serializers.IntegerField(read_only=True)
+    rating = serializers.SerializerMethodField()
     image= LawyerImageSerializer(read_only=True , many=True)
     first_name = serializers.CharField(source='user.first_name', read_only=True)
     last_name = serializers.CharField(source='user.last_name', read_only=True)
+
+    def get_rating(self, obj):
+        rating_obj = Review.objects.filter(lawyer=obj).aggregate(rating=Avg('rating'))
+        rating_avg = rating_obj['rating']
+        if rating_avg:
+            return rating_avg
+        else:
+            return 0
+
 
     class Meta:
         model = LawyerProfile

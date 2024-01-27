@@ -7,11 +7,30 @@ import TextAreaField from "./TextAreaField";
 import { useState } from "react";
 import axios from "axios";
 
-const createAppointment = async ({ lawyerId, timeSlotId }) => {
-  const { data } = await axios.post(
-    `/core/${lawyerId}/schedule-appointment/${timeSlotId}/`
+const createAppointment = async ({
+  lawyerId,
+  timeSlotId,
+  startTime,
+  note,
+  token,
+  close,
+}) => {
+  const res = await axios.post(
+    `/core/${lawyerId}/schedule-appointment/${timeSlotId}/`,
+    {
+      startTime: startTime,
+      note: note,
+    },
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
   );
-  return data;
+
+  console.log(res.data);
+  close();
+  return res.data;
 };
 
 const AppointmentDialog = ({ trigger, timeSlots, lawyerId }) => {
