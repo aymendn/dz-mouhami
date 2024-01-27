@@ -732,7 +732,7 @@ def appointments_requests(request):
                         
             serialized_results = AppointmentSerializer(appointments, many=True).data
 
-            return Response({"success": True, "serialized_results": serialized_results}) #add the success variable
+            return Response({"success": True, "results": serialized_results}) #add the success variable
         
         except Http404:
             return Response({"success": False, "message": "No appointments for this user"})
@@ -761,8 +761,7 @@ def appointments(request):
                         
             serialized_results = AppointmentSerializer(appointments, many=True).data
 
-            return Response({"success": True, "serialized_results": serialized_results}) #add the success variable
-        
+            return Response({"success": True, "results": serialized_results}) #add the success variable
         except Http404:
             return Response({"success": False, "message": "No appointments for this user"})
     else:
