@@ -466,6 +466,13 @@ class ReviewViewSet(viewsets.ModelViewSet):
         serializer.validated_data['lawyer'] = lawyer
         serializer.save()
 
+        #to calculate the average rating
+        new_rating = serializer.validated_data['rating']
+        existing_reviews = Review.objects.filter(lawyer=lawyer)
+        average_rating = existing_reviews.aggregate(Avg('rating'))['rating__avg']
+        lawyer.rating = average_rating
+        lawyer.save()
+
     def get_serializer_context(self):
         token = self.request.headers.get('Authorization')
         if token:
