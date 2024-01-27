@@ -466,6 +466,13 @@ class ReviewViewSet(viewsets.ModelViewSet):
         serializer.validated_data['lawyer'] = lawyer
         serializer.save()
 
+        #to calculate the average rating
+        new_rating = serializer.validated_data['rating']
+        existing_reviews = Review.objects.filter(lawyer=lawyer)
+        average_rating = existing_reviews.aggregate(Avg('rating'))['rating__avg']
+        lawyer.rating = average_rating
+        lawyer.save()
+
     def get_serializer_context(self):
         token = self.request.headers.get('Authorization')
         if token:
@@ -593,8 +600,7 @@ class GoogleOAuth2LoginCallbackView(APIView):
 
 
 class CustomPageNumberPagination(PageNumberPagination):
-    page_size = 5
-    page_size_query_param = 'page_size'
+    page_size_query_param = 'limit'
     max_page_size = 100
 
 @api_view(['GET'])
@@ -635,9 +641,9 @@ def lawyer_profile_search(request):
     if rating:
         search_results = search_results.filter(rating__gte=rating)
         
-    paginator = CustomPageNumberPagination()
     search_results = search_results.order_by('-rating')
-
+    
+    paginator = CustomPageNumberPagination()
     paginated_results = paginator.paginate_queryset(search_results, request)
 
     serialized_results = LawyerProfileSerializer(paginated_results, many=True).data
