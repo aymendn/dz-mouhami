@@ -6,6 +6,9 @@ import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import SwitchLanguage from "./SwitchLanguage";
+
+// TODO: add the user profile picture
+
 const ProfileNavbar = () => {
   const { t } = useTranslation();
 

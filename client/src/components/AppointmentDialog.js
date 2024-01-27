@@ -6,6 +6,8 @@ import SelectField from "./SelectField";
 import TextAreaField from "./TextAreaField";
 import { useState } from "react";
 import axios from "axios";
+import { useToken } from "../utils/UseTokenHook";
+import { toast } from "react-toastify";
 
 const createAppointment = async ({
   lawyerId,
@@ -15,25 +17,34 @@ const createAppointment = async ({
   token,
   close,
 }) => {
-  const res = await axios.post(
-    `/core/${lawyerId}/schedule-appointment/${timeSlotId}/`,
-    {
-      startTime: startTime,
-      note: note,
-    },
-    {
-      headers: {
-        Authorization: token,
-      },
-    }
-  );
+  try {
+    const res = await axios(
+      `/core/${lawyerId}/schedule-appointment/${timeSlotId}/`,
+      {
+        method: "post",
+        data: {
+          startTime: startTime,
+          note: note,
+        },
+        headers: {
+          Authorization: token,
+        },
+      }
+    );
 
-  console.log(res.data);
-  close();
-  return res.data;
+    toast.success("Appointment created successfully");
+  } catch (error) {
+    console.log(error);
+    toast.error("Appointment creation failed");
+  } finally {
+    close();
+  }
 };
 
 const AppointmentDialog = ({ trigger, timeSlots, lawyerId }) => {
+  // ===== Getting the token =====
+  const token = useToken();
+
   // ===== Handling the backend request =====
   const { mutate, isLoading, isSuccess, isError, error } = useMutation(
     createAppointment,
@@ -47,8 +58,8 @@ const AppointmentDialog = ({ trigger, timeSlots, lawyerId }) => {
     }
   );
 
-  const handleCreateAppointment = (lawyerId, timeSlotId) => {
-    mutate({ lawyerId, timeSlotId });
+  const handleCreateAppointment = (close) => {
+    mutate({ lawyerId, timeSlotId, startTime: exactTime, note, token, close });
   };
   // ===============================================
 
@@ -64,6 +75,8 @@ const AppointmentDialog = ({ trigger, timeSlots, lawyerId }) => {
   const timesListOfDay = timesListFromTimeSlot(timeSlotFromId(timeSlotId));
 
   const [exactTime, setExactTime] = useState(timesListOfDay[0] || null);
+
+  const [note, setNote] = useState("");
 
   const handleTimeSlotChange = (e) => {
     const selectedSlotId = e.target.value;
@@ -132,6 +145,10 @@ const AppointmentDialog = ({ trigger, timeSlots, lawyerId }) => {
 
             <div className="flex flex-col gap-8 w-full font-['DM_Sans'] items-start">
               <TextAreaField
+                id={"note"}
+                name={"note"}
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
                 divClassName={"w-full"}
                 placeholder="Additional Notes or Comments...."
                 label="Additional Notes or Comments"
@@ -145,7 +162,7 @@ const AppointmentDialog = ({ trigger, timeSlots, lawyerId }) => {
                   Annuler
                 </button>
                 <button
-                  onClick={handleCreateAppointment}
+                  onClick={() => handleCreateAppointment(close)}
                   className="text-center text-sm font-medium text-[#f5fbff] bg-[#094b72] flex flex-row justify-center items-center px-6 py-3 rounded-full w-full hover:opacity-90"
                 >
                   Confirmer

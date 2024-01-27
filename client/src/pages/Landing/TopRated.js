@@ -9,23 +9,21 @@ import { useQuery } from "react-query";
 import Loading from "../../components/Loading";
 
 const getLawyers = async () => {
-  // Try to simulate a request by providing fake data
-  const lawyersData = Array(4)
-    .fill()
-    .map((_) => ({
-      name: "Mohammed amine ",
-      location: "Tizi-Ouzou, Algeria",
-      categories: ["Usurpation ", "Criminologie"],
-      description:
-        "je suis un avocat specialisé en affaire de crimes et d'usurpation d'identite  , je suis devouée et je suis passioné par mon travail",
-      image: lawyerPlaceholder,
-    }));
+  try {
+    const { data } = await axios.get("/core/lawyer-profile-search/", {
+      params: {
+        limit: 1,
+        page: 1,
+        query: "s",
+      },
+    });
 
-  await new Promise((resolve) => setTimeout(resolve, 5000));
-  return lawyersData;
-  // Normallement code ykon hakda, mais hadi li lfo9 bach ntestiwha brk
-  // const { data } = await axios.get(/lawyers);
-  // return data;
+    console.log(data);
+    return data?.search_results || [];
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };
 
 const TopRated = () => {

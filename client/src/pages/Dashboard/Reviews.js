@@ -7,7 +7,6 @@ const Reviews = () => {
     .fill()
     .map((item) => ({
       imageUrl: "https://picsum.photos/200",
-      fullName: "John Doe",
       date: "July 2021",
       rating: 4,
       reviewContent:

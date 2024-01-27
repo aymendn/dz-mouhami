@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@szhsin/react-menu": "^4.1.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -22,6 +23,7 @@
     "react-rating": "^2.0.5",
     "react-router-dom": "^6.20.1",
     "react-scripts": "^5.0.1",
+    "react-select": "^5.8.0",
     "react-svg-color": "^2.3.0",
     "react-toastify": "^10.0.4",
     "reactjs-popup": "^2.0.6",

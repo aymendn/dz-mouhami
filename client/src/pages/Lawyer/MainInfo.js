@@ -37,7 +37,7 @@ const MainInfo = ({ lawyerData }) => {
           width={280}
           height={280}
           placeholderColor="#dde7ee"
-          className="  rounded-md me-4 object-cover"
+          className="rounded-md me-4 object-cover min-w-[min(80%,280px)] max-w-[90%] min-h-[280px]"
         />
 
         <div className="rounded-lg overflow-hidden">
@@ -50,7 +50,7 @@ const MainInfo = ({ lawyerData }) => {
           <Rating
             className="mb-1"
             direction={direction}
-            initialRating={rating || 0}
+            initialRating={Math.floor(rating) || 0}
             readonly={true}
             emptySymbol={<img src={star} className="icon" width={30} />}
             fullSymbol={<img src={starFilled} className="icon" width={30} />}
