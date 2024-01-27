@@ -284,9 +284,12 @@ class ClientProfileViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
                 
 
+from .pagination import DefaultPagination
 
 class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
-    queryset = LawyerProfile.objects.prefetch_related('image', 'documents').all()
+    # sort by Approved=false comes before those with Approved=true
+    queryset = LawyerProfile.objects.prefetch_related('image', 'documents').order_by('approved').all()
+    pagination_class = DefaultPagination
     # permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
     serializer_class = LawyerProfileAdminListSerializer
 
