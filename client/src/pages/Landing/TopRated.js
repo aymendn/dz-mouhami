@@ -12,9 +12,8 @@ const getLawyers = async () => {
   try {
     const { data } = await axios.get("/core/lawyer-profile-search/", {
       params: {
-        limit: 1,
+        limit: 4,
         page: 1,
-        query: "s",
       },
     });
 
