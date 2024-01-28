@@ -75,11 +75,13 @@ const resources = {
       schedule:" Planning des rendez-vous",
       LawyersPending :"Avocats en attente d'inscription",
       unvalidatedlawyers: "Avocats qui ne sont pas validés",
-      specialization:"specialisation"
+      specialization:"specialisation",
+      Rendezvous :"Rendez-vous"
     },
   },
   ar: {
     translation: {
+      Rendezvous:"موعد",
       Refuser:"رفض",
       Accepter:"قبول",
       Action:"إجراء",

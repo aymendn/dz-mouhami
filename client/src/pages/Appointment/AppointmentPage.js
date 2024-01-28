@@ -42,7 +42,7 @@ const AppointementPage = () => {
               {t("schedule")}
             </h1>
             <p className="text-[#103F5BB2] text-sm font-medium">
-              You have {rdvData.length} Appointements
+               {rdvData.length} {t("Rendezvous")}
             </p>
           </div>
           <table className="min-w-full bg-white border border-slate-200 ">
