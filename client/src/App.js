@@ -58,7 +58,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <div className={languageCode}>
-        <button onClick={logout} className="bg-red-500 ">
+        {/* <button onClick={logout} className="bg-red-500 ">
           Logout
         </button>
         <div>{"token: " + JSON.stringify(user?.token)}</div>
@@ -66,7 +66,7 @@ function App() {
         <div>{"isClient: " + isClient}</div>
         <div>{"isLawyer: " + isLawyer}</div>
         <div>{"isSuperUser: " + isSuperUser}</div>
-        <div>{"isSignup: " + isSignup}</div>
+        <div>{"isSignup: " + isSignup}</div> */}
         <Router>
           <RoutesHandler />
           <ScrollToTop />
