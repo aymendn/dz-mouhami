@@ -153,7 +153,9 @@ class LawyerDocumentViewSet(viewsets.ModelViewSet):
 class LawyerProfileViewSet(viewsets.ModelViewSet):
     queryset = LawyerProfile.objects.prefetch_related('image', 'documents').all()
     serializer_class = LawyerProfileSerializer
-
+    
+    
+    
     def get_queryset(self):
         token = self.request.headers.get('Authorization')
         if token:
@@ -229,8 +231,26 @@ class LawyerProfileViewSet(viewsets.ModelViewSet):
             item['rating'] = rating
 
         return Response(data)
+    
+    # def perform_update(self, serializer):
+    #     token = self.request.headers.get('Authorization')
+    #     if token:
+    #         try:
+    #             user = Token.objects.get(key=token).user
+    #         except Token.DoesNotExist:
+    #             raise PermissionDenied('Lawyer profile not found or not approved.')
+    #     else :
+    #         return PermissionDenied("access denied")
+            
+    #     # token = "6aaeffb7d25c4697859f4135245956eec6012708"
+    #     # token = "533ba7c8dccd71003fedea92076ab3ef94aaa243"
+    #     user = Token.objects.get(key=token).user
+    #     # Check if the user is a client
+    #     if ClientProfile.objects.filter(user=user).exists():
+    #         raise PermissionDenied('You are a Client!')
 
-
+    #     # Save the lawyer profile
+    #     serializer.save(user=user)
             
 
 
@@ -662,7 +682,7 @@ from rest_framework.response import Response
 @permission_classes([AllowAny])
 def schedule_appointment(request, lawyer_id, time_slot_id):
     token_key = request.headers.get('Authorization', None)
-    time = request.POST.get('startTime',None)
+    time = request.POST.get('startTime',"9:00:00")
     note = request.POST.get('note','')
     
     if token_key:
@@ -821,3 +841,58 @@ def verify_token(request):
             return Response({"success": True, "message": "Valid token."})
     else:
         return Response({"success": False, "message": "Token not provided."})
+    
+
+# Lawyer dashboard views
+
+# list all appointments of the lawyer
+class AppointmentViewSet(viewsets.ModelViewSet):
+    queryset = Appointment.objects.all()
+    serializer_class = AppointmentSerializer
+
+    def list(self, request, *args, **kwargs):
+        user_token = request.headers.get('Authorization', None)
+        try:
+            token = Token.objects.get(key=user_token)
+            try:
+                queryset = Appointment.objects.filter(lawyer=token.user.lawyer_profile)
+                serializer = AppointmentSerializer(queryset, many=True)
+                return Response(serializer.data)
+            except LawyerProfile.DoesNotExist:
+                return Response({"success": False, "message": "Is not a lawyer"})
+        except Token.DoesNotExist:
+            return Response({"success": False, "message": "not authenticated"})
+
+
+
+# return some statistics about the appointments of the lawyer
+@api_view(['GET'])
+def appointments_statistics_view(request):
+    user_token = request.headers.get('Authorization', None)
+    try:
+        user = Token.objects.get(key=user_token).user
+        if hasattr(user, "lawyer_profile"):
+            lawyer = user.lawyer_profile
+            all_appointments = lawyer.appointments.all().count()
+            
+            today = timezone.now()
+            start_of_week = today - timezone.timedelta(days=6)
+            appointments_of_this_week = lawyer.appointments.filter(date__range=[start_of_week, today]).count()
+            
+            pending_appointments = lawyer.appointments.filter(status="Pending").count()
+            accepted_appointments = lawyer.appointments.filter(status="Accepted").count()
+            refused_appointments = lawyer.appointments.filter(status="Refused").count()
+            
+            return Response({
+                "success": True,
+                "all_appointments": all_appointments,
+                "appointments_of_this_week": appointments_of_this_week,
+                "pending_appointments": pending_appointments,
+                "approved_appointments": accepted_appointments,
+                "refused_appointments": refused_appointments
+            })
+        else:
+            return Response({"success": False, "message": "Is not a lawyer"})
+        
+    except Token.DoesNotExist:
+        return Response({"success": False, "message": "Is not authenticated"})

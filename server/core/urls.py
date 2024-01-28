@@ -14,6 +14,9 @@ lawyers_router.register(r'images', views.LawyerImageViewSet, basename='lawyer-im
 lawyers_router.register(r'documents', views.LawyerDocumentViewSet, basename='lawyer-documents')
 # lawyers_router.register(r'appointments', views.AppointmentLawyerModelViewSet, basename='lawyer-appointments')
 
+# for lawyer dashboard
+router.register(r'appointments', views.AppointmentViewSet, basename='appointments')
+statistics_path = path(route='statistics/', view=views.appointments_statistics_view, name='statistics')
 
 lawyers_dashbord = routers.NestedSimpleRouter(router, r'dashboard', lookup='lawyer')
 
@@ -30,6 +33,7 @@ urlpatterns = router.urls + lawyers_router.urls + lawyers_dashbord.urls + [
     path('refuse-appointment/<int:appointment_id>/', views.refuse_appointment),
     path('appointments-requests', views.appointments_requests),
     path('appointments', views.appointments),
+    path(route='statistics/', view=views.appointments_statistics_view, name='statistics')
     ] + lawyers_view.urls
 # urlpatterns = urlpatterns + lawyers_view.urls
 
@@ -52,6 +56,3 @@ path("signup/", GoogleOAuth2SignUpView.as_view(), name="google_signup"),
     ),
 ]
 # [path('home/', views.HomeView.as_view(), name ='home')]
-
-
-
