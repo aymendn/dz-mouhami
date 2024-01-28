@@ -12,9 +12,16 @@ import "./i18n";
 // TODO: /core/dashboard/{idLawyer}/  in body: approved: true/false [PUT] to accept or refuse lawyer
 // TODO: lawyer dashboard (yasser)
 
-// [ ] get reviews
-// [ ] post review
-// [ ] post appointment
+
+
+// [ ] Rapport (all)
+// [ ] Video basic script and outline (maya)
+// [ ] Video recording and editing (aymen)
+// [ ] Complete Linking (aymen)
+// [ ] Translation of all pages (maya)
+// [ ] Tests for backend (yasser, anis, aya)
+// [ ] Tests for frontend (aymen)
+// [ ] Docker (yasser, anis, aya)
 
 axios.defaults.baseURL = "http://127.0.0.1:8000";
 axios.defaults.headers.post["Content-Type"] = "application/json";

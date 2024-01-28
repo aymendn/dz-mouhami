@@ -41,7 +41,7 @@ const LoginHandler = () => {
       // verify user permissions to redirect to the correct page
       const redirectTo = shouldRedirectTo({ user, isSignup });
       navigate(redirectTo);
-    }, 3000);
+    }, 0);
   }, [user, setUserJson]);
 
   return (
@@ -59,12 +59,12 @@ const LoginHandler = () => {
 export default LoginHandler;
 
 const shouldRedirectTo = ({ user, isSignup }) => {
-  if (isSignup || (!user.isClient && !user.isLawyer && !user.isSuperUser)) {
-    return "/choice";
-  }
-
   if (user.isSuperUser) {
     return "/admin";
+  }
+
+  if (isSignup || (!user.isClient && !user.isLawyer && !user.isSuperUser)) {
+    return "/choice";
   }
 
   if (user.isLawyer) {

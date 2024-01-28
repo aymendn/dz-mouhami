@@ -2,13 +2,18 @@ import React from "react";
 import SearchIcon from "../../assets/search.svg";
 import SvgColor from "react-svg-color";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
-const SearchBar = () => {
+const SearchBar = ({ onSearch }) => {
   const { t } = useTranslation();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const query = searchParams.get("query");
+  const [searchQuery, setSearchQuery] = useState(query || "");
 
   const handleSearch = () => {
-    // Implement your search logic here
-    console.log("Performing search...");
+    onSearch(searchQuery);
   };
 
   return (
@@ -17,6 +22,8 @@ const SearchBar = () => {
         type="text"
         placeholder={t("search")}
         className=" text-[rgba(10,40,57,0.76)] outline-none border-none w-full p-2"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
       />
       <button
         onClick={handleSearch}

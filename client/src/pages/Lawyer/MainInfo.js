@@ -7,6 +7,8 @@ import starFilled from "../../assets/star_filled.svg";
 import star from "../../assets/star.svg";
 import { useTranslation } from "react-i18next";
 import { Image } from "react-img-placeholder";
+import fixLawyerImage from "../../utils/LawyerImage";
+import profilePlaceholder from "../../assets/profileImage.jpg";
 
 const MainInfo = ({ lawyerData }) => {
   const { t } = useTranslation();
@@ -21,9 +23,9 @@ const MainInfo = ({ lawyerData }) => {
   // get the first image from images
   const getImage = () => {
     try {
-      return lawyerData.images[0].image || "placeholder";
+      return fixLawyerImage(lawyerData.images[0].image || profilePlaceholder);
     } catch (error) {
-      return "placeholder";
+      return profilePlaceholder;
     }
   };
 

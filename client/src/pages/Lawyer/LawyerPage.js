@@ -62,7 +62,7 @@ const LawyerPage = () => {
 
           {/* Address */}
           <div className="rounded-2xl border-2 border-slate-100 p-8 ">
-            <Address />
+            <Address address={data.address} />
           </div>
         </div>
       </div>

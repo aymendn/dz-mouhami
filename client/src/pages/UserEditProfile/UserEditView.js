@@ -4,9 +4,12 @@ import TextField from "../../components/TextField";
 import SelectField from "../../components/SelectField";
 import { useTranslation } from "react-i18next";
 import TextAreaField from "../../components/TextAreaField";
-import axios from 'axios';
+import axios from "axios";
+import { useToken } from "../../utils/UseTokenHook";
+
 const UserEditView = () => {
   const { t } = useTranslation();
+  const token = useToken();
 
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -20,40 +23,41 @@ const UserEditView = () => {
     // Trigger the file input click when the image is clicked
     document.getElementById("imageInput").click();
   };
-  const [data, setData] = useState(
-    {
-     
-     specialization:"",
-     phone_number:null,
-     bio:"",
-     language:"",
-     street:"",
-     city:"",
-     state:"",
-     zip_code:null,
-     country:"",
-    }
-   );
-  const handleChange = (e) =>{
+  const [data, setData] = useState({
+    specialization: "",
+    phone_number: null,
+    bio: "",
+    language: "",
+    street: "",
+    city: "",
+    state: "",
+    zip_code: null,
+    country: "",
+  });
 
-    setData(prev=>({...prev,[e.target.name]: e.target.value}))
-   
-}
+  const handleChange = (e) => {
+    setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
   const handleSubmit = async (e) => {
-     const token = "6aaeffb7d25c4697859f4135245956eec6012708"
     console.log("Data to be updated:", { ...data, token: token });
     e.preventDefault();
-    await axios.put(`http://127.0.0.1:8000/core/lawyers/2/`, {...data,token:token} , {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => {
-        
+    await axios
+      .put(
+        `/core/lawyers/2/`,
+        data,
+        {
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
         console.log(response.data);
       })
-      .catch(error => {
-        console.error('Erreur :', error);
+      .catch((error) => {
+        console.error("Erreur :", error);
       });
   };
   return (
@@ -94,93 +98,90 @@ const UserEditView = () => {
         )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 m-8">
-        
-        
-         <TextField
-              id={"phone_number"}
-              name={"phone_number"}
-              label={"phone number"}
-              type={"number"}
-              placeholder={"555-222-333"}
-              onChange={handleChange}
-            />
+        <TextField
+          id={"phone_number"}
+          name={"phone_number"}
+          label={"phone number"}
+          type={"number"}
+          placeholder={"555-222-333"}
+          onChange={handleChange}
+        />
 
+        <TextField
+          id={"street"}
+          label={"street"}
+          name={"street"}
+          type={"text"}
+          onChange={handleChange}
+        />
+        <SelectField
+          id={"specialization"}
+          name={"specialization"}
+          type={"text"}
+          label={"Legal specialization"}
+          placeholder={"Select a specialization"}
+          options={[
+            { value: "Agression", label: "Agression" },
+            { value: "Crime", label: "Crime" },
+            { value: "Robbing", label: "Robbing" },
+          ]}
+          onChange={handleChange}
+        />
 
-            <TextField 
-            id={"street"}  
-            label={"street"}
-            name={"street"}  
-            type={"text"}
-            onChange={handleChange}
-             />
-            <SelectField
-              id={"specialization"}
-              name={"specialization"}
-              type={"text"}
-              label={"Legal specialization"}
-              placeholder={"Select a specialization"}
-              options={[
-                { value: "Agression", label: "Agression" },
-                { value: "Crime", label: "Crime" },
-                { value: "Robbing", label: "Robbing" },
-              ]}
-              onChange={handleChange}
-            />
+        <SelectField
+          id={"language"}
+          name={"language"}
+          label={"Language"}
+          type={"text"}
+          options={[
+            { value: "FR", label: "FR" },
+            { value: "AR", label: "AR" },
+          ]}
+          onChange={handleChange}
+        />
+        <TextField
+          id={"city"}
+          label={"city"}
+          name={"city"}
+          type={"text"}
+          onChange={handleChange}
+        />
+        <TextField
+          id={"state"}
+          label={"state"}
+          name={"state"}
+          type={"text"}
+          onChange={handleChange}
+        />
 
-<SelectField
-              id={"language"}
-              name={"language"}
-              label={"Language"}
-              type={"text"}
-              options={[
-                { value: "FR", label: "FR" },
-                { value: "AR", label: "AR" },
-               
-              ]}
-              onChange={handleChange}
-            />
-            <TextField 
-            id={"city"}  
-            label={"city"}
-            name={"city"}
-            type={"text"}
-            onChange={handleChange}  
-             />
-            <TextField 
-            id={"state"}  
-            label={"state"}
-            name={"state"} 
-            type={"text"}
-            onChange={handleChange}
-             
-             />
+        <TextField
+          id={"country"}
+          label={"country"}
+          type={"text"}
+          name={"country"}
+          onChange={handleChange}
+        />
 
-            <TextField 
-            id={"country"}  
-            label={"country"}
-            type={"text"}
-            name={"country"} 
-            onChange={handleChange} 
-             />
-
-          <TextField 
-            id={"zip_code"}  
-            label={"zip code"}
-            name={"zip_code"}  
-            type={"number"}
-            onChange={handleChange}
-             />
-            <TextAreaField
-            id={"bio"}  
-            label={"bio"}
-            name={"bio"}
-            type={"text"}
-            onChange={handleChange}
-            />
-          
-        </div>
+        <TextField
+          id={"zip_code"}
+          label={"zip code"}
+          name={"zip_code"}
+          type={"number"}
+          onChange={handleChange}
+        />
+        <TextAreaField
+          id={"bio"}
+          label={"bio"}
+          name={"bio"}
+          type={"text"}
+          onChange={handleChange}
+        />
+      </div>
       <div className="flex justify-end m-4">
-        <button onClick={handleSubmit} className="transition-transform transform hover:opacity-90 duration-500  mx-4 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2">
+        <button
+          onClick={handleSubmit}
+          className="transition-transform transform hover:opacity-90 duration-500  mx-4 border-1 bg-[#094B72] py-3 px-8 rounded-3xl text-white font-normal text-md flex gap-2"
+        >
           <p>{t("save")}</p>
         </button>
       </div>

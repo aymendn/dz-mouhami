@@ -68,75 +68,8 @@ function App() {
         <div>{"isSuperUser: " + isSuperUser}</div>
         <div>{"isSignup: " + isSignup}</div>
         <Router>
+          <RoutesHandler />
           <ScrollToTop />
-          <Routes>
-            {/* Can be accessed by logged in users only */}
-            {isLoggedIn && <Route path="/choice" Component={ChoicePage} />}
-            {isLoggedIn && (
-              <Route path="/user-registration" Component={UserFormPage} />
-            )}
-            {isLoggedIn && (
-              <Route
-                path="/user-registration/validation"
-                Component={SuccessUserPage}
-              />
-            )}
-            {isLoggedIn && (
-              <Route
-                path="/lawyer-registrationStep1"
-                Component={LawyerForm1Page}
-              />
-            )}
-            {isLoggedIn && (
-              <Route
-                path="/lawyer-registrationStep2"
-                Component={LawyerForm2Page}
-              />
-            )}
-            {isLoggedIn && (
-              <Route
-                path="/lawyer-registrationStep2/validation"
-                Component={SuccessLawyerPage}
-              />
-            )}
-
-            {/* Can be accessed by clients only */}
-            {isLoggedIn && isClient && (
-              <Route path="/user-edit" Component={UserEditProfilePage} />
-            )}
-
-            {/* Can be accessed by lawyers only */}
-            {isLoggedIn && isLawyer && (
-              <Route path="/dashboard" Component={DashboardPage} />
-            )}
-            {isLoggedIn && isLawyer && (
-              <Route path="/requests" Component={RequestsPage} />
-            )}
-            {isLoggedIn && isLawyer && (
-              <Route path="/appointments" Component={AppointementPage} />
-            )}
-            {isLoggedIn && isLawyer && (
-              <Route path="/edit" Component={EditProfilePage} />
-            )}
-
-            {/* Can be accessed by admin only */}
-            {isLoggedIn && isSuperUser && (
-              <Route path="/admin" Component={AdminPage} />
-            )}
-
-            {/* Can be accessed by anyone */}
-            <Route path="/" Component={LandingPage} />
-            <Route path="/lawyer/:id" Component={LawyerPage} />
-            {isLoggedIn && <Route path="/search" Component={SearchPage} />}
-            <Route path="/login-handler" Component={LoginHandler} />
-            <Route path="/contact" Component={ContactPage} />
-            <Route path="/about" Component={AboutPage} />
-            <Route path="/privacy" Component={PrivacyPage} />
-            <Route path="/terms" Component={TermsPage} />
-
-            {/* To redirect every private or unknown route to the landing page */}
-            <Route path="*" Component={Redirector} />
-          </Routes>
         </Router>
       </div>
       <ToastContainer position="bottom-left" />
@@ -145,3 +78,88 @@ function App() {
 }
 
 export default App;
+
+const RoutesHandler = () => {
+  const { user, logout } = useUser();
+
+  const isClient = user?.isClient || false;
+  const isLawyer = user?.isLawyer || false;
+  const isSuperUser = user?.isSuperUser || false;
+  const isSignup = user?.isSignup || false;
+  const isLoggedIn = !!user;
+
+  if (isSuperUser) {
+    return (
+      <Routes>
+        <Route path="/admin" Component={AdminPage} />
+        <Route path="/login-handler" Component={LoginHandler} />
+        <Route path="*" Component={AdminPage} />
+      </Routes>
+    );
+  }
+
+  return (
+    <Routes>
+      {/* Can be accessed by logged in users only */}
+      {isLoggedIn && <Route path="/choice" Component={ChoicePage} />}
+      {isLoggedIn && (
+        <Route path="/user-registration" Component={UserFormPage} />
+      )}
+      {isLoggedIn && (
+        <Route
+          path="/user-registration/validation"
+          Component={SuccessUserPage}
+        />
+      )}
+      {isLoggedIn && (
+        <Route path="/lawyer-registrationStep1" Component={LawyerForm1Page} />
+      )}
+      {isLoggedIn && (
+        <Route path="/lawyer-registrationStep2" Component={LawyerForm2Page} />
+      )}
+      {isLoggedIn && (
+        <Route
+          path="/lawyer-registrationStep2/validation"
+          Component={SuccessLawyerPage}
+        />
+      )}
+
+      {/* Can be accessed by clients only */}
+      {isLoggedIn && isClient && (
+        <Route path="/user-edit" Component={UserEditProfilePage} />
+      )}
+
+      {/* Can be accessed by lawyers only */}
+      {isLoggedIn && isLawyer && (
+        <Route path="/dashboard" Component={DashboardPage} />
+      )}
+      {isLoggedIn && isLawyer && (
+        <Route path="/requests" Component={RequestsPage} />
+      )}
+      {isLoggedIn && isLawyer && (
+        <Route path="/appointments" Component={AppointementPage} />
+      )}
+      {isLoggedIn && isLawyer && (
+        <Route path="/edit" Component={EditProfilePage} />
+      )}
+
+      {/* Can be accessed by admin only */}
+      {isLoggedIn && isSuperUser && (
+        <Route path="/admin" Component={AdminPage} />
+      )}
+
+      {/* Can be accessed by anyone */}
+      <Route path="/" Component={LandingPage} />
+      <Route path="/lawyer/:id" Component={LawyerPage} />
+      <Route path="/search" Component={SearchPage} />
+      <Route path="/login-handler" Component={LoginHandler} />
+      <Route path="/contact" Component={ContactPage} />
+      <Route path="/about" Component={AboutPage} />
+      <Route path="/privacy" Component={PrivacyPage} />
+      <Route path="/terms" Component={TermsPage} />
+
+      {/* To redirect every private or unknown route to the landing page */}
+      <Route path="*" Component={Redirector} />
+    </Routes>
+  );
+};
