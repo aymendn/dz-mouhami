@@ -13,8 +13,11 @@ import Loading from "../../components/Loading";
 import LoadingOverlay from "../../components/LoadingOverlay";
 import { toast } from "react-toastify";
 import PaginationNav from "../Search/PaginationNav";
+import { useTransition } from "react";
+import { useTranslation } from "react-i18next";
 
 const AdminPage = () => {
+  const {t} = useTranslation()
   // make pagination in url (?page=1)
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -115,24 +118,24 @@ const AdminPage = () => {
       <div className="flex-1 py-4 px-0 lg:px-8 max-w-5xl w-full">
         <div className="m-6">
           <h1 className="text-2xl font-bold mb-1 text-[#094B72]">
-            Lawyers Pending Registrations
+            {t("LawyersPending")}
           </h1>
           <p className="text-[#103F5BB2] text-sm font-medium">
-            There are {requestsData.length} unvalidated lawyers
+            {requestsData.length} {t("unvalidatedlawyers")} 
           </p>
         </div>
         <LoadingOverlay isLoading={isLoading}>
           <table className="min-w-full bg-white border border-slate-200 ">
             <thead>
               <tr className="bg-slate-50 text-[#26495D] text-sm l">
-                <th className="border border-slate-200 px-4 py-2">Nom</th>
-                <th className="border border-slate-200 px-4 py-2">Prenon</th>
+                <th className="border border-slate-200 px-4 py-2">{t("firstName")}</th>
+                <th className="border border-slate-200 px-4 py-2">{t("lastName")}</th>
                 <th className="border border-slate-200 px-4 py-2">
-                  specialization
+                  {t("specialization")}
                 </th>
-                <th className="border border-slate-200 px-4 py-2">Document</th>
-                <th className="border border-slate-200 px-4 py-2">Status</th>
-                <th className="border border-slate-200 px-4 py-2">Actions</th>
+                <th className="border border-slate-200 px-4 py-2">{t(" document")}</th>
+                <th className="border border-slate-200 px-4 py-2">{t("Statut")}</th>
+                <th className="border border-slate-200 px-4 py-2">{t("Action")}</th>
               </tr>
             </thead>
             <tbody>
@@ -168,14 +171,14 @@ const AdminPage = () => {
                         <div className="w-4 h-4">
                           <SvgColor svg={Accept} colors={["#FFF", "#FFF"]} />
                         </div>
-                        Accept
+                        {t("Accepter")}
                       </button>
                       <button
                         onClick={() => handleRefuse(requests.id)}
                         className="   bg-red-500  px-6 py-2 ps-4 rounded-3xl text-white font-normal text-md flex flex-row hover:bg-red-700 duration-300 items-center gap-2 "
                       >
                         <img src={Delete} alt="Refuse" />
-                        <p>Refuse</p>
+                        <p>{t("Refuser")}</p>
                       </button>
                     </div>
                   </td>

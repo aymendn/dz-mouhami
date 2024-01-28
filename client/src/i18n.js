@@ -73,10 +73,21 @@ const resources = {
       lawyer:"je suis un avocat",
       policy:"En continuant, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité",
       schedule:" Planning des rendez-vous",
+      LawyersPending :"Avocats en attente d'inscription",
+      unvalidatedlawyers: "Avocats qui ne sont pas validés",
+      specialization:"specialisation"
     },
   },
   ar: {
     translation: {
+      Refuser:"رفض",
+      Accepter:"قبول",
+      Action:"إجراء",
+      Statut:" حالة",
+      document:" وثيقة",
+      specialization:"تخصص",
+      unvalidatedlawyers :"محامون غير مُعتمَدين",
+      LawyersPending:"محامون في انتظار التسجيلات",
       languageCode: "ar",
       direction: "rtl",
       getStarted: "ابدأ الآن",
