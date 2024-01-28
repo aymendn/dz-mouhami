@@ -22,16 +22,16 @@ const FilterSidebar = ({ onApply }) => {
   const [categories, setcategories] = useState(searchParams.get("categories"));
 
   const daysOptions = [
-    "Saturday",
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
+    "Samedi",
+    "Dimanche",
+    "Lundi",
+    "Mardi",
+    "Mercredi",
+    "jeudi",
+    "Vendredi",
   ];
   const ratingOptions = ["5", "4", "3", "2", "1"];
-  const categoriesOptions = ["Criminal", "Civil", "Family", "Aggression"];
+  const categoriesOptions = ["Crime", "Civil", "Famille", "Aggression"];
 
   return (
     <div className="w-1/3 h-full rounded-2xl border-2 border-slate-100 p-8 me-5 hidden lg:block">
@@ -59,7 +59,7 @@ const FilterSidebar = ({ onApply }) => {
 
       {/* Categories */}
       <div className="mt-8">
-        <h2 className="text-[#607e8ff9] text-base font-medium">Categories</h2>
+        <h2 className="text-[#607e8ff9] text-base font-medium">{t("Categories")}</h2>
         <div className="my-3 flex items-center">
           {radioButtonsSelector(categories, categoriesOptions, (e) =>
             setcategories(e.target.value)
@@ -69,7 +69,7 @@ const FilterSidebar = ({ onApply }) => {
 
       {/* Days */}
       <div className="mt-8">
-        <h2 className="text-[#607e8ff9] text-base font-medium">Days</h2>
+        <h2 className="text-[#607e8ff9] text-base font-medium">{t("jours")}</h2>
         <div className="my-3 flex items-center">
           {radioButtonsSelector(days, daysOptions, (e) =>
             setdays(e.target.value)
@@ -79,7 +79,7 @@ const FilterSidebar = ({ onApply }) => {
 
       {/* Rating */}
       <div className="mt-8">
-        <h2 className="text-[#607e8ff9] text-base font-medium">Rating</h2>
+        <h2 className="text-[#607e8ff9] text-base font-medium">{t("note")}</h2>
         <div className="my-3 flex items-center">
           {radioButtonsSelector(rating, ratingOptions, (e) =>
             setRating(e.target.value)

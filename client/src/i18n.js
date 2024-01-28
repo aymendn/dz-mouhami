@@ -76,11 +76,19 @@ const resources = {
       LawyersPending :"Avocats en attente d'inscription",
       unvalidatedlawyers: "Avocats qui ne sont pas validés",
       specialization:"specialisation",
-      Rendezvous :"Rendez-vous"
+      Rendezvous :"Rendez-vous",
+      inscriptionavocat:"Inscription des avocats",
+      welcomelawyers:"Bienvenue, professionnel du droit ! Nous sommes ravis de vous accueillir au sein de notre communauté. Veuillez fournir les informations suivantes pour créer votre profil d'avocat.",
+      
     },
   },
   ar: {
     translation: {
+      Categories:'فئات',
+      jours:"يوم",
+      note:"تقييم",
+      welcomelawyers:" مرحبًا، محترف قانوني! نحن متحمسون لانضمامك إلى مجتمعنا. يرجى تقديم المعلومات التالية لإنشاء ملفك الشخصي كمحام.",
+      inscriptionavocat:' تسجيل محامٍ',
       Rendezvous:"موعد",
       Refuser:"رفض",
       Accepter:"قبول",

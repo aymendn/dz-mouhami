@@ -11,8 +11,9 @@ import { useNavigate } from "react-router-dom";
 import { useToken } from "../../utils/UseTokenHook";
 import { useAtom } from "jotai";
 import { userJsonAtom } from "../../utils/Auth";
+import { useTranslation } from "react-i18next";
 const LawyerForm1Page = () => {
-
+  const {t} = useTranslation()
   const [data, setData] = useState({
     specialization: "",
     phone_number: null,
@@ -78,13 +79,11 @@ const LawyerForm1Page = () => {
         <RegistrationFormStepper activeStep={1} />
         <div className="mt-8 text-center">
           <h1 className="text-[#0F3146] text-5xl font-semibold">
-            Lawyer Registration
+            {t("inscriptionavocat")}
           </h1>
 
           <p className="p-4 text-[#496C80] text-md text-center">
-            Welcome, legal professional! We're excited to have you join our
-            community. Please provide the following information to create your
-            lawyer profile.
+            {t("welcomelawyers")}
           </p>
         </div>
 
@@ -138,7 +137,7 @@ const LawyerForm1Page = () => {
 
             <TextField
               id={"country"}
-              label={"country"}
+              label={t("country")}
               name={"country"}
               onChange={handleChange}
             />
