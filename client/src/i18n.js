@@ -79,14 +79,17 @@ const resources = {
       Rendezvous :"Rendez-vous",
       inscriptionavocat:"Inscription des avocats",
       welcomelawyers:"Bienvenue, professionnel du droit ! Nous sommes ravis de vous accueillir au sein de notre communauté. Veuillez fournir les informations suivantes pour créer votre profil d'avocat.",
-      pending:"Compte en attente d'approbation ",
+      pending:"Comptes en attente d'approbation ",
       approval:"Merci de vous être inscrit(e) sur DZ-Mouhami ! Nous examinons actuellement les informations de votre compte afin de garantir la plus haute qualité de professionnels du droit sur notre plateforme. Votre compte est actuellement en attente d'approbation.",
       creation:' Compte créé avec succès',
-      success:"Merci de rejoindre DZ-Mouhami ! Votre compte a été créé avec succès. Vous faites désormais partie de notre communauté dédiée à connecter les utilisateurs avec des avocats de confiance en Algérie."
+      success:"Merci de rejoindre DZ-Mouhami ! Votre compte a été créé avec succès. Vous faites désormais partie de notre communauté dédiée à connecter les utilisateurs avec des avocats de confiance en Algérie.",
+      
+    
     },
   },
   ar: {
     translation: {
+      Demandes:"طلب",
       success:" شكرًا لانضمامك إلى DZ-Mouhami! تم إنشاء حسابك بنجاح. أنت الآن جزء من مجتمعنا المكرس لربط المستخدمين بمحامين موثوقين في الجزائر.",
       creation:'تم إنشاء الحساب بنجاح!',
       approval:"شكرًا لتسجيلك في DZ-Mouhami! نقوم حاليًا بمراجعة معلومات حسابك لضمان أعلى جودة للمحترفين القانونيين على منصتنا. حسابك قيد الموافقة حاليً",
