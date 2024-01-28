@@ -615,7 +615,8 @@ def lawyer_profile_search(request):
 
     if query :
         lawyer_filter = (
-            Q(user__first_name__icontains = query)
+            Q(user__first_name__icontains = query) |
+            Q(user__last_name__icontains = query)
         )
         address_filter = (
             Q(address__street__icontains = query) |
