@@ -6,28 +6,34 @@ import { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
+import { useToken } from "../../utils/UseTokenHook";
+import Loading from "../../components/Loading";
 
 const AppointementPage = () => {
-  const {t} = useTranslation()
-  
-  const [rdvData, setrdvData] = useState([])
-  useEffect(()=>{
-      const fetchAllrdvData = async ()=>{
-          try{
-              const token = "6aaeffb7d25c4697859f4135245956eec6012708"
-              const res =await axios.get('http://127.0.0.1:8000/core/appointments' ,{
-                headers: {
-                  Authorization: `Bearer ${token}`, 
-                },
-              }) 
-              setrdvData(res.data)
-              console.log(res.data)
-          }catch(err){
-              console.log('erreur ',err)
-          }
-      } 
-      fetchAllrdvData()
-  },[])
+  const { t } = useTranslation();
+  const token = useToken();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [rdvData, setrdvData] = useState([]);
+
+  useEffect(() => {
+    const fetchAllrdvData = async () => {
+      try {
+        setIsLoading(true);
+        const res = await axios.get("/core/appointments", {
+          headers: {
+            Authorization: token,
+          },
+        });
+        setrdvData(res.data?.results || []);
+      } catch (err) {
+        console.log("erreur ", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchAllrdvData();
+  }, []);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -42,16 +48,25 @@ const AppointementPage = () => {
               {t("schedule")}
             </h1>
             <p className="text-[#103F5BB2] text-sm font-medium">
-               {rdvData.length} {t("Rendezvous")}
+              {rdvData.length} {t("Rendezvous")}
             </p>
           </div>
+
           <table className="min-w-full bg-white border border-slate-200 ">
             <thead>
               <tr className="bg-slate-50 text-[#26495D] text-sm l">
-                <th className="border border-slate-200 px-4 py-2">{t("firstname")}</th>
-                <th className="border border-slate-200 px-4 py-2">{t(" lastname")}</th>
-                <th className="border border-slate-200 px-4 py-2">{t("age")}</th>
-                <th className="border border-slate-200 px-4 py-2">{t("schedule")}</th>
+                <th className="border border-slate-200 px-4 py-2">
+                  {t("firstName")}
+                </th>
+                <th className="border border-slate-200 px-4 py-2">
+                  {t("lastName")}
+                </th>
+                <th className="border border-slate-200 px-4 py-2">
+                  {t("Age")}
+                </th>
+                <th className="border border-slate-200 px-4 py-2">
+                  {t("schedule")}
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -74,6 +89,7 @@ const AppointementPage = () => {
               ))}
             </tbody>
           </table>
+          {isLoading && <Loading className="py-24 px-4" />}
         </div>
       </div>
       <div className=" lg:hidden">

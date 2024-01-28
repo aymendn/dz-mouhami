@@ -7,7 +7,9 @@ import logoutIcon from "../assets/logout.svg";
 import { Link } from "react-router-dom";
 import SidebarLink from "./SidebarLink";
 import { useTranslation } from "react-i18next";
+import { useUser } from "../utils/UseTokenHook";
 const Sidebar = () => {
+  const { user, logout } = useUser();
   const { t } = useTranslation();
   return (
     <div className="hidden lg:flex max-w-[280px]">
@@ -26,12 +28,14 @@ const Sidebar = () => {
           {t("profile")}
         </h2>
         <SidebarLink icon={profileIcon} title={t("editProfile")} to="/edit" />
-        <SidebarLink
-          icon={logoutIcon}
-          title={t("signOut")}
-          to="/"
-          isRed={true}
-        />
+        <button onClick={logout}>
+          <SidebarLink
+            icon={logoutIcon}
+            title={t("signOut")}
+            to="/"
+            isRed={true}
+          />
+        </button>
         <div className="mt-auto mb-10">
           <div className=" flex items-start justify-start flex-wrap gap-x-4 gap-y-1">
             <Link to="/contact">

@@ -96,7 +96,7 @@ const CardLawyer = ({
           <div className="flex items-center gap-1 ms-auto self-start mt-2">
             <Rating
               direction={direction}
-              initialRating={Math.floor(rating)}
+              initialRating={Math.floor(5)}
               readonly={true}
               emptySymbol={<img src={star} className="icon" width={20} />}
               fullSymbol={<img src={starFilled} className="icon" width={20} />}

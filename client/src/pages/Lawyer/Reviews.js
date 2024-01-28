@@ -5,23 +5,17 @@ import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { useQuery } from "react-query";
 import Loading from "../../components/Loading";
-import qs from "qs";
-import { stringify } from "json5";
 import { useToken } from "../../utils/UseTokenHook";
 
-const getReviews = async ({ lawyerId, token }) => {
-  const res = await axios.get(`/core/lawyer-view/${lawyerId}/reviews/`, {
-    headers: {
-      Authorization: token,
-    },
-  });
+const getReviews = async ({ lawyerId }) => {
+  const res = await axios.get(`/core/lawyer-view/${lawyerId}/reviews/`, {});
 
   console.log(res);
 
   return res.data;
 };
 
-const Reviews = ({ lawyerId }) => {
+const Reviews = ({ lawyerId, hasAction = true }) => {
   const { t } = useTranslation();
   const token = useToken();
 
@@ -67,15 +61,17 @@ const Reviews = ({ lawyerId }) => {
             {t("reviews")}
           </div>
         </div>
-        <LeaveReviewDialog
-          key="appointment"
-          lawyerId={lawyerId}
-          trigger={
-            <div className="bg-[#094b72] text-white text-sm font-medium  py-2 px-5 rounded-full hover:opacity-90 cursor-pointer transition-all ms-2">
-              {t("leaveAReview")}
-            </div>
-          }
-        />
+        {hasAction && (
+          <LeaveReviewDialog
+            key="appointment"
+            lawyerId={lawyerId}
+            trigger={
+              <div className="bg-[#094b72] text-white text-sm font-medium  py-2 px-5 rounded-full hover:opacity-90 cursor-pointer transition-all ms-2">
+                {t("leaveAReview")}
+              </div>
+            }
+          />
+        )}
       </div>
       {currentView()}
     </>

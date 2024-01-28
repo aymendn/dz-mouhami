@@ -4,9 +4,9 @@ import personSearch from "../../assets/person_search.svg";
 import personCheck from "../../assets/person_check_blue.svg";
 import SvgColor from "react-svg-color";
 import { Link } from "react-router-dom";
-import { useTransition } from "react";
+import { useTranslation } from "react-i18next";
 const SucceessUserPage = () => {
-  const {t} = useTransition
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen flex flex-col justify-between">
       <Navbar />

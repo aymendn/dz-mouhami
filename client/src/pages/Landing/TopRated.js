@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import axios from "axios";
 import { useQuery } from "react-query";
 import Loading from "../../components/Loading";
+import { Link } from "react-router-dom";
 
 const getLawyers = async () => {
   try {
@@ -36,9 +37,12 @@ const TopRated = () => {
           <h1 className="font-['Domine'] font-semibold text-[#094B72E5] text-2xl md:text-3xl">
             {t("topRatedLawyers")}
           </h1>
-          <button className="bg-[#094E771A] font-medium text-[#094B72E5] rounded-full px-6 py-2 hover:bg-[#094f773b] transition duration-50 text-sm md:text-base">
+          <Link
+            to={"/search"}
+            className="bg-[#094E771A] font-medium text-[#094B72E5] rounded-full px-6 py-2 hover:bg-[#094f773b] transition duration-50 text-sm md:text-base"
+          >
             {t("seeAll")}
-          </button>
+          </Link>
         </div>
         {isLoading ? (
           <Loading className="py-12 px-2" />
