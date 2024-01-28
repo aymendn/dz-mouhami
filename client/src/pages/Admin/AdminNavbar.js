@@ -5,6 +5,14 @@ import LogoComponent from "../../components/Logo";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import SvgColor from "react-svg-color";
+import { useTranslation } from "react-i18next";
+import { useUser } from "../../utils/UseTokenHook";
+import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
+import "@szhsin/react-menu/dist/index.css";
+import Profil from "../../assets/profile.svg";
+import LogoutSvg from "../../assets/logout.svg";
+import { useLocation } from "react-router-dom";
+import SwitchLanguage from "../../components/SwitchLanguage";
 const AdminNavbar = () => {
   // get current url, if it's /home, show the get started button
   const currentUrl = window.location.pathname;
@@ -38,6 +46,12 @@ const AdminNavbar = () => {
               {/* Logo */}
               <AdminLogo />
 
+              {/* Spacer */}
+              <div className="flex-1"></div>
+
+              {/* Profile Icon */}
+              <LoggedInComponent />
+
               {/* Hamburger menu */}
               <MenuIcon onClick={handleMenuClick} isOpen={isMenuOpen} />
             </div>
@@ -51,10 +65,7 @@ const AdminNavbar = () => {
               >
                 {/* Navigation Links */}
                 <div className="flex flex-col font-medium">
-                  <CustomLink name="Appointement" to="/appointments" />
-                  <CustomLink name="Requests" to="/requests" />
-                  <CustomLink name="Edit Profile" to="/edit" />
-                  <CustomLink name="Sign Out" to="/" />
+                  <SwitchLanguage />
                 </div>
               </div>
             </div>
@@ -63,8 +74,15 @@ const AdminNavbar = () => {
           <div className=" mx-auto flex justify-between items-center">
             {/* Logo */}
             <AdminLogo />
+
+            {/* Spacer */}
+            <div className="flex-1"></div>
+
+            {/* Switch Language */}
+            <SwitchLanguage />
+
             {/* Navigation Links */}
-            <div className="space-x-4 flex justify-end gap-12 text-sm font-medium">
+            <div className="space-x-4 flex justify-end gap-12 text-sm font-medium ms-12">
               <Link to="/about" className="flex items-center gap-1 text-white">
                 <img src={info}></img>
                 About
@@ -76,7 +94,9 @@ const AdminNavbar = () => {
                 <img src={contact}></img>
                 Contact
               </Link>
-              <img src={profilePicture} className="w-8 h-8 rounded-full"></img>
+
+              {/* Profile icon */}
+              <LoggedInComponent />
             </div>
           </div>
         )}
@@ -132,5 +152,37 @@ function AdminLogo() {
       <LogoComponent isWhite={true} to="/admin" />
       <p className="text-white font-medium opacity-70">Admin Dashboard</p>
     </div>
+  );
+}
+
+function LoggedInComponent() {
+  const { t } = useTranslation();
+  const { user, logout } = useUser();
+
+  if (!user) {
+    return null;
+  }
+
+  const profileUrl = user.isClient ? "/user-edit" : "/edit";
+
+  const profileImg = user?.userData?.picture || Profil;
+
+  return (
+    <Menu
+      menuButton={
+        <MenuButton>
+          <img
+            className="w-10 h-10 rounded-full border-2 border-[#26495d6c] mx-4"
+            src={profileImg}
+          ></img>
+        </MenuButton>
+      }
+      transition
+    >
+      <MenuItem className="flex flex-row gap-2 items-center" onClick={logout}>
+        <img src={LogoutSvg}></img>
+        <span className="font-medium text-red-500">{t("signOut")}</span>
+      </MenuItem>
+    </Menu>
   );
 }

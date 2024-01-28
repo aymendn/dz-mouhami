@@ -38,14 +38,24 @@ class LawyerImageSerializer(serializers.ModelSerializer):
         model = LawyerImage
         fields = ['id', 'image']
 
+from django.db.models import Avg
 
 class LawyerProfileSerializer(serializers.ModelSerializer):
     address = AddressSerializer(required=False, allow_null=True)
     time_slots = TimeSlotSerializer(required=False, allow_null=True, many=True)
-    rating = serializers.IntegerField(read_only=True)
+    rating = serializers.SerializerMethodField()
     image= LawyerImageSerializer(read_only=True , many=True)
     first_name = serializers.CharField(source='user.first_name', read_only=True)
     last_name = serializers.CharField(source='user.last_name', read_only=True)
+
+    def get_rating(self, obj):
+        rating_obj = Review.objects.filter(lawyer=obj).aggregate(rating=Avg('rating'))
+        rating_avg = rating_obj['rating']
+        if rating_avg:
+            return rating_avg
+        else:
+            return 0
+
 
     class Meta:
         model = LawyerProfile
@@ -191,12 +201,11 @@ class LawyerProfileAdminListSerializer(serializers.ModelSerializer):
 
     
 class ReviewSerializer(serializers.ModelSerializer):
-    image = ClientImageSerializer(read_only=True)
     first_name = serializers.CharField(source='client.user.first_name', read_only=True)
     last_name = serializers.CharField(source='client.user.last_name', read_only=True)
     class Meta:
         model = Review
-        fields = ['id', 'first_name', 'last_name', 'rating', 'comment', 'image']
+        fields = ['id', 'first_name', 'last_name', 'rating', 'comment', 'created_at']
 
     def create(self, validated_data):
         lawyer = self.context.get('lawyer_id')
@@ -205,15 +214,12 @@ class ReviewSerializer(serializers.ModelSerializer):
         # Get the ClientProfile instance using the provided client_id
         client = get_object_or_404(ClientProfile, id=client_id)
         user = User.objects.get(id= ClientProfile.objects.get(id=client_id).user_id)
-        image_instance = ClientImage.objects.filter(user_id=user.id)
-        image = image_instance[0].image
 
         review_instance = Review.objects.create(
             lawyer_id=lawyer,
             client=client,
             rating=validated_data['rating'],
             comment=validated_data['comment'],
-            image=image
         )
         return review_instance
 

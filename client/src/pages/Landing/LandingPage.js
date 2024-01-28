@@ -20,23 +20,8 @@ const LandingPage = () => {
           backgroundImage: `url(${BgImage})`,
         }}
       >
-        <Main></Main>{" "}
+        <Main></Main>
       </div>
-
-      <a href="http://localhost:8000/core/login">
-        <button>login</button>
-      </a>
-      <button
-        onClick={() => {
-          axios
-            .get("http://192.168.228.1:8000/core/lawyer-search")
-            .then((res) => {
-              console.log(res.data);
-            });
-        }}
-      >
-        try
-      </button>
       <Services></Services>
       <TopRated></TopRated>
       <GetStared></GetStared>

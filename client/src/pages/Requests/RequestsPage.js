@@ -7,10 +7,11 @@ import SvgColor from "react-svg-color";
 import Footer from "../../components/Footer";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useTransition } from "react";
 
 const RequestsPage = () => {
 
-
+const {t} =useTransition()
 
  const [requestsData, setrequestsData] = useState([])
   useEffect(()=>{
@@ -76,18 +77,20 @@ const RequestsPage = () => {
         <Sidebar></Sidebar>
         <div className="flex-1 py-4">
           <div className="m-6">
-            <h1 className="text-2xl font-bold mb-1 text-[#094B72]">Requests</h1>
+            <h1 className="text-2xl font-bold mb-1 text-[#094B72]">{t("Demandes")}</h1>
             <p className="text-[#103F5BB2] text-sm font-medium">
-              You have {requestsData.length} requests
+               {requestsData.length} {t("Demandes")}
             </p>
           </div>
           <table className="min-w-full bg-white border border-slate-200 ">
             <thead>
               <tr className="bg-slate-50 text-[#26495D] text-sm l">
-                <th className="border border-slate-200 px-4 py-2">Name</th>
-                <th className="border border-slate-200 px-4 py-2">Surname</th>
-                <th className="border border-slate-200 px-4 py-2">Age</th>
-                <th className="border border-slate-200 px-4 py-2">Actions</th>
+                <th className="border border-slate-200 px-4 py-2">
+                  {t("firstName")}
+                </th>
+                <th className="border border-slate-200 px-4 py-2">{("lastName")}</th>
+                <th className="border border-slate-200 px-4 py-2">{t("age")}</th>
+                <th className="border border-slate-200 px-4 py-2">{t("Action")}</th>
               </tr>
             </thead>
             <tbody>

@@ -47,7 +47,7 @@ const EditProfilePage = () => {
     e.preventDefault();
     
   
-    axios.put(`http://127.0.0.1:8000/core/clients/11/`, {...data,token:token})
+    axios.put(`http://127.0.0.1:8000/core/lawyers/11/`, {...data,token:token})
       .then(response => {
         
         console.log(response.data);

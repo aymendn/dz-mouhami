@@ -4,13 +4,22 @@ import info from "../assets/info.svg";
 import contact from "../assets/email.svg";
 import Profil from "../assets/profile.svg";
 import Search from "../assets/search.svg";
+import LogoutSvg from "../assets/logout.svg";
 import "../style/styles.css";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import SwitchLanguage from "./SwitchLanguage";
 import { useTranslation } from "react-i18next";
+import { useUser } from "../utils/UseTokenHook";
+import { Menu, MenuItem, MenuButton } from "@szhsin/react-menu";
+import "@szhsin/react-menu/dist/index.css";
+import "@szhsin/react-menu/dist/transitions/slide.css";
+
 const Navbar = () => {
   const { t } = useTranslation();
+
+  const { user, logout } = useUser();
+  const isClient = user?.isClient || false;
 
   // get current url, if it's /home, show the get started button
   const currentUrl = window.location.pathname;
@@ -43,6 +52,12 @@ const Navbar = () => {
             {/* Logo */}
             <LogoComponent />
 
+            {/* A spacer to take all push other action */}
+            <div className="flex-1"></div>
+
+            {/* Profile, logout */}
+            <LoggedInComponent />
+
             {/* Hamburger menu */}
             <MenuIcon onClick={handleMenuClick} isOpen={isMenuOpen} />
           </div>
@@ -69,7 +84,10 @@ const Navbar = () => {
           <LinksWrapper className="space-x-4 flex justify-between gap-12 text-sm font-medium" />
 
           {/* Get Started Button */}
-          {isHome && <GetStartedButton />}
+          <GetStartedButton />
+
+          {/* Profile, logout */}
+          <LoggedInComponent />
         </div>
       )}
     </nav>
@@ -104,19 +122,29 @@ function MenuIcon({ onClick, isOpen = true }) {
   );
 }
 
-function GetStartedButton({}) {
+function GetStartedButton() {
   const { t } = useTranslation();
+  const { user, logout } = useUser();
+  if (user) {
+    return null;
+  }
   return (
-    <Link to={"/choice"}>
+    <a href="http://localhost:8000/core/login">
       <button className="bg-[#E5F2FA] font-semibold text-[#09283A] rounded-full px-6 py-2 hover:bg-[#d7ebf8] border-2 border-[#194f6e1b] hover:border-[#194f6e54] transition-all duration-100">
         {t("getStarted")}
       </button>
-    </Link>
+    </a>
   );
 }
 
 function LinksWrapper({ className }) {
   const { t } = useTranslation();
+
+  // get profile url based on user type
+  const { user, logout } = useUser();
+  const isClient = user?.isClient || false;
+  const profileUrl = isClient ? "/user-edit" : "/edit";
+
   return (
     <div className={className}>
       <SwitchLanguage />
@@ -128,7 +156,7 @@ function LinksWrapper({ className }) {
         {t("search")}
       </Link>
       <Link
-        to="/user-edit"
+        to={profileUrl}
         className="nav-Links flex items-center gap-1 text-[#26495D]"
       >
         <img src={Profil}></img>
@@ -147,5 +175,43 @@ function LogoComponent() {
         className="text-white text-lg font-bold"
       ></img>
     </Link>
+  );
+}
+
+function LoggedInComponent() {
+  const { t } = useTranslation();
+  const { user, logout } = useUser();
+
+  if (!user) {
+    return null;
+  }
+
+  const profileUrl = user.isClient ? "/user-edit" : "/edit";
+
+  const profileImg = user?.userData?.picture || Profil;
+
+  return (
+    <Menu
+      menuButton={
+        <MenuButton>
+          <img
+            className="w-10 h-10 rounded-full border-2 border-[#26495d6c] mx-4"
+            src={profileImg}
+          ></img>
+        </MenuButton>
+      }
+      transition
+    >
+      <MenuItem className="flex flex-row gap-2 items-center">
+        <Link to={profileUrl} className="flex flex-row gap-2 items-center">
+          <img src={Profil}></img>
+          <span className="font-medium">{t("profile")}</span>
+        </Link>
+      </MenuItem>
+      <MenuItem className="flex flex-row gap-2 items-center" onClick={logout}>
+        <img src={LogoutSvg}></img>
+        <span className="font-medium text-red-500">{t("signOut")}</span>
+      </MenuItem>
+    </Menu>
   );
 }

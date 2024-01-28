@@ -17,12 +17,10 @@ const SucceessUserPage = () => {
             className="w-16 mx-auto"
           />
           <h1 className="p-4 text-[#0F3146] text-4xl font-semibold">
-            Account Created Successfully!
+            {t("creation")}
           </h1>
           <p className="p-4 text-[#496C80] text-base font-medium">
-            Thank you for joining DZ-Mouhami! Your account has been successfully
-            created. You are now part of our community dedicated to connecting
-            users with trusted lawyers in Algeria.
+            {t("success")}
           </p>
         </div>
         <Link to="/search">

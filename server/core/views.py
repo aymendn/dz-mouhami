@@ -170,7 +170,7 @@ class LawyerProfileViewSet(viewsets.ModelViewSet):
         # token = '6aaeffb7d25c4697859f4135245956eec6012708'
         # token = "533ba7c8dccd71003fedea92076ab3ef94aaa243"
         user = Token.objects.get(key=token).user
-        return LawyerProfile.objects.filter(user=user, approved=True)
+        return LawyerProfile.objects.filter(user=user)
 
 
     def perform_create(self, serializer):
@@ -304,9 +304,12 @@ class ClientProfileViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
                 
 
+from .pagination import DefaultPagination
 
 class LawyerAdminDashboardViewSet(viewsets.ModelViewSet):
-    queryset = LawyerProfile.objects.prefetch_related('image', 'documents').all()
+    # sort by Approved=false comes before those with Approved=true
+    queryset = LawyerProfile.objects.prefetch_related('image', 'documents').order_by('approved').all()
+    pagination_class = DefaultPagination
     # permission_classes = [permissions.IsAuthenticated, permissions.IsAdminUser]
     serializer_class = LawyerProfileAdminListSerializer
 
@@ -483,6 +486,13 @@ class ReviewViewSet(viewsets.ModelViewSet):
         serializer.validated_data['lawyer'] = lawyer
         serializer.save()
 
+        #to calculate the average rating
+        new_rating = serializer.validated_data['rating']
+        existing_reviews = Review.objects.filter(lawyer=lawyer)
+        average_rating = existing_reviews.aggregate(Avg('rating'))['rating__avg']
+        lawyer.rating = average_rating
+        lawyer.save()
+
     def get_serializer_context(self):
         token = self.request.headers.get('Authorization')
         if token:
@@ -610,8 +620,7 @@ class GoogleOAuth2LoginCallbackView(APIView):
 
 
 class CustomPageNumberPagination(PageNumberPagination):
-    page_size = 5
-    page_size_query_param = 'page_size'
+    page_size_query_param = 'limit'
     max_page_size = 100
 
 @api_view(['GET'])
@@ -626,7 +635,8 @@ def lawyer_profile_search(request):
 
     if query :
         lawyer_filter = (
-            Q(user__first_name__icontains = query)
+            Q(user__first_name__icontains = query) |
+            Q(user__last_name__icontains = query)
         )
         address_filter = (
             Q(address__street__icontains = query) |
@@ -652,9 +662,9 @@ def lawyer_profile_search(request):
     if rating:
         search_results = search_results.filter(rating__gte=rating)
         
-    paginator = CustomPageNumberPagination()
     search_results = search_results.order_by('-rating')
-
+    
+    paginator = CustomPageNumberPagination()
     paginated_results = paginator.paginate_queryset(search_results, request)
 
     serialized_results = LawyerProfileSerializer(paginated_results, many=True).data
@@ -743,7 +753,7 @@ def appointments_requests(request):
                         
             serialized_results = AppointmentSerializer(appointments, many=True).data
 
-            return Response({"success": True, "serialized_results": serialized_results}) #add the success variable
+            return Response({"success": True, "results": serialized_results}) #add the success variable
         
         except Http404:
             return Response({"success": False, "message": "No appointments for this user"})
@@ -772,8 +782,7 @@ def appointments(request):
                         
             serialized_results = AppointmentSerializer(appointments, many=True).data
 
-            return Response({"success": True, "serialized_results": serialized_results}) #add the success variable
-        
+            return Response({"success": True, "results": serialized_results}) #add the success variable
         except Http404:
             return Response({"success": False, "message": "No appointments for this user"})
     else:

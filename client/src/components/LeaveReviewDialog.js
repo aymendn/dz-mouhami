@@ -7,23 +7,44 @@ import axios from "axios";
 import { useMutation } from "react-query";
 import LoadingOverlay from "./LoadingOverlay";
 import { useState } from "react";
+import { useToken } from "../utils/UseTokenHook";
+import { toast } from "react-toastify";
 
-const leaveReview = async ({ rating, comment, lawyerId }) => {
-  const { data } = await axios.post(`/core/lawyers/${lawyerId}/reviews/`, {
-    rating,
-    comment,
-  });
-  return data;
+const leaveReview = async ({ rating, comment, lawyerId, token, close }) => {
+  try {
+    const res = await axios(`/core/lawyer-view/${lawyerId}/reviews/`, {
+      method: "post",
+      data: {
+        rating: rating,
+        comment: comment,
+      },
+      headers: {
+        Authorization: token,
+      },
+    });
+
+    toast.success("Review added successfully");
+  } catch (error) {
+    console.log(error);
+    toast.error("Review creation failed");
+  } finally {
+    close();
+  }
 };
 
 const LeaveReviewDialog = ({ trigger, lawyerId }) => {
+  // == Token ==
+  const token = useToken();
+
   // == Backend call ==
   const { mutate, isLoading } = useMutation(leaveReview);
-  const handleSubmit = () => {
+  const handleSubmit = (close) => {
     mutate({
       rating: rating,
       comment: comment,
       lawyerId: lawyerId,
+      token: token,
+      close: close,
     });
   };
 
@@ -80,7 +101,7 @@ const LeaveReviewDialog = ({ trigger, lawyerId }) => {
                   Annuler
                 </button>
                 <button
-                  onClick={handleSubmit}
+                  onClick={() => handleSubmit(close)}
                   className="text-center text-sm font-medium text-[#f5fbff] bg-[#094b72] flex flex-row justify-center items-center px-6 py-3 rounded-full w-full hover:opacity-90"
                 >
                   Confirmer
