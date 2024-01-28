@@ -3,20 +3,19 @@ import Footer from "../../components/Footer";
 import validation1 from "../../assets/hourglass.svg";
 import validation from "../../assets/home.svg";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 const SuccessLawyerPage = () => {
+  const {t} = useTranslation()
   return (
     <div className="flex flex-col justify-between items-stretch min-h-screen w-full ">
       <Navbar />
       <div className="mt-8 py-4 mx-auto w-1/2 text-center">
         <img src={validation1} alt="validation" className="w-16 mx-auto" />
         <h1 className="p-4 text-[#0F3146] text-4xl font-semibold">
-          Account Pending Approval!
+          {t("pending")}
         </h1>
         <p className="p-4 text-[#496C80] text-base font-medium">
-          Thank you for registering with DZ-Mouhami! We're currently reviewing
-          your account information to ensure the highest quality of legal
-          professionals on our platform. Your account is currently pending
-          approval.
+          {t("approval")}
         </p>
       </div>
       <div className="flex justify-center mb-16">
