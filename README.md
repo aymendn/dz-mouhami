@@ -19,3 +19,7 @@
 
 ## React Tests:
 You can find test in `./client/tests/e2e/registrationTest.js`
+
+<p align="center">
+      <img src="./assets/image.png">
+</p>
