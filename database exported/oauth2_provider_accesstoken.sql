@@ -1,0 +1,22 @@
+CREATE TABLE "oauth2_provider_accesstoken" (
+  "id" bigint NOT NULL AUTO_INCREMENT,
+  "token" varchar(255) NOT NULL,
+  "expires" datetime(6) NOT NULL,
+  "scope" longtext NOT NULL,
+  "application_id" bigint DEFAULT NULL,
+  "user_id" int DEFAULT NULL,
+  "created" datetime(6) NOT NULL,
+  "updated" datetime(6) NOT NULL,
+  "source_refresh_token_id" bigint DEFAULT NULL,
+  "id_token_id" bigint DEFAULT NULL,
+  PRIMARY KEY ("id"),
+  UNIQUE KEY "token" ("token"),
+  UNIQUE KEY "source_refresh_token_id" ("source_refresh_token_id"),
+  UNIQUE KEY "id_token_id" ("id_token_id"),
+  KEY "oauth2_provider_acce_application_id_b22886e1_fk_oauth2_pr" ("application_id"),
+  KEY "oauth2_provider_accesstoken_user_id_6e4c9a65_fk_auth_user_id" ("user_id"),
+  CONSTRAINT "oauth2_provider_acce_application_id_b22886e1_fk_oauth2_pr" FOREIGN KEY ("application_id") REFERENCES "oauth2_provider_application" ("id"),
+  CONSTRAINT "oauth2_provider_acce_id_token_id_85db651b_fk_oauth2_pr" FOREIGN KEY ("id_token_id") REFERENCES "oauth2_provider_idtoken" ("id"),
+  CONSTRAINT "oauth2_provider_acce_source_refresh_token_e66fbc72_fk_oauth2_pr" FOREIGN KEY ("source_refresh_token_id") REFERENCES "oauth2_provider_refreshtoken" ("id"),
+  CONSTRAINT "oauth2_provider_accesstoken_user_id_6e4c9a65_fk_auth_user_id" FOREIGN KEY ("user_id") REFERENCES "auth_user" ("id")
+);

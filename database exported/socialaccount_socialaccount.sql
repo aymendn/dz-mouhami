@@ -1,0 +1,15 @@
+CREATE TABLE "socialaccount_socialaccount" (
+  "id" int NOT NULL AUTO_INCREMENT,
+  "provider" varchar(200) NOT NULL,
+  "uid" varchar(191) NOT NULL,
+  "last_login" datetime(6) NOT NULL,
+  "date_joined" datetime(6) NOT NULL,
+  "extra_data" json NOT NULL,
+  "user_id" int NOT NULL,
+  PRIMARY KEY ("id"),
+  UNIQUE KEY "socialaccount_socialaccount_provider_uid_fc810c6e_uniq" ("provider","uid"),
+  KEY "socialaccount_socialaccount_user_id_8146e70c_fk_auth_user_id" ("user_id"),
+  CONSTRAINT "socialaccount_socialaccount_user_id_8146e70c_fk_auth_user_id" FOREIGN KEY ("user_id") REFERENCES "auth_user" ("id")
+);insert into `socialaccount_socialaccount` (`date_joined`, `extra_data`, `id`, `last_login`, `provider`, `uid`, `user_id`) values ('2024-01-25 00:46:45.497703', '{\"hd\":\"estin.dz\",\"aud\":\"159094331037-bh9moh5r16ogrug3f31c48v0vtsv4l70.apps.googleusercontent.com\",\"azp\":\"159094331037-bh9moh5r16ogrug3f31c48v0vtsv4l70.apps.googleusercontent.com\",\"exp\":1706147750,\"iat\":1706144150,\"iss\":\"https://accounts.google.com\",\"sub\":\"107165280403269563176\",\"name\":\"anis BENSMAIL\",\"email\":\"a_bensmail@estin.dz\",\"locale\":\"fr\",\"at_hash\":\"UaJw1r0YB3_s2wm7YtAOFg\",\"picture\":\"https://lh3.googleusercontent.com/a/ACg8ocIM4opn_Te34s40ZSgY86MV06BDOB9gbgMZZpQlcUGK=s96-c\",\"given_name\":\"anis\",\"family_name\":\"BENSMAIL\",\"email_verified\":true}', 1, '2024-01-25 00:55:52.350400', 'google', '107165280403269563176', 2);
+insert into `socialaccount_socialaccount` (`date_joined`, `extra_data`, `id`, `last_login`, `provider`, `uid`, `user_id`) values ('2024-01-25 11:59:48.246855', '{\"aud\":\"159094331037-bh9moh5r16ogrug3f31c48v0vtsv4l70.apps.googleusercontent.com\",\"azp\":\"159094331037-bh9moh5r16ogrug3f31c48v0vtsv4l70.apps.googleusercontent.com\",\"exp\":1706191035,\"iat\":1706187435,\"iss\":\"https://accounts.google.com\",\"sub\":\"101174417417873145845\",\"name\":\"yasser messahli\",\"email\":\"yassermessahli0@gmail.com\",\"locale\":\"en-GB\",\"at_hash\":\"1yrmplGm_wWRnZMEmITqsg\",\"picture\":\"https://lh3.googleusercontent.com/a/ACg8ocLQZj8cX2rvPYOt65_MFCup1tU4juV60j0xX-w_Xv16zg=s96-c\",\"given_name\":\"yasser\",\"family_name\":\"messahli\",\"email_verified\":true}', 2, '2024-01-25 12:57:14.991646', 'google', '101174417417873145845', 3);
+insert into `socialaccount_socialaccount` (`date_joined`, `extra_data`, `id`, `last_login`, `provider`, `uid`, `user_id`) values ('2024-01-25 13:00:50.180358', '{\"hd\":\"estin.dz\",\"aud\":\"159094331037-bh9moh5r16ogrug3f31c48v0vtsv4l70.apps.googleusercontent.com\",\"azp\":\"159094331037-bh9moh5r16ogrug3f31c48v0vtsv4l70.apps.googleusercontent.com\",\"exp\":1706191250,\"iat\":1706187650,\"iss\":\"https://accounts.google.com\",\"sub\":\"103318590107855062776\",\"name\":\"yasser MESSAHLI\",\"email\":\"y_messahli@estin.dz\",\"locale\":\"en-GB\",\"at_hash\":\"CMhaFN-xy5wkQBKZq35VsQ\",\"picture\":\"https://lh3.googleusercontent.com/a/ACg8ocIGHgDoUnZgZolzFf_1YeLo1OFNwma46bIwfYt2WXXkbDs=s96-c\",\"given_name\":\"yasser\",\"family_name\":\"MESSAHLI\",\"email_verified\":true}', 3, '2024-01-25 13:00:50.180358', 'google', '103318590107855062776', 4);

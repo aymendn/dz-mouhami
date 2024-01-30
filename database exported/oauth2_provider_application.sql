@@ -1,0 +1,20 @@
+CREATE TABLE "oauth2_provider_application" (
+  "id" bigint NOT NULL AUTO_INCREMENT,
+  "client_id" varchar(100) NOT NULL,
+  "redirect_uris" longtext NOT NULL,
+  "client_type" varchar(32) NOT NULL,
+  "authorization_grant_type" varchar(32) NOT NULL,
+  "client_secret" varchar(255) NOT NULL,
+  "name" varchar(255) NOT NULL,
+  "user_id" int DEFAULT NULL,
+  "skip_authorization" tinyint(1) NOT NULL,
+  "created" datetime(6) NOT NULL,
+  "updated" datetime(6) NOT NULL,
+  "algorithm" varchar(5) NOT NULL,
+  "post_logout_redirect_uris" longtext NOT NULL DEFAULT (_utf8mb3''),
+  PRIMARY KEY ("id"),
+  UNIQUE KEY "client_id" ("client_id"),
+  KEY "oauth2_provider_application_user_id_79829054_fk_auth_user_id" ("user_id"),
+  KEY "oauth2_provider_application_client_secret_53133678" ("client_secret"),
+  CONSTRAINT "oauth2_provider_application_user_id_79829054_fk_auth_user_id" FOREIGN KEY ("user_id") REFERENCES "auth_user" ("id")
+);insert into `oauth2_provider_application` (`algorithm`, `authorization_grant_type`, `client_id`, `client_secret`, `client_type`, `created`, `id`, `name`, `post_logout_redirect_uris`, `redirect_uris`, `skip_authorization`, `updated`, `user_id`) values ('', 'openid-hybrid', '1BOD9gJG7KFWYXvPan7keTlHr7ioNSl4SIrPYfbD', 'pbkdf2_sha256$720000$0Z6hi1AXM2mPi4bcXYBIWC$d/4fFMx9EeWTuqBuCOza8dzPhwYqvl4GtRoeLWB0dZA=', 'confidential', '2024-01-25 11:45:12.629120', '4', '', '', 'http://192.168.228.1:8000/', 0, '2024-01-25 11:45:12.629120', 2);

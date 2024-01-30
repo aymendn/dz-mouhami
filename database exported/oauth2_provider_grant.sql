@@ -1,0 +1,21 @@
+CREATE TABLE "oauth2_provider_grant" (
+  "id" bigint NOT NULL AUTO_INCREMENT,
+  "code" varchar(255) NOT NULL,
+  "expires" datetime(6) NOT NULL,
+  "redirect_uri" longtext NOT NULL,
+  "scope" longtext NOT NULL,
+  "application_id" bigint NOT NULL,
+  "user_id" int NOT NULL,
+  "created" datetime(6) NOT NULL,
+  "updated" datetime(6) NOT NULL,
+  "code_challenge" varchar(128) NOT NULL,
+  "code_challenge_method" varchar(10) NOT NULL,
+  "nonce" varchar(255) NOT NULL,
+  "claims" longtext NOT NULL DEFAULT (_utf8mb3''),
+  PRIMARY KEY ("id"),
+  UNIQUE KEY "code" ("code"),
+  KEY "oauth2_provider_gran_application_id_81923564_fk_oauth2_pr" ("application_id"),
+  KEY "oauth2_provider_grant_user_id_e8f62af8_fk_auth_user_id" ("user_id"),
+  CONSTRAINT "oauth2_provider_gran_application_id_81923564_fk_oauth2_pr" FOREIGN KEY ("application_id") REFERENCES "oauth2_provider_application" ("id"),
+  CONSTRAINT "oauth2_provider_grant_user_id_e8f62af8_fk_auth_user_id" FOREIGN KEY ("user_id") REFERENCES "auth_user" ("id")
+);
