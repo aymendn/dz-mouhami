@@ -151,7 +151,6 @@ class LawyerDocumentViewSet(viewsets.ModelViewSet):
 
 
 class LawyerProfileViewSet(viewsets.ModelViewSet):
-    queryset = LawyerProfile.objects.prefetch_related('image', 'documents').all()
     serializer_class = LawyerProfileSerializer
     
     
@@ -161,16 +160,18 @@ class LawyerProfileViewSet(viewsets.ModelViewSet):
         if token:
             try:
                 user = Token.objects.get(key=token).user
+                if LawyerProfile.objects.get(user=user):
+                    return LawyerProfile.objects.get(user=user)
             except Token.DoesNotExist:
-                raise PermissionDenied('Lawyer profile not found or not approved.')
+                raise PermissionDenied('Not authenticated')
         else :
-            return PermissionDenied("access denied")
+            raise PermissionDenied("No token provided")
             
-        # token = "6aaeffb7d25c4697859f4135245956eec6012708"
-        # token = '6aaeffb7d25c4697859f4135245956eec6012708'
-        # token = "533ba7c8dccd71003fedea92076ab3ef94aaa243"
-        user = Token.objects.get(key=token).user
-        return LawyerProfile.objects.filter(user=user)
+        # # token = "6aaeffb7d25c4697859f4135245956eec6012708"
+        # # token = '6aaeffb7d25c4697859f4135245956eec6012708'
+        # # token = "533ba7c8dccd71003fedea92076ab3ef94aaa243"
+        # user = Token.objects.get(key=token).user
+        # return LawyerProfile.objects.get(user=user)
 
 
     def perform_create(self, serializer):
@@ -221,16 +222,15 @@ class LawyerProfileViewSet(viewsets.ModelViewSet):
     
     def list(self, request, *args, **kwargs):
         queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset, many=True)
+        serializer = self.get_serializer(queryset)
 
         # Calculate and include the rating information in the serialized response
         data = serializer.data
-        for item in data:
-            lawyer_id = item['id']
-            rating = Review.objects.filter(lawyer__id=lawyer_id).aggregate(Avg('rating'))['rating__avg']
-            item['rating'] = rating
+        lawyer_id = data['id']
+        rating = Review.objects.filter(lawyer__id=lawyer_id).aggregate(Avg('rating'))['rating__avg']
+        data['rating'] = rating
 
-        return Response(data)
+        return Response(data, status=status.HTTP_200_OK)
     
     # def perform_update(self, serializer):
     #     token = self.request.headers.get('Authorization')
@@ -258,7 +258,7 @@ class ClientProfileViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     queryset = ClientProfile.objects.all()
     serializer_class = ClientProfileSerializer
-    
+
 
 
     def get_queryset(self):
@@ -799,9 +799,9 @@ def accept_appointment(request, appointment_id):
         try:
             user = Token.objects.get(key=token_key).user
         except Token.DoesNotExist:
-            raise PermissionDenied('Access denied. Invalid token.')
+            return Response('Access denied. Invalid token.', status=status.HTTP_401_UNAUTHORIZED)
     else:
-        return PermissionDenied("Access denied. Token not provided.")
+        return Response("Access denied. Token not provided.", status=status.HTTP_401_UNAUTHORIZED)
 
     if hasattr(user, 'lawyer_profile'):
         try:
@@ -810,7 +810,7 @@ def accept_appointment(request, appointment_id):
             return Response({"success": False, "message": "Appointment not found or not associated with your profile"})
         appointment.status = 'Accepted'
         appointment.save()
-        return Response({"success": True, "message": "Appointment accepted."})
+        return Response({"success": True, "message": "Appointment accepted."}, status=status.HTTP_201_CREATED)
     else:
         return Response({"success": False, "message": "You don't have permission to accept an appointment."})
 

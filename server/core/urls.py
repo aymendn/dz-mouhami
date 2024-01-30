@@ -29,7 +29,7 @@ lawyers_view.register(r'reviews', views.ReviewViewSet, basename='lawyer-reviews'
 urlpatterns = router.urls + lawyers_router.urls + lawyers_dashbord.urls + [
     path('lawyer-profile-search/', views.lawyer_profile_search),
     path('<int:lawyer_id>/schedule-appointment/<int:time_slot_id>/', views.schedule_appointment),
-    path('accept-appointment/<int:appointment_id>/', views.accept_appointment),
+    path('accept-appointment/<int:appointment_id>/', views.accept_appointment, name='accept-appointment'),
     path('refuse-appointment/<int:appointment_id>/', views.refuse_appointment),
     path('appointments-requests', views.appointments_requests),
     path('appointments', views.appointments),
