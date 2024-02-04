@@ -13,7 +13,6 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
 from rest_framework.pagination import PageNumberPagination
-from allauth.socialaccount.models import SocialAccount, SocialToken
 from rest_framework import generics, permissions
 from .models import LawyerProfile, Appointment
 from .serializers import UserSerializer
@@ -22,7 +21,7 @@ from .serializers import LawyerProfileAdminListSerializer
 from django.utils import timezone
 from django.db.models import Q
 
-from allauth.socialaccount.models import SocialAccount
+
 from rest_framework import status
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.exceptions import NotFound
@@ -46,50 +45,6 @@ from django.conf import settings
 from django.shortcuts import redirect
 
 
-
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def get_user_info_from_google_token(request):
-    google_token = request.data.get('google_token', None)
-
-    if not google_token:
-        return Response({'error': 'Google token not provided'}, status=400)
-
-    try:
-        social_account = SocialAccount.objects.get(token=google_token, provider='google')
-
-        user_profile = social_account.user.userprofile  
-
-        user_info = {
-            'username': user_profile.user.username,
-            'email': user_profile.user.email,
-            'first_name': user_profile.user.first_name,
-            'last_name': user_profile.user.last_name,
-        }
-
-        return Response(user_info, status=200)
-
-    except SocialAccount.DoesNotExist:
-        return Response({'error': 'Invalid Google token'}, status=400)
-
-
-
-
-# class GoogleAccessTokenView(APIView):
-#     permission_classes = [IsAuthenticated]
-
-#     def get(self, request, *args, **kwargs):
-#         try:
-#             google_account = SocialAccount.objects.get(user=request.user, provider='google')
-#             google_token = google_account.socialtoken_set.get()
-#             access_token = str(google_token.token)  # Convert the SocialToken to a string
-#             return Response({'access_token': access_token})
-#         except SocialAccount.DoesNotExist:
-#             return Response({'error': 'No linked Google account for the user.'}, status=404)
-#         except SocialToken.DoesNotExist:
-#             return Response({'error': 'No Google access token found for the user.'}, status=404)
-#         except Exception as e:
-#             return Response({'error': f'An error occurred: {str(e)}'}, status=500)
 
 
 

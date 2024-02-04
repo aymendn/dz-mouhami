@@ -4,11 +4,11 @@ import random as rd
  
 # MySQL database connection parameters
 db_config = {
-    'host': 'dz-mouhami-dz-mouhami.a.aivencloud.com',
-    'user': 'avnadmin',
-    'password': 'AVNS_vXeEd-Miww6VsPvnWhc',
-    'port': 28133,
-    'database': 'DZ_Mouhami_DB',
+    'host': 'localhost',
+    'user': 'root',
+    'password': 'root',
+    'port': 3306,
+    'database': 'dz-mouhami',
 }
 
 query = """

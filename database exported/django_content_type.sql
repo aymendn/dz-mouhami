@@ -24,7 +24,6 @@ insert into `django_content_type` (`app_label`, `id`, `model`) values ('core', 1
 insert into `django_content_type` (`app_label`, `id`, `model`) values ('core', 18, 'review');
 insert into `django_content_type` (`app_label`, `id`, `model`) values ('core', 19, 'timeslot');
 insert into `django_content_type` (`app_label`, `id`, `model`) values ('core', 35, 'userprofile');
-insert into `django_content_type` (`app_label`, `id`, `model`) values ('drf_social_oauth2', 32, 'multifactorauth');
 insert into `django_content_type` (`app_label`, `id`, `model`) values ('oauth2_provider', 23, 'accesstoken');
 insert into `django_content_type` (`app_label`, `id`, `model`) values ('oauth2_provider', 22, 'application');
 insert into `django_content_type` (`app_label`, `id`, `model`) values ('oauth2_provider', 24, 'grant');

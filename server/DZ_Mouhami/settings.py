@@ -38,19 +38,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',
     'rest_framework',
     "rest_framework.authtoken",
     "sslserver",
-    'djoser',
+    # 'djoser',
     'debug_toolbar',
     'corsheaders',
     'oauth2_provider',
-    'social_django',
-    'drf_social_oauth2',
+    # 'social_django',
+    # 'drf_social_oauth2',
     'core',
     'drf_yasg'
 ]
@@ -82,8 +82,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.request',
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
+                # 'social_django.context_processors.backends',
+                # 'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -173,7 +173,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
     'social_core.backends.google.GoogleOAuth2',
     # drf-social-oauth2
-    'drf_social_oauth2.backends.DjangoOAuth2',
+    # 'drf_social_oauth2.backends.DjangoOAuth2',
     # Django
     'django.contrib.auth.backends.ModelBackend',
 ]
@@ -232,7 +232,7 @@ REST_FRAMEWORK = {
         # OAuth
         # 'oauth2_provider.ext.rest_framework.OAuth2Authentication',  # django-oauth-toolkit < 1.0.0
         'oauth2_provider.contrib.rest_framework.OAuth2Authentication',  # django-oauth-toolkit >= 1.0.0
-        'drf_social_oauth2.authentication.SocialAuthentication',
+        # 'drf_social_oauth2.authentication.SocialAuthentication',
     )
 }
 

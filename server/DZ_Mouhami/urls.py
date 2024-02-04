@@ -42,12 +42,7 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('__debug__/', include(debug_toolbar.urls)),
-    path("auth/", include("djoser.urls")),
     path('core/', include('core.urls')),
-    path('accounts/', include('allauth.urls')),
-    path('accounts/', include('allauth.socialaccount.urls')),
-    path('auth/', include('drf_social_oauth2.urls', namespace='drf')),
-    path('o/', include('social_django.urls', namespace='social')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0),
          name='schema-swagger-ui'),
     
