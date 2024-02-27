@@ -100,11 +100,11 @@ pymysql.install_as_MySQLdb()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'DZ_Mouhami_DB',
+        'NAME': 'defaultdb',
         'USER': 'avnadmin',
-        'PASSWORD': 'AVNS_vXeEd-Miww6VsPvnWhc',
-        'HOST': 'dz-mouhami-dz-mouhami.a.aivencloud.com',
-        "PORT": "28133"
+        'PASSWORD': 'AVNS_gQabCCKGgk5H5nYo2fe',
+        'HOST': 'mouhami-db-dz-mouhami-2.a.aivencloud.com',
+        "PORT": "26537"
     }
 }
 # mysql --user avnadmin --password=AVNS_vXeEd-Miww6VsPvnWhc --host dz-mouhami-dz-mouhami.a.aivencloud.com --port 28133 DZ_Mouhami_DB
